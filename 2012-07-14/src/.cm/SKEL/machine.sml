@@ -1,0 +1,2 @@
+Skeleton 5
+ae"FunMachine"i5Caä¢Term"gp1c"TERM"aä¢Context"gp1c"CONTEXT"aä¢Subst"gp1c"SUBST"aä¢Abst"gp1c"ABST"aä¢UMopen"gp1c"UMOPEN"Caä¢Toc"gp1c"TOC"aä¢ParTm"gp1c"PARTM"aä¢Pretty"gp1c"PRETTY"aä¢Error"gp1c"ERROR"f7ÿÿ‚Cd"Universes"ÿ<ä¢Utils"d"Printing"ÿ$NNjh1bd2egp1ÿf5Cd"Int"ÿÿ"ÿ‚	ÿ<Nf8ÿ9ÿÿ‚Cd"ListPair"ÿ‚3ÿƒÿ$d"Theories"Ngp1c"MACHINE"

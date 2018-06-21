@@ -1,0 +1,2 @@
+Skeleton 5
+ae"FunUnif"i6aä¢Term"gp1c"TERM"Caä¢Subst"gp1c"SUBST"aä¢UMopen"gp1c"UMOPEN"aä¢Toc"gp1c"TOC"aä¢Pretty"gp1c"PRETTY"f1ä¢Utils"Njh1bd5Cegp2ÿ2d"Modif"f3ä¢List"ÿd"Printing"egp1ÿegp1ÿ!f2ÿÿ5Nf5Cd"Int"d"Bool"ÿ‚ÿÿCd"ListPair"ÿ5d"Universes"ÿ!d"Theories"Ngp1c"UNIF"

@@ -1,0 +1,142 @@
+(* **************************************************** *
+ * CM-based sources for LEGO, James McKinna 11 nov 2011 *
+ * **************************************************** *)
+
+Group is 
+
+      	$smlnj/compiler/compiler.cm
+      	$/basis.cm
+      	$/smlnj-lib.cm
+	$/ml-yacc-lib.cm
+
+	utils.sig	 (* doc only *)
+	utils.sml	 (* added fresh name generator *)
+
+	format.sig	
+	universe.sig	 (* exposes UVARS; now only used in namespace history mech. *)
+
+	annotation.sml	 (* this is what Cezary/Carst need *)
+
+	format.sml	 (* revised version of TextIO.lineInput *)
+	printing.sml	 (* includes some print routines, e.g. (loud)message *)
+
+	universe.sml	 (* exposes UVARS; now only used in namespace history mech. *)
+	term.sig	 (* doc only? *)
+	term.sml	 (* persistent top-level bindings: functorise! *)
+
+	error.sig	
+	legoformat.sig	
+
+	context.sig	
+	context.sml	 (* like Term, not yet integrated properly *)
+
+	infix.sml	
+	legoformat.sml	
+
+	pretty.sig	
+	pretty.sml	
+
+	subst.sig	 
+	subst.sml	 
+   
+	Umachine.sml	 (* 2011: no longer exposes UVARS *)
+
+	abst.sig	 
+	abst.sml	 
+
+	error-format.sml	
+	error.sml	
+
+	expand.sig	 (* 2011: formerly type.sig *)
+	expand.sml	 (* 2011: formerly type.sml *)
+
+	toc.sig	  
+	toc.sml		 (* fold in with Machine? *)
+
+	unif.sig	 (* doc only *)
+	unif.sml	 (* 2011: no longer exposes UVARS *)
+
+	cml.sml	  	 (* 2011: abandon? not for the time being... structure ParTm *)
+
+	machine.sig	
+	machine.sml	 (* needs Umachine, Toc, subst2 *)
+
+	conor-knots.sml	
+
+	namespace.sig	 (* everybody needs this *)
+	namespace.sml	 (* exposes UVARS for history *)
+
+	concrete.sig	
+	concrete.sml	 
+
+	qmaster.sig	
+	qmaster.sml	
+
+	conor.sig	
+	conor-ind.sml	
+
+	inductive.sig	
+	inductive.sml	
+
+	synt.sig	
+	synt.sml	
+
+	conor-then.sml	
+
+	tactics.sig	
+	tacticals.sig	
+	tacticals.sml	
+
+	toplevel.sig	
+	toplevel.sml	
+
+	discharge.sig	
+	discharge.sml	
+
+	top.sig	
+	top.sml	
+
+	tactics.sml	
+
+	conor-voodoo.sml	
+	conor-check.sml	
+	conor-top.sml	 (* 2011: no longer loads -voodoo and -check *)
+
+	modules.sig	
+
+	logic.sml	 (* now a structure, based on Modules, Namespace *)
+	help.sml	
+
+	modules.sml	
+
+	init.sig	
+	init.sml	
+
+	pbp.sml		(* built-in, but not used *)
+
+(* *********************************************************** *
+(* Ideally, support for Proof-by-Pointing is added dynamically
+   by the User Interface *)
+
+	pbp_lib_logic.sml
+	pbp_lib_eq_basics.sml
+
+(* Example of adding a user-defined tactic *)
+
+	lib_nat_plus_thms.sml
+
+ * *********************************************************** *)
+
+
+	linker.sml	 (* everything the parser needs *)
+
+	pos.sml		 (* need for the parser *)
+	lego.lex:MLLex	 (* auto-generated now *)
+	lego.grm:MLYacc	 (* auto-generated now *)
+
+	parser.sml	 (* because lego.grm.sml is now functorised properly *)
+
+	interface.sml	 (* because parser is now functorised properly *)
+
+	main.sml	 (* exports make_lego, lego(), legoML(), and... runs legoML *)
+

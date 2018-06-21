@@ -1,0 +1,2 @@
+Skeleton 5
+ae"FunQuarterMaster"i6aä¢Term"gp1c"TERM"Caä¢Concrete"gp1c"CONCRETE"aä¢Namespace"gp1c"NAMESPACE"aä¢Engine"gp1c"CONSTRUCTIVEENGINE"aä¢Pretty"gp1c"PRETTY"f1d"Utils"Njh1bd2egp1ÿf4d"List"ÿÿ ÿ*f4ÿ‚ÿÿ ÿ*gp1c"QUARTERMASTER"

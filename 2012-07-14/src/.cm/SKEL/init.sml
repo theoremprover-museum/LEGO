@@ -1,0 +1,2 @@
+Skeleton 5
+ae"FunInit"i8aä¢Infix"gp1c"INFIX"aä¢UMopen"gp1c"UMOPEN"aä¢Namespace"gp1c"NAMESPACE"Caä¢Tactics"gp1c"TACTICS"aä¢Toplevel"gp1c"TOPLEVEL"aä¢Top"gp1c"TOP"aä¢ConorThen"gp1c"CONORTHEN"f6ÿ‚Cÿ"ÿ8ÿ-d"Universes"ÿCd"Utils"d"Printing"ÿ‚ÿd"Theories"NNjh0gp1c"INIT"

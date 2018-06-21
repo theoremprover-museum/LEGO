@@ -1,0 +1,2 @@
+Skeleton 5
+ae"ConorCheck"i7aä¢UMopen"gp1c"UMOPEN"aä¢Toc"gp1c"TOC"Caä¢Engine"gp1c"CONSTRUCTIVEENGINE"aä¢ConorTopNeeds"gp1c"CONORTOPNEEDS"aä¢ConorInductiveNeeds"gp1c"CONORINDUCTIVENEEDS"aä¢Pretty"gp1c"PRETTY"f2d"Utils"d"Printing"Nh2aä¢Term"gp2ÿ>ÿƒbd2egp1ÿƒf3ÿ'ÿ‚.ÿf5Cd"List"ÿ‚.ÿÿ>ÿ8N

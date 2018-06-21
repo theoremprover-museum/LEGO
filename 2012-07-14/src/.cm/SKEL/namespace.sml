@@ -1,0 +1,2 @@
+Skeleton 5
+d2f1d"UndoKnotTypes"ae"FunNamespace"i5Caä¢Term"gp1c"TERM"aä¢Context"gp1c"CONTEXT"aä¢Subst"gp1c"SUBST"aä¢UMopen"gp1c"UMOPEN"aä¢Expand"gp1c"EXPAND"Caä¢ParTm"gp1c"PARTM"aä¢UndoKnots"h1egp1c"CONORKNOTS"aä¢Machine"gp1c"MACHINE"aä¢Pretty"gp1c"PRETTY"f6ÿ(Cÿ&ÿ‚ÿd"Printing"ÿ:NNjh1bd5Cegp2ä¢Utils"d"Except"egp2ÿ„d"Counting"egp2ÿ„d"Timing"egp2ÿ„d"ListUtil"egp2ÿ„d"StringUtil"Cegp2ÿ„d"FunUtil"egp2ÿ„d"Modif"egp1ÿ(egp1ÿ:egp1ÿNf8d"Int"d"List"ÿƒCÿ&ÿ‚'d"Universes"d"Infix"ÿ‚Cÿÿ„ÿƒÿ<ÿ:Ngp1c"NAMESPACE"

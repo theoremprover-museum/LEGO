@@ -1,0 +1,29 @@
+
+	   Some Type Theory and Lambda Calculus Formalized
+
+		   James McKinna and Randy Pollack
+
+This directory contains the LEGO source files (".l" files) of a formal
+development described in a paper to appear in the Journal of Formal
+Reasoning.  It has all been checked by LEGO Version 1.3.1, the
+official release version at time of writing.  
+
+LEGO, its documentation, and examples are available from the LEGO WWW
+homepage <http://www.dcs.ed.ac.uk/home/lego/>.  To use these files,
+you probably must have some familiarity with LEGO.
+
+This development is over 2 man-years of work by James McKinna and
+Randy Pollack.  In has many parallel and some mutually exclusive
+branches.
+
+You can load "filename.l" by typing "Make filename" to the LEGO
+toplevel prompt.  This will Make all that filename depends on, as well
+as filename.  As LEGO loads .l files, it will "compile" the proofs
+they contain into lambda terms, writing out corresponding ".o" files.
+Thes .o files will Make much faster than the original .l files.
+
+BUG: one file, "conversion_cut.l" calls a tactic (Cut) that changes
+the context of previously inhabited types; thus "conversion_cut.l"
+cannot really be compiled.  If you have difficulty loading a file
+called conversion_cut, just delete "conversion_cut.o" (which will
+force LEGO to use the uncompiled conversion_cut.l) and try again.

@@ -1,0 +1,2 @@
+Skeleton 5
+ae"LegoLexFun"i4aä¢Tokens"gp1c"Lego_TOKENS"aä¢Pos"gp1c"POS"aä¢Infix"gp1c"INFIX"f6d"Char"Cd"List"d"String"ä¢TextIO"ä¢Vector"d"Array"Njh3aä¢yyInput"jh3aä¢TIO"gp1ÿ)ad"TSIO"gp2ÿ‚d"StreamIO"ad"TPIO"gp1d"TextPrimIO"è0aä¢UserDeclarations"h3aÿgp1ÿaÿ,gp1ÿ,aä¢KeyWord"jÿƒÿƒbbd2egp1ÿƒf9d"IO"ÿ,ÿÿƒCÿ2ÿ<d"Utils"ÿƒ<ÿ‚Nf0f1ÿ‚gp1c"LEXER"

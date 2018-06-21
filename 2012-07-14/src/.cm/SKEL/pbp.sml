@@ -1,0 +1,2 @@
+Skeleton 5
+d4aã¢PBP"è0aã¢PBPINPUT"ÿ	ae"FunPbpInput"i4áä¢LegoFormat"çğ±ã¢LEGOFORMAT"aä¢Engine"gp1c"CONSTRUCTIVEENGINE"aä¢Namespace"gp1c"NAMESPACE"f4ÿ+ä¢Utils"ÿ	ÿ+ÿ	ae"FunPbp"i3ÿ*aä¢PbpInput"gp1ÿf9d"Int"d"List"d"TextIO"ÿ‚)Cÿ‚d"Annotate"d"Printing"d"ListFormat"ÿ+Njÿ	gp1ÿ

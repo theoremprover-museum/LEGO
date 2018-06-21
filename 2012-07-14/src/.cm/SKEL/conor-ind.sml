@@ -1,0 +1,2 @@
+Skeleton 5
+d2ae"FunConorInductiveNeeds"i7aä¢Term"gp1c"TERM"aä¢UMopen"gp1c"UMOPEN"Caä¢Toc"gp1c"TOC"aä¢Namespace"gp1c"NAMESPACE"áä¢Engine"çğ±ã¢CONSTRUCTIVEENGINE"aä¢QuarterMaster"gp1c"QUARTERMASTER"f3ä¢Utils"d"Printing"ÿ4Njh2aÿçğ±ÿbeÿƒf6ÿCä¢List"ÿ‚ÿ1ÿÿ4Nçğ±ã¢CONORINDUCTIVENEEDS"ae"FunConorInductive"i4ÿ3aä¢ConorInductiveNeeds"ÿƒ;aä¢Pretty"gp1c"PRETTY"f3ÿ…	ÿ‚;ÿ4jh1bd3egp1ÿ„/egp2ÿ„/ÿf2d"Int"ÿƒ(f0gp1c"CONORINDUCTIVE"

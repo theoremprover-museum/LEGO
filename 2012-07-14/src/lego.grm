@@ -1,0 +1,735 @@
+(* ********************************************************** * 
+   port to NJ-SML 110: James McKinna 24 Nov 2008--11 Nov 2011
+
+   ********************************************************** *)
+
+(* Pretty Lego grammar *
+ * $Log: lego.grm,v $
+ * Revision 1.21  1998/11/10 15:27:44  ctm
+ * Label and Generate have (! tag !) syntax, as do terms
+ *
+ * Revision 1.20  1998/10/30 14:10:56  ctm
+ * conditional visibility added, eg [A?Type][a?A]a
+ *                         becoming [A|Type][a:A]a
+ * when translated to abstract syntax
+ *
+ * Revision 1.19  1998/10/28 15:59:00  ctm
+ * Attempt to fix reduction pattern grammar.
+ *
+ * Revision 1.18  1998/07/07 16:04:16  tms
+ * fixed Cd bug under Linux
+ *   LEGO no longer complains of uncaught exception NotDirectory if cd
+ *   has been successful
+ *
+ * Revision 1.17  1998/06/03 11:59:24  ctm
+ * This is the release source for LEGO 1.3
+ *
+ * Revision 1.16  1997/11/24 11:01:09  tms
+ * merged immed-may-fail with main branch
+ *
+ * Revision 1.15.2.2  1997/10/14 19:31:50  djs
+ * Support for error trapping in module imports.
+ *
+ * Revision 1.15.2.1  1997/10/10 17:02:19  djs
+ * Made everything work on Solaris, by taking out some nested comments.
+ *
+ * Revision 1.15  1997/07/11 13:27:27  tms
+ * Qrepl will fail if the LHS does not occur in the goal
+ *
+ * Revision 1.14  1997/06/20 14:51:25  djs
+ * More changes to facilitate script management. Mostly to do with the
+ * protocol for annotations, but also changed the behaviour of lego wrt
+ * multiple declarations - now, if one fails, the others are rolled back.
+ *
+ * Revision 1.13  1997/05/28 10:34:32  tms
+ * Tactic Assumption accepts relative goals
+ *
+ * Revision 1.12  1997/05/08 13:50:24  tms
+ * o Added Support for Extending Tactics
+ * o Generalised Expansion Commands to work relative to a path
+ *
+ * Revision 1.11  1997/03/06 09:52:11  tms
+ * modified signature of pbptop
+ * *)
+
+    (******* User declarations ************)
+
+   val Global = true
+   val Local  = false 
+
+   val unf = true
+   val frz  = false 
+
+   val lAssoc = true
+   val rAssoc = false 
+
+fun ParserError s = Pos.errmsg "Lego parser" (s,(!Pos.lno),(!Pos.lno))
+               (* will be ignored                           ^^^^^^^^ *)
+
+fun defnerror () = ParserError "only identifiers can be bound"
+
+
+%%  (******* ML-Yacc definitions **********)
+
+%arg (filNamTimKndExec) 
+   : (Modules.stamp)
+
+%header
+(functor LegoLrValsFun (
+	 structure Token : TOKEN
+         structure Pos : POS
+	 structure Term : TERM
+	 structure Concrete : CONCRETE
+	 structure Namespace : NAMESPACE
+	 structure Engine : CONSTRUCTIVEENGINE
+	 structure Modules : MODULES
+	 structure Logic : LOGIC
+	 structure Top : TOP
+	 structure Tactics : TACTICS
+	 structure Tacticals : TACTICALS
+	 structure Toplevel : TOPLEVEL
+	 structure Discharge : DISCHARGE
+	 structure Init : INIT
+	 structure ConorTop : CONORTOP
+	 structure ConorThen : CONORTHEN
+	 structure QuarterMaster : QUARTERMASTER
+	 structure Pbp : PBP
+	 structure Pretty : PRETTY
+	 structure Error : ERROR
+	 sharing 
+	 	 type Term.cnstr 
+		    = Concrete.cnstr
+		    = Namespace.cnstr
+		    = Engine.cnstr
+		    = Pretty.cnstr
+		    = Error.cnstr
+	 and 
+	 	 type Namespace.context
+		    = Pretty.context
+	 and 
+	 	 type Term.bindSort
+		    = Concrete.bindSort
+	 and 
+	 	 type Term.visSort
+		    = Concrete.visSort
+	 and 
+	 	 type Term.LocGlob
+		    = Concrete.LocGlob
+	 and 
+	 	 type Term.Frz
+		    = Concrete.Frz
+	 and 
+	 	 type Term.Prefix
+		    = Concrete.Prefix
+	 and 
+	 	 type Concrete.cnstr_c 
+		    = Toplevel.cnstr_c 
+		    = Tactics.cnstr_c 
+		    = Logic.cnstr_c 
+		    = Top.cnstr_c 
+		    = ConorTop.cnstr_c 
+		    = Discharge.cnstr_c 
+		    = QuarterMaster.cnstr_c
+		    = Engine.cnstr_c 
+	 and 
+	 	 type Concrete.binder_c 
+		    = QuarterMaster.binder_c
+	 and 
+	 	 type Concrete.ctxt_c 
+		    = Top.ctxt_c
+	 and 
+		 type Tacticals.tactic 
+		    = ConorThen.tactic 
+		    = Tactics.tactic 
+                       ) 
+	: Lego_LRVALS)
+
+(* %verbose *)	       (* factored out dependency on structure Infix : INFIX *)
+
+
+%name  Lego
+%pos   Pos.pos
+
+%term 
+ALLE | ALLI | ANDE | ANDI | ARROW | ANNOTATEON | ANNOTATEOFF  |
+ASSUMPTION | BACKSLASH |
+BAR | 
+CD | CLAIM | 
+COLON | CONFIG | CONTRACT | COMMA | CTXT | CHOICE | CUT |
+CASE |
+DEQ | DOLLARSQ | DISCHARGE | DISCHARGEKEEP | DNF | DOT | DOT1 |
+   DOT2 | DECLS | DOUBLE |
+ECHO | ELIM | EOF | EQUAL | EQUIV | EXE | EXI | EXPALL | EXPAND | EXPORTST |
+ENDCASE |
+FIELDS | FREEZE | FORGET | FORGETMARK | FROM |
+GENERATE | GEN | GOAL | DOLLARGOAL |
+HASH | HELP | HNF |
+ID of string | INCLUDE | IMMED | IMPE | IMPI | INIT | INT of int |
+   INTROS | iNTROS | IMPORT | INTERACTIVE |
+INFIX | INFIX_UNREGD of string |
+INFIX_L1 of string | INFIX_R1 of string | 
+INFIX_L2 of string | INFIX_R2 of string | 
+INFIX_L3 of string | INFIX_R3 of string | 
+INFIX_L4 of string | INFIX_R4 of string | 
+INFIX_L5 of string | INFIX_R5 of string | 
+INFIX_L6 of string | INFIX_R6 of string | 
+INFIX_L7 of string | INFIX_R7 of string | 
+INFIX_L8 of string | INFIX_R8 of string | 
+INFIX_L9 of string | INFIX_R9 of string | 
+KILLREF |
+LABEL | LOGIC | LCBR | LINE | LPTBR | LRBR | LSQBR | LOAD | LEFT |
+MODULE |  MARKS | MAKE |
+NEXT | NORMAL | NORMTYP | NOTE | NOTI |
+ORE | ORIL | ORIR |
+PPOFF | PPON | PPLINEWIDTH |
+PRF | PRINTTIMER | PROP | PWD | PCTPCT | PBP | PBPHYP |
+QM | QREPL |
+RCBR | REFINE | 
+RELINT of bool*int | 
+RPTBR | RRBR | RSQBR | RELOAD | RIGHT |
+SAVE | SAVEUNFROZ | SAVEFROZEN | DOLLARSAVE |
+SAVEOBJECTSON | SAVEOBJECTSOFF |
+  SEMICOLON | SLASHS | STARTTIMER | STRING of string | STARSQ |
+TACTICELSE | TACTICFAIL | TACTICFOR | TACTICREPEAT | TACTICSUCCEED
+ | TACTICTHEN | TACTICTRY | STTHEORY | ENDTHEORY |
+THRY | TILDE | TREG | TYPE | TYPEOF | TYPESTR | TAGBEGIN | TAGEND |
+UNDERSCORE | UNFREEZE | UNDO | UNDOALL | UNSAFE |
+INDUCTIVE | NOREDS | PARAMS | CONSTRS | RELATION | THEOREMS | RECORD |
+INDUCTION | INVERSION | INVERT | QNIFY | qNIFY | EQUALITY |
+UPARR | UTAC |
+VREG 
+
+| app (* For binding precedence over infix *)
+
+%nonterm 
+ANONID of string | APPLN of Concrete.cnstr_c | 
+ASSOC of bool | (* 2011 was: Infix.Associativity *)
+BIND of Concrete.binder_c | 
+CAST of Concrete.cnstr_c | CMD of unit -> unit | CNSTR of Concrete.cnstr_c | 
+CTXTT of Concrete.ctxt_c | CTXTTE of Concrete.ctxt_c |
+CTXTL of Concrete.ctxt_c | CTXTLE of Concrete.ctxt_c | 
+CUTDFN of (string*Concrete.cnstr_c) | CUTCXT of (string*Concrete.cnstr_c) list | 
+DECL of Concrete.binder_c | 
+DEFN of Concrete.binder_c | 
+DEQS of Concrete.cnstr_c*Concrete.cnstr_c |
+DLBIND of (Concrete.visSort * (string list) * Concrete.cnstr_c) | 
+DLSLBIND of ((Concrete.visSort * (string list) * Concrete.cnstr_c) * (string list)) | 
+DNBIND of ((string list) * Concrete.cnstr_c) | 
+DNSLBIND of (((string list) * Concrete.cnstr_c) * (string list)) | 
+EXPRSN of unit -> unit |  
+IDLIST of string list | IDLST of string list | 
+INTROST of string list |
+INDOPT of Top.ind_options | RECOPT of Top.ind_options | SHAREDOPT of Top.ind_options |
+RELGOAL of unit -> int | 
+REDUCTION of Concrete.cnstr_c | 
+	RED of Concrete.cnstr_c*Concrete.cnstr_c | 
+	REDS of (Concrete.cnstr_c*Concrete.cnstr_c) list |
+SPAT of Concrete.cnstr_c | 
+     	PAT of Concrete.cnstr_c | 
+	PPAT of Concrete.cnstr_c |
+CASEEXP of Concrete.cnstr_c | 
+	BRANCH of (Concrete.ctxt_c)*Concrete.cnstr_c*Concrete.cnstr_c |
+      	BRANCHES of ((Concrete.ctxt_c)*Concrete.cnstr_c*Concrete.cnstr_c) list | 
+NUMCMD  of unit -> unit  | 
+NUMCMD0 of (int -> unit) | 
+NUMCMD1 of (int -> Concrete.cnstr_c -> unit) | 
+START | 
+STRINGorID of string | STRINGorIDLIST of string list | 
+SORT of Concrete.cnstr_c |
+TACTICAL of Tactics.tactic | 
+	 SIMPLETACTICAL of Tactics.tactic |
+	 COMBINEDTACTICAL of Tactics.tactic |
+THMID of string | 
+TUPLE of ((Concrete.cnstr_c list) * Concrete.cnstr_c) | 
+      TPL_BOD of (Concrete.cnstr_c list) | 
+MODULEHEADER of string * string list |
+INTLIST of (int list) |
+LABELTAG of (string list) | MAGICTAG of (Concrete.cnstr_c list)
+
+%start   START
+%eop     EOF SEMICOLON
+%noshift EOF SEMICOLON
+
+%nonassoc TACTICFOR TACTICREPEAT
+%right TACTICELSE
+%right TACTICTHEN 
+%nonassoc TACTICTRY
+
+%left INFIX_L1
+%right INFIX_R1
+%left INFIX_L2
+%right INFIX_R2
+%left INFIX_L3
+%right INFIX_R3
+%left INFIX_L4
+%right INFIX_R4
+%left INFIX_L5
+%right INFIX_R5
+%left INFIX_L6
+%right INFIX_R6
+%left INFIX_L7
+%right INFIX_R7
+%left INFIX_L8
+%right INFIX_R8
+%left INFIX_L9
+%right INFIX_R9
+
+%left app
+
+%nonassoc COLON
+%right ARROW HASH BACKSLASH COMMA
+%left DOT DOT1 DOT2 UPARR
+
+%nonassoc TILDE
+  
+%%
+  START : MODULEHEADER ( Modules.ModuleHeader filNamTimKndExec MODULEHEADER )
+                             
+        | TACTICAL     ( if (Modules.isDepChecking filNamTimKndExec) 
+	  	       	    then () 
+			 else ( Tactics.execute (TACTICAL) ) )
+(* no distinct "execute" for TACTICAL, leading to too-rigid types *)
+
+  MODULEHEADER : MODULE ID                        (ID, [])
+               | MODULE ID IMPORT STRINGorIDLIST  (ID, STRINGorIDLIST)
+
+  TACTICAL : SIMPLETACTICAL         ( SIMPLETACTICAL )
+           | COMBINEDTACTICAL       ( COMBINEDTACTICAL )
+           |                        ( Tacticals.tactical_null )
+
+  SIMPLETACTICAL : EXPRSN           ( Tactics.mkTactic (EXPRSN) )
+                 | TACTICFAIL       ( Tacticals.tactical_fail )
+                 | TACTICSUCCEED    ( Tacticals.tactical_succeed )
+
+  COMBINEDTACTICAL :
+    LRBR COMBINEDTACTICAL RRBR	    ( COMBINEDTACTICAL ) 
+  | TACTICAL TACTICTHEN TACTICAL    ( ConorThen.Then TACTICAL1 TACTICAL2 )
+  | TACTICAL TACTICELSE TACTICAL    ( Tacticals.tactical_else TACTICAL1 TACTICAL2 )
+  | TACTICREPEAT TACTICAL           ( Tacticals.tactical_repeat TACTICAL )
+  | TACTICFOR INT TACTICAL          ( Tacticals.tactical_for INT TACTICAL )
+  | TACTICTRY TACTICAL              ( Tacticals.tactical_try TACTICAL )  
+ 
+  EXPRSN : CTXTT                    ( fn _ => Top.EvalCxt CTXTT ) 
+         | CAST                     ( fn _ => Top.Eval CAST )
+         | REDUCTION                ( fn _ => Top.EvalRed REDUCTION )
+         | DEQS                     ( fn _ => (Top.EvalDefn DEQS 
+	   			      	        handle Top.DefnError => defnerror()) )
+         | CMD                      ( CMD ) 
+         | NUMCMD                   ( NUMCMD )
+
+  DEQS   : APPLN DEQ CAST	    ( (APPLN, CAST) )
+
+         | APPLN CTXTT DEQ CAST     ( (APPLN, (Concrete.Ctxt_c (CTXTT,CAST))) )
+
+         | APPLN COLON APPLN DEQ CAST ( (APPLN, (Concrete.Cast_c (CAST,APPLN2))) )
+
+
+         | APPLN CTXTT COLON APPLN DEQ CAST ( (APPLN, (Concrete.Ctxt_c (CTXTT,
+	   	       	     	       	        Concrete.Cast_c (CAST,APPLN2)))) )
+
+  CMD : ECHO STRING                  ( fn _ => Printing.message ("-- "^STRING^" --") )
+      | LINE                         ( Printing.prnl )
+
+      | MAKE STRINGorID              ( fn _ => Modules.Make STRINGorID )
+      | LOAD STRINGorID              ( fn _ => Modules.Load STRINGorID )
+      | RELOAD STRINGorID
+	  ( fn _ => Modules.ReloadFrom STRINGorID STRINGorID )
+      | RELOAD STRINGorID FROM STRINGorID
+          ( fn _ => Modules.ReloadFrom STRINGorID1 STRINGorID2 )
+      | INCLUDE STRINGorID           ( fn _ => Modules.Include STRINGorID )
+
+      | CUT CUTCXT            	     ( fn _ => Discharge.Cut CUTCXT )
+
+(* *** ends session ??? *** *)
+      | EXPORTST STRINGorID   	     ( fn _ => (SMLofNJ.exportML STRINGorID; ()) ) 
+
+      | DISCHARGE ID          	     ( fn _ => Namespace.Discharge ID )
+      | DISCHARGEKEEP ID      	     ( fn _ => Namespace.DischargeKeep ID )
+
+      | STTHEORY ID           	     ( fn _ => Namespace.StartTheory ID )
+      | ENDTHEORY ID          	     ( fn _ => Namespace.EndTheory ID )
+      
+(* 2011-11-25 removed 9999 by changing RELGOAL *)
+      | INTROS RELGOAL INTROST	     ( fn _ => Toplevel.Intros true (RELGOAL ()) INTROST ) 
+      | iNTROS RELGOAL INTROST	     ( fn _ => Toplevel.Intros false (RELGOAL ()) INTROST )
+
+      | ASSUMPTION RELGOAL    	     ( fn _ => Toplevel.Assumption (RELGOAL()) )
+
+      | REFINE RELGOAL CAST          ( fn _ => Toplevel.Refine (RELGOAL ()) 0 CAST )
+      | REFINE RELGOAL CAST ELIM INT ( fn _ => Toplevel.Refine (RELGOAL ()) INT CAST )
+
+      | QREPL RELGOAL CAST           ( fn _ => Tactics.Qreplace (RELGOAL ()) CAST )
+
+      | INVERT RELGOAL CAST    	     ( fn _ => ConorTop.Invert (RELGOAL ()) CAST)
+
+      | EQUIV CAST                   ( fn _ => Top.Equiv CAST )
+      | EQUIV VREG CAST              ( fn _ => Top.V_Equiv CAST )
+      | EQUIV TREG CAST              ( fn _ => Top.T_Equiv CAST )
+
+      | CLAIM CAST                   ( fn _ => Toplevel.Claim CAST )
+
+      | QNIFY                  	     ( fn _ => ConorTop.Qnify true (~1) Concrete.Prop_c)
+      | QNIFY INT              	     ( fn _ => ConorTop.Qnify true INT Concrete.Prop_c)
+      | QNIFY CAST             	     ( fn _ => ConorTop.Qnify true 0 CAST)
+      | qNIFY                  	     ( fn _ => ConorTop.Qnify false (~1) Concrete.Prop_c)
+      | qNIFY INT              	     ( fn _ => ConorTop.Qnify false INT Concrete.Prop_c)
+      | qNIFY CAST             	     ( fn _ => ConorTop.Qnify false 0 CAST)
+
+      | PBP INT INTLIST		     ( fn _ => Pbp.pbptop INT INTLIST )
+      | PBPHYP ID INTLIST	     ( fn _ => Pbp.pbphyptop ID INTLIST )
+
+      | UTAC ID                	     ( fn _ => Tactics.ExecUserTac ID )
+
+      | INDUCTION CAST         	     ( fn _ => ConorTop.Induction CAST 0 )
+      | INDUCTION INT          	     ( fn _ => ConorTop.Induction Concrete.Prop_c INT )
+      | CONFIG EQUALITY ID ID ID     ( fn _ => ConorTop.ConfigEquality (ID1,ID2,ID3) )
+      | CONFIG QNIFY ID ID           ( fn _ => ConorTop.ConfigQnify (ID1,ID2,"") )
+      | CONFIG THEOREMS              ( fn _ => ConorTop.ConfigTheorems ("","","") )
+      | CONFIG THEOREMS ID ID ID     ( fn _ => ConorTop.ConfigTheorems (ID1,ID2,ID3) )
+
+      | CONFIG QREPL                 ( fn _ => Tactics.Config_Qrepl (Logic.Qstr,"",Logic.Qsym) )
+      | CONFIG QREPL ID ID ID        ( fn _ => Tactics.Config_Qrepl (ID1,ID2,ID3) )
+
+      | CONFIG SAVEUNFROZ            ( fn _ => Toplevel.ConfigSaveUnFroz() )
+      | CONFIG SAVEFROZEN            ( fn _ => Toplevel.ConfigSaveFroz() )
+      | GOAL ID COLON APPLN          ( fn _ => Toplevel.Goal APPLN (ID,Global) )
+      | GOAL APPLN                   ( fn _ => Toplevel.Goal APPLN ("",Global) ) 
+      | DOLLARGOAL ID COLON APPLN    ( fn _ => Toplevel.Goal APPLN (ID,Local) )
+      | DOLLARGOAL APPLN             ( fn _ => Toplevel.Goal APPLN ("",Local) ) 
+
+      | EXPAND INTLIST IDLST         ( fn _ => Top.Expand INTLIST IDLST )
+      | EXPAND INTLIST VREG IDLST    ( fn _ => Top.V_Expand INTLIST IDLST )
+      | EXPAND INTLIST TREG IDLST    ( fn _ => Top.T_Expand INTLIST IDLST )
+      | EXPALL INTLIST RELGOAL       ( fn _ => Top.ExpAll INTLIST (RELGOAL ()) )
+      | EXPALL INTLIST VREG INT      ( fn _ => Top.V_ExpAll INTLIST INT )
+      | EXPALL INTLIST TREG INT      ( fn _ => Top.T_ExpAll INTLIST INT )
+      | HNF INT                      ( fn _ => Top.Hnf INT )
+      | HNF                          ( fn _ => Top.Hnf 1 )
+      | HNF INT VREG                 ( fn _ => Top.V_Hnf INT )
+      | HNF VREG                     ( fn _ => Top.V_Hnf 1 )
+      | HNF INT TREG                 ( fn _ => Top.T_Hnf 1 )
+      | HNF TREG                     ( fn _ => Top.T_Hnf 1 )
+      | DNF                          ( fn _ => Top.Dnf() )
+      | DNF VREG                     ( fn _ => Top.V_Dnf() )
+      | DNF TREG                     ( fn _ => Top.T_Dnf() )
+
+      | INTERACTIVE                  ( fn _ => Annotate.Interactive() ) (* !!! *)
+
+      | NORMAL                       ( fn _ => Top.Normal () )
+      | NORMAL VREG                  ( fn _ => Top.V_Normal () )
+      | NORMAL TREG                  ( fn _ => Top.T_Normal () )
+
+      | NEXT RELGOAL                 ( fn _ => Toplevel.Next (RELGOAL ()) )
+      | SAVE THMID		     ( fn _ => Toplevel.SaveDefault (THMID, Global) )
+      | DOLLARSAVE THMID	     ( fn _ => Toplevel.SaveDefault (THMID, Local) )
+(*      | SAVE	   		     ( fn _ => Toplevel.SaveDefault ("", Global) ) *)
+(*      | DOLLARSAVE		     ( fn _ => Toplevel.SaveDefault ("", Local) ) *)
+
+      | SAVEUNFROZ THMID             ( fn _ => Toplevel.Save unf THMID )
+      | SAVEFROZEN THMID 	     ( fn _ => Toplevel.Save frz THMID )
+
+(*      | SAVEUNFROZ      	     ( fn _ => Namespace.Save "" UnfGlb ) *)
+(*      | SAVEFROZEN 		     ( fn _ => Namespace.Save "" FrzGlb ) *)
+
+      | IMMED                        ( Toplevel.Immed ) (* 2011: changed type *)
+
+      | FREEZE IDLST                 ( fn _ => (Namespace.Freeze IDLST;()) )
+      | UNFREEZE IDLST               ( fn _ => (Namespace.Unfreeze IDLST;()) )
+
+      | STARTTIMER                   ( Top.StartTimer )
+      | PRINTTIMER                   ( Top.PrintTimer )
+
+      | INIT ID                      ( fn _ => Init.Init_raw ID )
+
+      | CTXT                         ( fn _ => Pretty.prt_context 
+      				       	        (Namespace.getNamespace()) )
+      | CTXT INT                     ( fn _ => Pretty.prt_context_dpth INT
+      				       	        (Namespace.getNamespace()) )
+      | CTXT ID			     ( fn _ => Pretty.prt_context_nam ID
+      				       	        (Namespace.getNamespace()) )
+      | DECLS                 	     ( fn _ => Pretty.prt_decls 
+      				       	        (Namespace.getNamespace()) )
+      | DECLS INT                    ( fn _ => Pretty.prt_decls_dpth INT
+      				       	        (Namespace.getNamespace()) )
+      | DECLS ID                     ( fn _ => Pretty.prt_decls_nam ID
+      				       	        (Namespace.getNamespace()) )
+      | MARKS                        ( fn _ => Pretty.prt_marks
+      				       	        (Namespace.getNamespace()) )
+      | FORGET ID                    ( fn _ => Namespace.Forget ID )
+      | FORGETMARK ID                ( fn _ => Namespace.ForgetMrk ID )
+
+      | PRF                          ( Toplevel.PR )
+      | UNDO INT                     ( fn _ => Toplevel.Undo INT )
+      | UNDO 			     ( fn _ => Toplevel.Undo 1 ) (* new *)
+      | UNDOALL                      ( Toplevel.UndoAll )      	 (* new *)
+      | KILLREF                      ( Toplevel.KillRef )
+
+      | LABEL TAGBEGIN LABELTAG TAGEND ID    ( fn _ =>
+                                       QuarterMaster.Label LABELTAG ID )
+      | LABEL TAGBEGIN LABELTAG TAGEND       ( fn _ =>
+                                       QuarterMaster.Label LABELTAG "" )
+      | GENERATE TAGBEGIN LABELTAG TAGEND DEFN ( fn _ =>
+                                       QuarterMaster.Generate LABELTAG DEFN )
+      | GENERATE TAGBEGIN LABELTAG TAGEND    ( fn _ =>
+                                       QuarterMaster.GenerateProp LABELTAG )
+
+      | CONFIG PPOFF                 ( fn _ => Pretty.SetPrettyPrinting false )
+      | CONFIG PPON                  ( fn _ => Pretty.SetPrettyPrinting true )
+      | CONFIG ANNOTATEON            ( fn _ => Printing.SetAnnotating true)
+      | CONFIG ANNOTATEOFF           ( fn _ => Printing.SetAnnotating false)
+      | CONFIG PPLINEWIDTH INT	     ( fn _ => Pretty.SetLineWidth INT )
+
+      | CONFIG SAVEOBJECTSON         ( fn _ => ( Modules.SetSaveObjects true;
+				               	 Namespace.addConfigObjects() 
+						 ) 
+					)
+      | CONFIG SAVEOBJECTSOFF        ( fn _ => ( Modules.SetSaveObjects false;
+				             	 Namespace.addConfigNoObjects() 
+						 ) 
+					)
+      | CONFIG INFIX INFIX_UNREGD  
+           (fn _ => Namespace.addConfigInfixNAssoc(INFIX_UNREGD))	(* 2011 *)
+      | CONFIG INFIX INFIX_UNREGD ASSOC INT
+           (fn _ => Namespace.addConfigInfix(INFIX_UNREGD, ASSOC, INT)) (* 2011 *)
+
+      | PWD	       	     	     ( Top.PWD )
+      | CD STRING    		     ( fn _ => Top.CD STRING )
+
+(* *** where does this belong? functorised to simplify the grammar action *** *)
+
+      | LOGIC                        ( Logic.logic )
+
+(* ************************************************************************** *) 
+
+      | HELP                         ( Help.help )
+      | INDUCTIVE CTXTL INDOPT       ( fn _ => Top.inductive_datatype CTXTL INDOPT)
+      | RECORD CTXTL RECOPT          ( fn _ => Top.record_type CTXTL RECOPT)
+
+ASSOC: LEFT                  	     ( true )  (* 2011 was: (Infix.LAssoc) *)
+     | RIGHT                 	     ( false ) (* 2011 was: (Infix.RAssoc) *) 
+
+SHAREDOPT :                          ( Top.inductive_no_switches )
+        | INDOPT PARAMS CTXTL        ( Top.inductive_update_params CTXTL INDOPT )
+        | INDOPT TYPESTR CNSTR       ( Top.inductive_update_universe CNSTR INDOPT )
+        | INDOPT NOREDS              ( Top.inductive_update_noreds INDOPT )
+        | INDOPT DOUBLE              ( Top.inductive_update_double INDOPT )
+        | INDOPT UNSAFE              ( Top.inductive_update_unsafe INDOPT )
+        | INDOPT THEOREMS            ( Top.inductive_update_theorems INDOPT )
+        | INDOPT RELATION            ( Top.inductive_update_relation INDOPT )
+
+
+INDOPT  : SHAREDOPT                  ( SHAREDOPT )
+        | INDOPT CONSTRS CTXTLE      ( Top.inductive_update_constructors CTXTLE INDOPT )
+        | INDOPT INVERSION           ( Top.inductive_update_inversion INDOPT )
+
+        
+RECOPT  : SHAREDOPT		     ( SHAREDOPT )
+        | RECOPT FIELDS CTXTLE       ( Top.inductive_update_constructors CTXTLE RECOPT )
+
+  NUMCMD : NUMCMD0 RELGOAL           ( fn _ => NUMCMD0 (RELGOAL ()) )
+         | NUMCMD1 RELGOAL CAST      ( fn _ => NUMCMD1 (RELGOAL ()) CAST )
+        
+(* *** tactics only make sense if logic has been loaded *** *)
+
+  NUMCMD0 : ANDI                     ( Logic.AndIntro )
+          | ORIL                     ( Logic.OrIntroL )
+          | ORIR                     ( Logic.OrIntroR )
+          | NOTI                     ( Logic.NotIntro )
+          | IMPI                     ( Logic.AllIntro )
+          | ALLI                     ( Logic.AllIntro )
+(* new: tired of having to supply a witness, when one can be computed *)
+          | EXI                      ( fn n => (Logic.ExIntro n Concrete.NewVar_c) )
+        
+  NUMCMD1 : ANDE                     ( Logic.AndElim )
+          | ORE                      ( Logic.OrElim )
+          | NOTE                     ( Logic.NotElim )
+          | EXE                      ( Logic.ExElim )
+          | IMPE                     ( Logic.AllElim )
+          | ALLE                     ( Logic.AllElim )
+          | EXI                      ( Logic.ExIntro )
+        
+
+  CTXTTE :                           ( Concrete.nil_c )
+         | CTXTT                     ( CTXTT )
+  CTXTT : BIND CTXTTE                ( Concrete.cons_c BIND CTXTTE )
+
+  CTXTLE:                            ( Concrete.nil_c )
+        | CTXTL                      ( CTXTL )
+  CTXTL : DECL CTXTLE                ( Concrete.cons_c DECL CTXTLE )
+
+
+       
+  BIND : DECL                        ( DECL ) 
+       | DEFN                        ( DEFN )
+        
+(* added new constructors to Concrete 2009-12-05; changed types 2011-10-22,2011-11-29 *)
+
+  DECL : LSQBR DLSLBIND RSQBR        ( Concrete.mkLLda DLSLBIND )
+       | DOLLARSQ DLSLBIND RSQBR     ( Concrete.mkGLda DLSLBIND )
+       | LCBR DLSLBIND RCBR          ( Concrete.mkLPi  DLSLBIND )
+       | LPTBR DLSLBIND RPTBR        ( Concrete.mkLSig DLSLBIND )
+        
+  DEFN : LSQBR DNSLBIND RSQBR        ( Concrete.mkGDefn DNSLBIND )
+       | DOLLARSQ DNSLBIND RSQBR     ( Concrete.mkLDefn DNSLBIND )
+       | STARSQ DNSLBIND RSQBR       ( Concrete.mkFDefn DNSLBIND )
+
+(* ****************************************************************** *)
+
+CUTCXT : CUTDFN                      ( [CUTDFN] )
+       | CUTDFN CUTCXT               ( CUTDFN::CUTCXT )
+CUTDFN : LSQBR ID EQUAL CAST RSQBR   ( (ID,CAST) )
+
+REDUCTION : LSQBR CTXTT REDS RSQBR   ( Concrete.Red_c(CTXTT,REDS) )
+          | LSQBR CHOICE REDS RSQBR  ( Concrete.mkRed_c(Concrete.nil_c,REDS) )
+
+REDS      : RED                      ( [RED] )
+          | RED CHOICE REDS          ( RED::REDS )
+RED       : PAT CONTRACT APPLN       ( (PAT,APPLN) )
+
+CASEEXP  : CASE APPLN BRANCHES ENDCASE         ( Concrete.Case_c(APPLN,BRANCHES) )
+BRANCHES : BRANCH                              ( [BRANCH] )
+         | BRANCH BRANCHES                     ( BRANCH::BRANCHES )
+BRANCH   : CHOICE CTXTT SPAT CONTRACT APPLN    ( (CTXTT,SPAT,APPLN) )
+         | CHOICE SPAT CONTRACT APPLN          ( (Concrete.nil_c,SPAT,APPLN) )
+
+  CAST : APPLN                       ( APPLN ) 
+       | APPLN COLON APPLN           ( Concrete.Cast_c (APPLN1,APPLN2) )
+        
+  APPLN : CNSTR                      ( CNSTR )
+        | APPLN CNSTR     %prec app  ( Concrete.mkApp_c  (APPLN,CNSTR) )  
+        | APPLN BAR CNSTR            ( Concrete.mkAppForce_c (APPLN,CNSTR) ) 
+        | APPLN PCTPCT CNSTR         ( Concrete.mkAppNoShow_c (APPLN,CNSTR) )    
+        | APPLN INFIX_L1 APPLN       ( Concrete.mkInfixApp_c(INFIX_L1,APPLN1,APPLN2) )
+        | APPLN INFIX_L2 APPLN       ( Concrete.mkInfixApp_c(INFIX_L2,APPLN1,APPLN2) )
+        | APPLN INFIX_L3 APPLN       ( Concrete.mkInfixApp_c(INFIX_L3,APPLN1,APPLN2) )
+        | APPLN INFIX_L4 APPLN       ( Concrete.mkInfixApp_c(INFIX_L4,APPLN1,APPLN2) )
+        | APPLN INFIX_L5 APPLN       ( Concrete.mkInfixApp_c(INFIX_L5,APPLN1,APPLN2) )
+        | APPLN INFIX_L6 APPLN       ( Concrete.mkInfixApp_c(INFIX_L6,APPLN1,APPLN2) )
+        | APPLN INFIX_L7 APPLN       ( Concrete.mkInfixApp_c(INFIX_L7,APPLN1,APPLN2) )
+        | APPLN INFIX_L8 APPLN       ( Concrete.mkInfixApp_c(INFIX_L8,APPLN1,APPLN2) )
+        | APPLN INFIX_L9 APPLN       ( Concrete.mkInfixApp_c(INFIX_L9,APPLN1,APPLN2) )
+        | APPLN INFIX_R1 APPLN       ( Concrete.mkInfixApp_c(INFIX_R1,APPLN1,APPLN2) )
+        | APPLN INFIX_R2 APPLN       ( Concrete.mkInfixApp_c(INFIX_R2,APPLN1,APPLN2) )
+        | APPLN INFIX_R3 APPLN       ( Concrete.mkInfixApp_c(INFIX_R3,APPLN1,APPLN2) )
+        | APPLN INFIX_R4 APPLN       ( Concrete.mkInfixApp_c(INFIX_R4,APPLN1,APPLN2) )
+        | APPLN INFIX_R5 APPLN       ( Concrete.mkInfixApp_c(INFIX_R5,APPLN1,APPLN2) )
+        | APPLN INFIX_R6 APPLN       ( Concrete.mkInfixApp_c(INFIX_R6,APPLN1,APPLN2) )
+        | APPLN INFIX_R7 APPLN       ( Concrete.mkInfixApp_c(INFIX_R7,APPLN1,APPLN2) )
+        | APPLN INFIX_R8 APPLN       ( Concrete.mkInfixApp_c(INFIX_R8,APPLN1,APPLN2) )
+        | APPLN INFIX_R9 APPLN       ( Concrete.mkInfixApp_c(INFIX_R9,APPLN1,APPLN2) )
+        
+  CNSTR : SORT                       ( SORT )
+        | ID                         ( Concrete.mkRef_c ID )
+        | CNSTR ARROW APPLN          ( Concrete.mkArr_c (CNSTR,APPLN) )
+        | CNSTR HASH APPLN           ( Concrete.mkSig_c (CNSTR,APPLN) )
+        | CNSTR BACKSLASH APPLN	     ( Concrete.mkLda_c (CNSTR,APPLN) )
+        | BIND APPLN                 ( Concrete.Bind_c (BIND,APPLN) )
+	| TUPLE			     ( Concrete.mkTuple_c TUPLE )
+        | CNSTR DOT1                 ( Concrete.mkFst_c (CNSTR) )
+        | CNSTR DOT2                 ( Concrete.mkSnd_c (CNSTR) )
+        | CNSTR DOT CNSTR            ( Concrete.mkApp_c (CNSTR2,CNSTR1) )  
+        | CNSTR UPARR ID             ( Concrete.mkLabProj_c (ID,CNSTR) )
+  
+        | LRBR CAST RRBR             ( CAST ) 
+        | LRBR NORMAL CAST RRBR      ( Concrete.Normal_c CAST ) 
+        | LRBR NORMTYP CAST RRBR     ( Concrete.mkRedTyp_c(CAST) ) (* 2011: instrs *)
+        | LRBR HNF INT CAST RRBR     ( Concrete.Hnf_c (INT,CAST) ) 
+        | LRBR HNF CAST RRBR         ( Concrete.Hnf_c (1,CAST) ) 
+        | LRBR DNF CAST RRBR         ( Concrete.Dnf_c CAST ) 
+        | LRBR TYPEOF CAST RRBR      ( Concrete.TypeOf_c CAST )
+	| LRBR GEN ID CAST RRBR      ( Concrete.Gen_c (CAST,ID) )
+        | QM                         ( Concrete.NewVar_c )
+        | QM RELGOAL                 ( Concrete.Var_c (RELGOAL()) )
+        | CASEEXP                    ( CASEEXP )
+(* ! *) | TILDE CNSTR                ( Logic.negate_c CNSTR )
+(* ! * | TILDE CNSTR                ( Concrete.mkApp_c (Concrete.mkRef_c "not",CNSTR) *)
+        | TAGBEGIN MAGICTAG TAGEND   ( QuarterMaster.Make MAGICTAG )
+
+(* simple patterns for `Case' LHS *)
+SPAT : ID                            ( Concrete.mkRef_c ID )
+     | SPAT ID                       ( Concrete.mkApp_c (SPAT,Concrete.mkRef_c ID) )
+     | SPAT BAR ID                   ( Concrete.mkAppForce_c (SPAT,Concrete.mkRef_c ID) )
+     | SPAT SORT                     ( Concrete.mkApp_c (SPAT,SORT) )
+     | SPAT BAR SORT                 ( Concrete.mkAppForce_c (SPAT,SORT) )
+
+(* patterns for reduction LHS *)
+
+PPAT : ID                            ( Concrete.mkRef_c ID )
+     | LRBR PAT RRBR                 ( PAT )
+PAT  : PPAT                          ( PPAT )
+     | PAT PPAT                      ( Concrete.mkApp_c (PAT,PPAT) )
+     | PAT BAR PPAT                  ( Concrete.mkAppForce_c (PAT,PPAT) )
+     | PAT SORT                      ( Concrete.mkApp_c (PAT,SORT) )
+     | PAT BAR SORT                  ( Concrete.mkAppForce_c (PAT,SORT) )
+
+SORT    : PROP                       ( Concrete.Prop_c )
+        | THRY                       ( Concrete.Theory_c )
+        | TYPE 			     ( Concrete.mkType_c () )
+        | TYPE LRBR APPLN RRBR	     ( (Concrete.mkTypeNam_c APPLN)
+	       	    	  	       	 handle Concrete.TypeNamError c => raise Error.error
+			 		 	(Error.mkTYPEAPPLN (Engine.fEvalVal c)) )
+        | TYPE LRBR INT RRBR 	     ( Concrete.mkTypeAbs_c INT )	
+
+TUPLE	: LRBR TPL_BOD COLON APPLN RRBR	( (TPL_BOD,APPLN) )
+	| LRBR TPL_BOD RRBR		( (TPL_BOD,Concrete.Bot_c) )
+TPL_BOD	: APPLN COMMA APPLN		( [APPLN1,APPLN2] )
+	| APPLN COMMA TPL_BOD		( APPLN::TPL_BOD )
+        
+DLBIND   : IDLIST COLON APPLN           ( (Concrete.mkVis,IDLIST,APPLN) )
+         | IDLIST BAR APPLN             ( (Concrete.mkHid,IDLIST,APPLN) )
+         | IDLIST QM APPLN              ( (Concrete.mkQM,IDLIST,APPLN) )
+
+DLSLBIND : DLBIND                       ( (DLBIND,[]) )
+         | DLBIND SLASHS IDLST          ( (DLBIND,IDLST) )
+        
+DNBIND   : IDLIST EQUAL CAST            ( (IDLIST,CAST) )
+         | IDLIST CTXTT EQUAL CAST      ( (IDLIST,Concrete.Ctxt_c(CTXTT,CAST)) )
+         | IDLIST COLON APPLN EQUAL CAST
+                                        ( (IDLIST,Concrete.Cast_c(CAST,APPLN)) )
+         | IDLIST CTXTT COLON APPLN EQUAL CAST
+                                        ( (IDLIST,Concrete.Ctxt_c(CTXTT,
+							Concrete.Cast_c(CAST,APPLN))) )
+DNSLBIND : DNBIND                       ( (DNBIND,[]) )
+         | DNBIND SLASHS IDLST          ( (DNBIND,IDLST) )
+        
+  IDLIST : ANONID                    ( [ANONID] )
+         | IDLIST COMMA ANONID       ( IDLIST @ [ANONID] )
+        
+INTLIST : 			     ([])
+	| INTLIST INT		     (INTLIST @ [INT])
+
+  ANONID : ID                        ( ID ) 
+         | UNDERSCORE                ( "" )
+
+  THMID :                 	     ( "" )
+        | ID                         ( ID ) 
+
+        
+  INTROST : ANONID                   ( [ANONID] )
+          | HASH                     ( ["#"] )
+          | INTROST ANONID           ( INTROST @ [ANONID] )
+          | INTROST HASH             ( INTROST @ ["#"] )
+	  |                          ( [] )
+        
+  IDLST :                            ( [] )
+        | IDLST ID                   ( IDLST @ [ID] )
+
+  RELGOAL : 	                     ( Namespace.current_goal_index )
+          | INT                      ( fn _ => Namespace.abs_goal_index INT )
+          | RELINT                   ( fn _ => Namespace.rel_goal_index RELINT )
+
+STRINGorID : ID                      ( ID )
+           | STRING                  ( STRING )
+
+STRINGorIDLIST : STRINGorIDLIST STRINGorID ( STRINGorIDLIST @ [STRINGorID] )
+               |                           ( [] )
+
+LABELTAG : LABELTAG INT              ( LABELTAG @ [Int.toString INT] )
+         | LABELTAG STRINGorID       ( LABELTAG @ [STRINGorID] )
+         |                           ( [] )
+
+MAGICTAG : MAGICTAG CNSTR            ( MAGICTAG @ [CNSTR] )
+         | MAGICTAG INT              ( MAGICTAG @ [Concrete.mkRef_c (Int.toString INT)] )
+         | MAGICTAG STRING           ( MAGICTAG @ [Concrete.mkRef_c STRING] )
+         |                           ( [] )
+

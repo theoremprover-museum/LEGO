@@ -1,0 +1,2 @@
+Skeleton 5
+ae"FunModules"i7aä¢Term"gp1c"TERM"aä¢Context"gp1c"CONTEXT"Caä¢Top"gp1c"TOP"ad"Toplevel"gp1c"TOPLEVEL"aä¢Namespace"gp1c"NAMESPACE"aä¢Pretty"gp1c"PRETTY"f7d"OS"ÿ<Cä¢List"ÿ‚d"String"d"Utils"d"Printing"NNjh1bd2egp1ÿf1ÿ#f6d"IO"Cÿ‚!d"Time"d"TextIO"ÿ&d"Annotate"Ngp1c"MODULES"

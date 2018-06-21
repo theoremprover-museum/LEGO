@@ -1,0 +1,2 @@
+Skeleton 5
+d2ae"FunConcrete"i5Cáä¢Term"çğ±ã¢TERM"aä¢Context"gp1c"CONTEXT"aä¢Subst"gp1c"SUBST"aä¢UMopen"gp1c"UMOPEN"aä¢Toc"gp1c"TOC"Cad"Unif"gp1c"UNIF"aä¢ParTm"gp1c"PARTM"aä¢Pretty"gp1c"PRETTY"aä¢Machine"gp1c"MACHINE"f6ÿCÿ‚ ÿ‚ÿ?d"Printing"ÿ'NNjh1bd4egp2ä¢Utils"d"Except"egp2ÿƒ3d"ListUtil"egp2ÿƒ3d"StringUtil"egp1ÿf6ä¢Int"Cÿ)d"List"d"ListPair"ÿd"Universes"Cd"Infix"ÿƒ3ÿ‚6ÿ'd"Theories"Nçğ±ã¢CONCRETE"ae"FunConstructiveEngine"i4ÿaä¢Concrete"ÿ…:aä¢Namespace"gp1c"NAMESPACE"f5Cÿ„2ÿÿ†5ÿƒ3ÿ†&Njh0gp1c"CONSTRUCTIVEENGINE"

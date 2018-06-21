@@ -1,0 +1,2 @@
+Skeleton 5
+d3f1ä¢Utils"aã¢UMOPEN"è0ae"FunUMopen"i5Caä¢Term"gp1c"TERM"aä¢Subst"gp1c"SUBST"aä¢LegoFormat"gp1c"LEGOFORMAT"aä¢Pretty"gp1c"PRETTY"f3ÿ-ÿd"Printing"Njh2bd2egp1ÿ)f1ÿ;d3f5Cä¢Int"ä¢Bool"ä¢List"ÿ)ÿ-Cä¢ListPair"d"Array"ä¢Universes"ÿä¢Theories"Naä¢HashReds"jÿÿbd2egp2ÿd"Modif"f3ÿ‚*ÿ‚7ÿf7ÿ‚*ÿ‚0Cÿ‚7ÿƒÿƒÿƒ2ÿƒ%Nf2ÿƒ2ÿgp1ÿ

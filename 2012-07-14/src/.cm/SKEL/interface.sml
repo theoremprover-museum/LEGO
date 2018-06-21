@@ -1,0 +1,2 @@
+Skeleton 5
+d2aå¢FunInterface"i7aä¢Error"gp1c"ERROR"aä¢Modules"gp1c"MODULES"Caä¢PromptKnots"gp1c"CONORKNOTS"aä¢Pos"gp1c"POS"aä¢LegoParser"gp1c"PARSER"aä¢LegoTokens"gp1c"Lego_TOKENS"f4ä¢Utils"d"Annotate"d"Printing"ÿ)Njh1bd2egp2ÿ‚+d"Except"f4ÿ!ÿ1ÿ‚ÿf6d"IO"Cd"TextIO"d"General"ÿÿ‚+ÿ)Nh0ad"Interface"jh6aÿgp1ÿCaÿ)gp1ÿ)aÿgp1ÿaÿ!gp1ÿ!aÿ‚gp2d"LegoLrVals"d"Tokens"aÿ1gp1ÿ1Ngp1ÿ
