@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Quotient Types</TITLE>
+<META NAME="description" CONTENT="Quotient Types">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node62.html">
+<LINK REL="previous" HREF="node58.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node62.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html871"
+ HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html868"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html862"
+ HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html870"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html872"
+ HREF="node62.html">Relations</A>
+<B> Up:</B> <A NAME="tex2html869"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html863"
+ HREF="node60.html">Vector Basics</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000160000000000000000">
+Quotient Types</A>
+</H1>
+
+<P>
+The directory <TT>lib_quotient</TT> contains one file
+which defines a notion of quotient types.
+The file defines a new type operator <TT>QU</TT>
+which takes a type and a 
+relation and produces a new type representing the quotient of the old
+type by the relation. Elements of the quotient type
+are given by the operator <TT>QU_class</TT> which takes
+an element in the underlying type to one
+in the quotient, i.e. the equivalence class of the 
+element. The assumption <TT>QU_cor</TT> then 
+states that the equivalence classes of related
+elements are equal. The assumption
+<TT>QU_it</TT> restricts the function space on quotient
+types to only those functions which respect the
+relation used to form the quotient.
+Then <TT>QU_ind</TT> says that all elements of the
+quotient are the equivalence class of some element
+of the original type.
+The reduction rule allows function application
+to normalise as expected.
+These definitions allow one to reason with a
+non-substitutive equality as if it were
+substitutive. 
+
+<P>
+Only for the final theorem do we actually need
+to assume that the relation quotiented by is
+a equivalence. This theorem also requires
+the assumption of extensionality of propositions.
+
+<P>
+<PRE>
+ ** Module lib_quotient Imports lib_eq_basics
+ $ext_prop : {X,Y:Prop}(X-&gt;Y)-&gt;(Y-&gt;X)-&gt;Eq X Y
+ $QU : {A|Type(0)}(A-&gt;A-&gt;Prop)-&gt;Type(0)
+ $QU_class : {A|Type(0)}{R:A-&gt;A-&gt;Prop}A-&gt;QU R
+ $QU_cor :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}{a1,a2:A}(R a1 a2)-&gt;
+    Eq (QU_class R a1) (QU_class R a2)
+ $QU_it :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}{C|Type}{f:A-&gt;C}
+    ({a1,a2:A}(R a1 a2)-&gt;Eq (f a1) (f a2))-&gt;(QU R)-&gt;C
+ $QU_ind :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}{P:(QU R)-&gt;Prop}({a:A}P (QU_class R a))-&gt;
+    {q:QU R}P q
+[[A|Type(0)][R:A-&gt;A-&gt;Prop][C|Type][f:A-&gt;C]
+ [H:{a1,a2:A}(R a1 a2)-&gt;Eq (f a1) (f a2)][a:A]
+    QU_it R f H (QU_class R a)  ==&gt;  f a]
+
+  QU_xi = ... :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}{C|Type}{f,g:A-&gt;C}
+    {p:{a1,a2:A}(R a1 a2)-&gt;Eq (f a1) (f a2)}
+    {q:{a1,a2:A}(R a1 a2)-&gt;Eq (g a1) (g a2)}({a:A}Eq (f a) (g a))-&gt;
+    {x:QU R}Eq (QU_it R f p x) (QU_it R g q x)
+  QU_it_ind = ... :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}{C|Type}{P:C-&gt;Prop}{f:A-&gt;C}
+    {p:{a1,a2:A}(R a1 a2)-&gt;Eq (f a1) (f a2)}({a:A}P (f a))-&gt;{x:QU R}
+    P (QU_it R f p x)
+  QU_in_class = ... :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}(sym R)-&gt;(trans R)-&gt;A-&gt;(QU R)-&gt;Prop
+  QU_cor_inv = ... :
+    {A|Type(0)}{R:A-&gt;A-&gt;Prop}(refl R)-&gt;(sym R)-&gt;(trans R)-&gt;{a,b:A}
+    (Eq (QU_class R a) (QU_class R b))-&gt;R a b
+</PRE>
+<P>
+<HR>
+<!--Navigation Panel-->
+<A NAME="tex2html871"
+ HREF="node62.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html868"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html862"
+ HREF="node60.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html870"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html872"
+ HREF="node62.html">Relations</A>
+<B> Up:</B> <A NAME="tex2html869"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html863"
+ HREF="node60.html">Vector Basics</A>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

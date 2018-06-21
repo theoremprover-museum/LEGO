@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Martin-L&#246;f's Inductive Equality</TITLE>
+<META NAME="description" CONTENT="Martin-L&#246;f's Inductive Equality">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html338" HREF="node13.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html336" HREF="node9.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html330" HREF="node11.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html340" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html339" HREF="node13.html">Altenkirch-Streicher Elimination Rule</A>
+<B>Up:</B> <A NAME="tex2html337" HREF="node9.html">Equality</A>
+<B> Previous:</B> <A NAME="tex2html331" HREF="node11.html">Paulin-Mohring's Inductive Equality</A>
+<BR> <P>
+<H3><A NAME="SECTION00062300000000000000">Martin-L&#246;f's Inductive Equality</A></H3>
+<P>
+<A NAME="lib_ML_eq">&#160;</A>
+<P>
+This library file gives the definition and rules for Martin-L&#246;f's
+inductive equality.  We cannot use LEGO's inductive type mechanism for
+this definition because the type of the constructor Eqr does not
+conform to Luo's schema for inductive types, so the definition is done
+by hand.  Loading this file causes the LEGO tactic <TT>Qrepl</TT> to be
+configured for this inductive equality.
+<P>
+<PRE>     ** Mark &quot;lib_ML_eq&quot; **
+
+Eq : {t|SET}t-&gt;t-&gt;Prop
+Eqr : {t|SET}{x:t}Eq x x
+Eq_elim : {t|SET}{P:{x,y:t}(Eq x y)-&gt;TYPE}
+     ({x:t}P x x (Eqr x))-&gt;{x,y:t}{p:Eq x y}P x y p
+Eq_refl = ... : {t|SET}refl (Eq|t)
+Eq_subst = ... : {t|SET}{m,n|t}(Eq m n)-&gt;{P:t-&gt;TYPE_minus1}(P m)-&gt;P n
+Eq_sym = ... : {t|SET}sym (Eq|t)
+Eq_trans = ... : {t|SET}trans (Eq|t)
+Eq_resp = ... : {A,B|SET}{f:A-&gt;B}respect f Eq
+Eq_resp2 = ... : {A,B,C|SET}{r:A-&gt;B-&gt;C}respect2 r Eq</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

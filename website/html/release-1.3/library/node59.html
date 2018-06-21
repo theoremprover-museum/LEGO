@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Vector Definitions</TITLE>
+<META NAME="description" CONTENT="Vector Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node60.html">
+<LINK REL="previous" HREF="node58.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node60.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html851"
+ HREF="node60.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html848"
+ HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html842"
+ HREF="node58.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html850"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html852"
+ HREF="node60.html">Vector Basics</A>
+<B> Up:</B> <A NAME="tex2html849"
+ HREF="node58.html">Vectors</A>
+<B> Previous:</B> <A NAME="tex2html843"
+ HREF="node58.html">Vectors</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000151000000000000000">
+Vector Definitions</A>
+</H2>
+
+<P>
+Vectors are another datatype parameterised
+over <TT>nat</TT> but this time <TT>vect n</TT> is the
+collection of lists of length <TT>n</TT>. With this datatype
+we can define the (family of) total functions ``nth''
+for any natural number <I>n</I> which take an element of
+the finite set 
+<!-- MATH: $\{0,\ldots,n-1\}$ -->
+<IMG
+ WIDTH="122" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$\{0,\ldots,n-1\}$">
+and a list of length
+<I>n</I> and returns the appropriate element of the list.
+In this file we prove that the ``nth'' function defined
+here is equivalent (modulo the appropriate conversions)
+to the ``nth'' function in the list library.
+
+<P>
+<PRE>
+ ** Module lib_vectors Imports lib_finite lib_list_length
+ $vect : (Type)-&gt;nat-&gt;Type(vect)
+ $vnil : {A:Type}vect A zero
+ $vcons : {A:Type}A-&gt;{n|nat}(vect A n)-&gt;vect A (suc n)
+ $vect_elim :
+    {A:Type}{C_vect:{n|nat}(vect A n)-&gt;Type}(C_vect (vnil A))-&gt;
+    ({a:A}{n|nat}{v:vect A n}(C_vect v)-&gt;C_vect (vcons A a v))-&gt;{n|nat}
+    {z:vect A n}C_vect z
+[[A:Type][C_vect:{n|nat}(vect A n)-&gt;Type][f_vnil:C_vect (vnil A)]
+ [f_vcons:{a:A}{n|nat}{v:vect A n}(C_vect v)-&gt;C_vect (vcons A a v)][a:A]
+ [n|nat][v:vect A n]
+    vect_elim A C_vect f_vnil f_vcons (vnil A)  ==&gt;  f_vnil
+ || vect_elim A C_vect f_vnil f_vcons (vcons A a v)  ==&gt;
+    f_vcons a v (vect_elim A C_vect f_vnil f_vcons v)]
+
+  vect_elim_ne = ... :
+    {A:Type}{C:{n|nat}(vect A (suc n))-&gt;Type}
+    ({a:A}{n|nat}{v:vect A n}C (vcons A a v))-&gt;{n|nat}{v:vect A (suc n)}
+    C v
+  vect_elim'_lemma = ... :
+    {A:Type}{n:nat}{m:vect A (suc n)}{P:(vect A (suc n))-&gt;Type}
+    ({a:A}{m'6:vect A n}P (vcons A a m'6))-&gt;P m
+  vect_rec = ... :
+    {A:Type}{C|Type}C-&gt;(A-&gt;{n|nat}(vect A n)-&gt;C-&gt;C)-&gt;{n|nat}(vect A n)-&gt;
+    C
+  vect_iter = ... :
+    {A:Type}{C|Type}C-&gt;(nat-&gt;A-&gt;C-&gt;C)-&gt;{n|nat}(vect A n)-&gt;C
+  vect_ind = ... :
+    {A:Type}{P:{n:nat}(vect A n)-&gt;Prop}(P (vnil A))-&gt;
+    ({a:A}{n|nat}{v:vect A n}(P v)-&gt;P (vcons A a v))-&gt;{n|nat}
+    {z:vect A n}P z
+  vnil_lemma = ... :
+    {A:Type}{n:nat}{v:vect A n}
+    nat_elim|([x:nat](vect A x)-&gt;Prop)
+     ([v'4:vect A zero]Eq v'4 (vnil A))
+     ([x:nat][_:(vect A x)-&gt;Prop][_:vect A (suc x)]trueProp) n v
+  vect_zero_eq_vnil = ... : {A:Type}{v:vect A zero}Eq v (vnil A)
+  vect_head = ... : {A:Type}{n|nat}(vect A (suc n))-&gt;A
+  vect_tail = ... : {A:Type}{n|nat}(vect A (suc n))-&gt;vect A n
+  cons_inj_lemma1 = ... :
+    {A:Type}{a,b:A}{n:nat}{v:vect A n}(Eq (vcons A a v) (vcons A b v))-&gt;
+    Eq a b
+  cons_inj_lemma2 = ... :
+    {A:Type}{a:A}{n:nat}{v,w:vect A n}(Eq (vcons A a v) (vcons A a w))-&gt;
+    Eq v w
+  vect_head_cons_tail = ... :
+    {A:Type}{n|nat}{v:vect A (suc n)}
+    Eq (vcons A (vect_head A v) (vect_tail A v)) v
+  vect_nth = ... : {A:Type}{n|nat}(fin n)-&gt;(vect A n)-&gt;A
+  vect_update = ... : {A:Type}{n|nat}(fin n)-&gt;(vect A n)-&gt;A-&gt;vect A n
+  vect_character = ... :
+    {A:Type}
+    [vect_character_rhs=nat_elim ([n:nat](vect A n)-&gt;vect A n)
+                         ([_:vect A zero]vnil A)
+                         ([x1:nat][_:(vect A x1)-&gt;vect A x1]
+                          [v:vect A (suc x1)]
+                          vcons A (vect_head A v) (vect_tail A v))]
+    {n|nat}{v:vect A n}Eq v (vect_character_rhs n v)
+  vect_zip = ... :
+    {A:Type}{n:nat}(A-&gt;A-&gt;A)-&gt;(vect A n)-&gt;(vect A n)-&gt;vect A n
+  vector_to_list = ... : {A:Type}{n|nat}(vect A n)-&gt;list A
+  vector_to_list_resp_cons = ... :
+    {A:Type}{n|nat}{v:vect A n}{a:A}
+    Eq (cons|A a (vector_to_list A v)) (vector_to_list A (vcons A a v))
+  vect_nth_equiv_nth = ... :
+    {A:Type}{n|nat}{x:fin n}{v:vect A n}{a:A}
+    Eq (vect_nth A x v) (nth (fin_to_nat x) (vector_to_list A v) a)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

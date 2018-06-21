@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>List Definitions</TITLE>
+<META NAME="description" CONTENT="List Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node46.html">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node46.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html694"
+ HREF="node46.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html691"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html685"
+ HREF="node44.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html693"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html695"
+ HREF="node46.html">List Basics</A>
+<B> Up:</B> <A NAME="tex2html692"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html686"
+ HREF="node44.html">List</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000131000000000000000">
+List Definitions</A>
+</H2>
+<P>
+The basic file contains the definition of list and the
+usual elimination, reduction, iteration and double
+elimination rules plus the characterisation theorems.
+<P>
+Older versions of the library have the element type parameter explicit
+throughout, but with the cons constructor named <TT>cons1</TT>, and <TT>
+  cons</TT> with implicit parameter defined subsequently. The use of
+conditional visibility enables the desired effect to be achieved
+directly, so that the parameter is explicit for <TT>list</TT> and <TT>
+  nil</TT>, but implicit for <TT>cons</TT> and <TT>list_elim</TT>. <TT>cons1</TT>
+is defined in attempt to alleviate some backwards compatibility
+problems, however, the change in parameter visibility for <TT>list_elim</TT>
+may necessitate some small adjustments in proof scripts.
+<P><PRE>
+ ** Module lib_list Imports lib_eq_basics
+ $list : (Type)-&gt;Type(list)
+ $nil : {t:Type}list t
+ $cons : {t|Type}t-&gt;(list t)-&gt;list t
+ $list_elim :
+    {t|Type}{C_list:(list t)-&gt;Type}(C_list (nil t))-&gt;
+    ({x1:t}{x2:list t}(C_list x2)-&gt;C_list (cons x1 x2))-&gt;{z:list t}
+    C_list z
+ ** Label (!list!) list
+ ** Label (!list elim!) list_elim
+ ** Label (!list nil!) nil
+ ** Label (!list cons!) cons
+[[t|Type][C_list:(list t)-&gt;Type][f_nil:C_list (nil t)]
+ [f_cons:{x1:t}{x2:list t}(C_list x2)-&gt;C_list (cons x1 x2)][x1:t]
+ [x2:list t]
+    list_elim C_list f_nil f_cons (nil t)  ==&gt;  f_nil
+ || list_elim C_list f_nil f_cons (cons x1 x2)  ==&gt;
+    f_cons x1 x2 (list_elim C_list f_nil f_cons x2)]
+
+  cons1 = ... : {t:Type}t-&gt;(list t)-&gt;list t
+  list_rec = ... : {s|Type}{t|Type}t-&gt;(s-&gt;(list s)-&gt;t-&gt;t)-&gt;(list s)-&gt;t
+  list_iter = ... : {s|Type}{t|Type}t-&gt;(s-&gt;t-&gt;t)-&gt;(list s)-&gt;t
+  list_ind = ... :
+    {s|Type}{P:(list s)-&gt;Prop}(P (nil s))-&gt;
+    ({x:s}{l:list s}(P l)-&gt;P (cons x l))-&gt;{l:list s}P l
+  list_double_elim = ... :
+    {s|Type}{T:(list s)-&gt;(list s)-&gt;Type}(T (nil s) (nil s))-&gt;
+    ({x:s}{l:list s}(T (nil s) l)-&gt;T (nil s) (cons x l))-&gt;
+    ({x:s}{l:list s}({l':list s}T l l')-&gt;T (cons x l) (nil s))-&gt;
+    ({x:s}{l:list s}({l':list s}T l l')-&gt;{y:s}{l':list s}
+     (T (cons x l) l')-&gt;T (cons x l) (cons y l'))-&gt;{l,l':list s}T l l'
+  is_nil = ... : {t|Type}(list t)-&gt;Prop
+  is_cons = ... : {t|Type}(list t)-&gt;Prop
+  nil_or_cons = ... : {t|Type}{l:list t}(is_nil l \/ is_cons l)
+  nil_not_cons = ... :
+    {t|Type}{l:list t}{x:t}not (Eq (nil t) (cons x l))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

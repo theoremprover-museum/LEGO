@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!-- Time-stamp: "24 Oct 98 tms /home/lego/pub/html/release-1.3/knownbugs.html" -->
+<html>
+  <head>
+    <title>Lego Version 1.3: Known Bugs</title>
+  </head>
+
+  <body>  <P>
+<!--  <HR>  -->
+<!-- <A HREF="refcard.ps.gz"> -->
+<!-- <IMG ALIGN=MIDDLE -->
+<!-- SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A>  -->
+
+<!-- <A HREF="index.html">  -->
+<!-- <IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> -->
+
+<!-- <A HREF="knownbugs.html"> -->
+<!-- <IMG ALIGN=MIDDLE -->
+<!-- SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> -->
+
+<!-- <A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A> -->
+<!--  <BR> -->
+
+<!-- <B> Next:</B> <A  HREF="refcard.ps.gz">Reference Card</A> -->
+<!-- <B> Up:</B> <A  HREF="index.html0">LEGO 1.3 System and Documentation </A> -->
+<!-- <B> Previous:</B> <A HREF="knownbugs.html">Known Bugs </A> -->
+<!-- <HR> -->
+      
+      <h1>LEGO Version 1.3: Known Bugs</h1>
+      
+      Please let us know if you come across any bugs in the current
+      release. We are aware of the following problems:
+      <dl>
+	<!-- one of (dt dd) -->
+	<dt>Cd</dt>
+	<dd>Under Linux, the command <tt>Cd</tt> always complains
+	about an uncaught exception, despite actually changing the
+	directory. [This will be fixed in the version 1.3.1.]</dd>
+
+<dt>Double</dt>
+        <dd>The computation of double elimination rules uses named variables.
+        If an inductive definition uses a name twice or a name
+        used by the system, the clash may cause an error. Workaround: do not
+        duplicate names and never call anything "z".</dd>
+
+      <dt>Expansion</dt>
+	<dd>The command <tt>ExpAll</tt> no longer works.</dd>
+	<dt>Freezing</dt>
+	<dd>Freezing terms while constructing a proof may lead to
+	problems in building the internal partial proof tree and LEGO
+	  fails with <tt>*tocAppErr*</tt>.</dd>
+	<dt>Pwd</dt>
+	<dd>under Linux does not work.</dd>
+
+<dt>Induction</dt>
+        <dd>Induction currently fails for some parameterised families of
+        inductive types (eg lists). [This will be fixed in the version 1.3.1.]
+        </dd>
+
+<dt>Local Definitions, Reductions and Discharge</dt>
+        <dd>Reduction rules containing local definitions are rejected by
+        the reduction compiler. A valid reduction rule which refers to a
+        locally defined variable will become invalid when that variable
+        is discharged.</dd>
+
+<dt>Qnify</dt>
+        <dd>Qnify sometimes does not perform all the reduction it should,
+        hence ignoring equations it is intended to process. [This will be
+        fixed in the version 1.3.1.]</dd>
+
+<dt>Reduction Rules</dt>
+	<dd>Implicit arguments in constructors which cannot actually be
+        inferred from
+	later arguments may lead to illegal reduction rules, thus
+	corrupting the object file. In addition, certain kinds
+        of legitimate reduction rules may be incorrectly parsed
+        on reloading: to work around this, add more brackets by hand.</dd>
+
+      </dl>
+
+      <hr>
+      <address><a href="mailto:lego@dcs.ed.ac.uk">LEGO Team</a></address>
+<!-- Created: Thu Feb 13 10:54:23 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: Sat Oct 24 12:52:25 BST 1998
+<!-- hhmts end -->
+  </body>
+</html>

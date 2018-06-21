@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The correctness proof</TITLE>
+<META NAME="description" CONTENT="The correctness proof">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1142" HREF="node83.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1140" HREF="node80.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1136" HREF="node81.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1144" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1143" HREF="node83.html">Pure Martin L&#246;f type </A>
+<B>Up:</B> <A NAME="tex2html1141" HREF="node80.html">Example</A>
+<B> Previous:</B> <A NAME="tex2html1137" HREF="node81.html">The marker phase of </A>
+<BR> <P>
+<H3><A NAME="SECTION000225200000000000000">The correctness proof</A></H3>
+<P>
+We say that a link is <TT>OK</TT> if it is not linking a black node to a white
+node. 
+The predicate <TT>lt_n <I>x</I> <I>y</I></TT> says that <I>x</I> is less than <I>y</I>, and
+<I>y</I> is not bigger than <I>n</I>.
+<P>
+To propagate the colouring the memory is scanned according to a
+bounded version <code>lt_pair</code> of the usual lexicographic order on
+pairs.
+<P>
+The predicate <code>OK_upto</code> expresses the fact that the pairs
+already scanned are <TT>OK</TT>.
+<P>
+At every stage during the scanning of the memory either a black to
+white link was found and the flag <TT>changed</TT> was set to <TT>
+true</TT> or all links were <TT>OK</TT>.
+<P>
+The idea of the marking phase is that the collector keeps scanning the
+memory until every link is <TT>OK</TT>, in other words, while <TT>changed</TT> is <TT>
+true</TT> the collector keeps propagating the colouring.
+<P>
+The invariant of such while loop says that every link is <TT>OK</TT> or there
+has been a change. From the definition of <code>lt_pair</code> it follows
+that every pair (<I>i</I>,<I>j</I>) is less than (<I>n</I>,0). Then we can express our
+invariant as <TT>CHOK</TT> <I>n</I> 0.
+<P>
+<PRE> ** Module verify Imports lib_hoare lib_nat_rels mark 
+  Ok = ... : (nat-&gt;nat-&gt;bool)-&gt;(nat-&gt;bool)-&gt;nat-&gt;nat-&gt;Prop
+  lt_n = ... : nat-&gt;nat-&gt;Prop
+  lt_pair = ... : (nat#nat)-&gt;(nat#nat)-&gt;Prop
+  OK_upto = ... : (nat-&gt;nat-&gt;bool)-&gt;(nat-&gt;bool)-&gt;nat-&gt;nat-&gt;Prop
+  CHOK = ... : (nat-&gt;nat-&gt;bool)-&gt;(nat-&gt;bool)-&gt;bool-&gt;nat-&gt;nat-&gt;Prop
+  iSigma : E
+  mark_phase = ... :
+    HD ([_:E]trueProp) mark
+       ([sigma:E]CHOK is_linked (sigma a) (sigma changed) n zero)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

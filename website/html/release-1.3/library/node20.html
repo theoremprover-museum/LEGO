@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Boolean Functions</TITLE>
+<META NAME="description" CONTENT="Boolean Functions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node21.html">
+<LINK REL="previous" HREF="node19.html">
+<LINK REL="up" HREF="node18.html">
+<LINK REL="next" HREF="node21.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html393"
+ HREF="node21.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html390"
+ HREF="node18.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html384"
+ HREF="node19.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html392"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html394"
+ HREF="node21.html">Boolean Theorems</A>
+<B> Up:</B> <A NAME="tex2html391"
+ HREF="node18.html">The Booleans</A>
+<B> Previous:</B> <A NAME="tex2html385"
+ HREF="node19.html">Boolean Definition</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00082000000000000000">
+Boolean Functions</A>
+</H2>
+
+<P>
+The file of boolean functions defines the boolean counterparts
+to the usual propositional connectives, if, and, or, implies etc.
+We also define the boolean-valued equality function on booleans.
+
+<P>
+<PRE>
+ ** Module lib_bool_funs Imports lib_bool
+  if = ... : {t|Type}bool-&gt;t-&gt;t-&gt;t
+  andalso = ... : bool-&gt;bool-&gt;bool
+  orelse = ... : bool-&gt;bool-&gt;bool
+  inv = ... : bool-&gt;bool
+  implies = ... : bool-&gt;bool-&gt;bool
+  bool_eq = ... : bool-&gt;bool-&gt;bool
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

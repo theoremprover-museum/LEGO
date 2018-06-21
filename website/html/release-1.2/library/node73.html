@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Imperative programs</TITLE>
+<META NAME="description" CONTENT="Imperative programs">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1036" HREF="node74.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1034" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1028" HREF="node72.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1038" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1037" HREF="node74.html">Locations</A>
+<B>Up:</B> <A NAME="tex2html1035" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html1029" HREF="node72.html">Specification and development of </A>
+<BR> <P>
+<H1><A NAME="SECTION000220000000000000000">Imperative programs</A></H1>
+<P>
+<A NAME="secimperative">&#160;</A>
+<P>
+This section provides work of <A NAME="tex2html6" HREF="http://www.dcs.ed.ac.uk/generated/infopages/tms.html">Thomas
+  Schreiber</A> to
+develop imperative programs in L<font size=-1><small>EGO</small></font>. Type theory tends itself
+naturally to proofs of functional programs, but since in practice most
+programs are imperative it is worthwhile to explore applications to
+imperative programs. We do this using Hoare logic. A difficulty is
+that type theory usually only allows definition of total functions,
+using a primitive recursion rather than general recursion, the
+motivation being to ensure that proofs are represented by total
+functions rather than partial ones. Thus the obvious technique,
+writing a denotation function for the imperative programs, does not
+work because <TT>while</TT> statements may not terminate. The choice we make
+is to represent expressions (which always terminate) by their
+denotations, and represent programs, which may not, by a data type.
+<P>
+As an example we take a fragment from a garbage collection algorithm
+on which <A NAME="tex2html7" HREF="http://www.dcs.ed.ac.uk/generated/infopages/rb.html">Rod
+Burstall</A>,
+Adriana Comagnoni and <A NAME="tex2html8" HREF="http://www.dcs.ed.ac.uk/generated/infopages/tms.html">Thomas
+  Schreiber</A> have been working as part of a collaboration with
+<I>Harlequin Ltd.</I>, who write L<font size=-1><small>ISP</small></font> compilers amongst
+other products. It is a couple of loops which update an array as one
+scan of the marking phase.
+<P>
+<BR> <HR>
+<UL> 
+<LI> <A NAME="tex2html1039" HREF="node74.html#SECTION000221000000000000000">Locations</A>
+<UL> 
+<LI> <A NAME="tex2html1040" HREF="node75.html#SECTION000221100000000000000">Basic defintion of locations</A>
+<LI> <A NAME="tex2html1041" HREF="node76.html#SECTION000221200000000000000">Updating</A>
+</UL> 
+<LI> <A NAME="tex2html1042" HREF="node77.html#SECTION000222000000000000000">An imperative programming language</A>
+<LI> <A NAME="tex2html1043" HREF="node78.html#SECTION000223000000000000000">Hoare logic</A>
+<LI> <A NAME="tex2html1044" HREF="node79.html#SECTION000224000000000000000">Hoare logic: Inversion</A>
+<LI> <A NAME="tex2html1045" HREF="node80.html#SECTION000225000000000000000">Example</A>
+<UL> 
+<LI> <A NAME="tex2html1046" HREF="node81.html#SECTION000225100000000000000">The marker phase of a garbage collection algorithm</A>
+<LI> <A NAME="tex2html1047" HREF="node82.html#SECTION000225200000000000000">The correctness proof</A>
+</UL>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

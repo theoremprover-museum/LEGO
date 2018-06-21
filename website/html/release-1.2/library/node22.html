@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Sum Types</TITLE>
+<META NAME="description" CONTENT="Sum Types">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html445" HREF="node23.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html443" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html437" HREF="node21.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html447" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html446" HREF="node23.html">Inductive Sigma</A>
+<B>Up:</B> <A NAME="tex2html444" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html438" HREF="node21.html">Product Types</A>
+<BR> <P>
+<H1><A NAME="SECTION000110000000000000000">Sum Types</A></H1>
+<P>
+In the directory <TT>lib_sum</TT> there is a single file
+defining the sum type with constructors <TT>in1</TT> and <TT>in2</TT>.
+Also defined is the case function (essentially
+the iterator for sum).
+<P>
+<PRE> ** Module lib_sum Imports lib_eq_basics
+ $sum : (Type)-&gt;(Type)-&gt;Type(sum)
+ $in1_exp : {A:Type}{B:Type}A-&gt;sum A B
+ $in2_exp : {A:Type}{B:Type}B-&gt;sum A B
+ $sum_elim :
+    {A:Type}{B:Type}{C_sum:(sum A B)-&gt;Type}
+    ({x2:A}C_sum (in1_exp A B x2))-&gt;({x1:B}C_sum (in2_exp A B x1))-&gt;
+    {z:sum A B}C_sum z
+[[A:Type][B:Type][C_sum:(sum A B)-&gt;Type]
+ [f_in1_exp:{x2:A}C_sum (in1_exp A B x2)]
+ [f_in2_exp:{x1:B}C_sum (in2_exp A B x1)][x2:A][x1:B]
+    sum_elim A B C_sum f_in1_exp f_in2_exp (in1_exp A B x2)  ==&gt;
+    f_in1_exp x2
+ || sum_elim A B C_sum f_in1_exp f_in2_exp (in2_exp A B x1)  ==&gt;
+    f_in2_exp x1]
+
+  in1 = ... : {s|Type}{t|Type}s-&gt;sum s t
+  in2 = ... : {s|Type}{t|Type}t-&gt;sum s t
+  case = ... : {s|Type}{t|Type}{u|Type}(s-&gt;u)-&gt;(t-&gt;u)-&gt;(sum s t)-&gt;u
+  sum_ind = ... :
+    {s|Type}{t|Type}{P:(sum s t)-&gt;Prop}({x:s}P (in1 x))-&gt;
+    ({y:t}P (in2 y))-&gt;{z:sum s t}P z
+  is_in1 = ... : {s|Type}{t|Type}(sum s t)-&gt;Prop
+  is_in2 = ... : {s|Type}{t|Type}(sum s t)-&gt;Prop
+  in1_or_in2 = ... : {s|Type}{t|Type}{x:sum s t}or (is_in1 x) (is_in2 x)
+  in1_not_in2 = ... : {s|Type}{t|Type}{x|s}not (is_in2 (in1|s|t x))
+  in2_not_in1 = ... : {s|Type}{t|Type}{x|t}not (is_in1 (in2|s|t x))
+  in1_inj = ... :
+    {s|Type}{t|Type}{x,y:s}(Eq (in1|s|t x) (in1|s|t y))-&gt;Eq x y
+  in2_inj = ... :
+    {s|Type}{t|Type}{x,y:t}(Eq (in2|s|t x) (in2|s|t y))-&gt;Eq x y</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

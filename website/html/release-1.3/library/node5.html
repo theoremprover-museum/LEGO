@@ -1,0 +1,72 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Equality</TITLE>
+<META NAME="description" CONTENT="Equality">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="previous" HREF="node4.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node6.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html216"
+ HREF="node6.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html213"
+ HREF="node3.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html209"
+ HREF="node4.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html215"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html217"
+ HREF="node6.html">Conventions</A>
+<B> Up:</B> <A NAME="tex2html214"
+ HREF="node3.html">Customising the Library</A>
+<B> Previous:</B> <A NAME="tex2html210"
+ HREF="node4.html">Universes</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00032000000000000000">
+Equality</A>
+</H2>
+
+<P>
+By default, the library provides Martin-L&#246;f equality. Users who
+wish to work with a different notion of equality need to implement
+their own version of the module <TT>lib_eq</TT> and ensure that the
+<TT>LEGOPATH</TT> respects their choice . Provided this
+exports a relation <TT>Eq</TT>, a proof of its reflexivity and
+substitutivity <TT>Eq_refl</TT>, <TT>Eq_subst</TT>, the module
+<TT>lib_eq_basics</TT> will generate some theorems and configures
+the commands <TT>Qrepl</TT>, <TT>Induction</TT>, <TT>Qnify</TT> and
+the switch <TT>Theorems</TT>.
+
+<P>
+For convenience, a definition of Leibniz equality can be copied from
+the module <TT>lib_eq_leibniz</TT> and Christine Paulin-Mohring's
+inductive equality from <TT>lib_eq_inductive</TT>.
+
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

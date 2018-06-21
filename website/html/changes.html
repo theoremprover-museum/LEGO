@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>Recent changes ( 9-Oct-1995)</TITLE>
+<!-- Created by: Thomas Schreiber, 15-Feb-1995 -->
+<!-- Changed by: Chris Owens, 23-Feb-1995 -->
+<!-- Changed by: Thomas Schreiber,  9-Oct-1995 -->
+<!-- $Id: changes.html,v 1.2 1995/02/24 20:40:23 cao Exp tms $ -->
+
+
+</HEAD>
+<BODY><P>
+ <HR> 
+<A HREF="papers.html">
+<IMG ALIGN=MIDDLE SRC="www/icons/next_motif.gif"></A> 
+<A HREF="../index.html"> <A HREF="release.html"> <IMG ALIGN=MIDDLE SRC="www/icons/up_motif.gif"></A>
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="www/icons/contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A  HREF="papers.html">More literature about LEGO</A>
+<B> Up:</B> <A  HREF="release.html">LEGO system and documentation</A>
+<HR> <P>
+<P>
+<H1>Recent changes</H1>
+
+<ul>
+  <li> LEGO now supports <a href="#smallsigma"><STRONG>small impredicative <IMG ALIGN=BOTTOM ALT="Sigma" SRC="Sigma.xbm">-types</STRONG></a>.
+
+       
+  <li> The syntax for <STRONG><a href="#recsyntax">records</a></STRONG> has changed.
+</ul>
+
+<p>
+<hr>
+<p>
+<ul>
+<li> <a name="smallsigma">16 February 1995</a>
+     <A HREF="http://www.informatik.uni-muenchen.de/lmu/info/pst/personen/reus/reus.html">Bernhard Reus</A> &amp; <A
+HREF="http://www.dcs.ed.ac.uk/home/tms/">Thomas Schreiber</A><P>
+LEGO now supports <a name="small impred"><STRONG>small impredicative <IMG ALIGN=BOTTOM ALT="Sigma" SRC="Sigma.xbm">-types</STRONG></a>. To enable the alternative formation rule for small <IMG ALIGN=BOTTOM ALT="Sigma" SRC="Sigma.xbm">-types  <P> <IMG ALIGN=BOTTOM ALT="" SRC="smallSigmas.xbm">
+, <P> you need to initialise either 
+<ul>
+
+<LI> <tt>Init XCC_s</tt> where definitions are treated as <IMG ALIGN=BOTTOM ALT="delta" SRC="delta.xbm">-rules, or 
+
+<LI> <tt>Init XCC'_s</tt> where definitions are treated as macros. 
+</ul> <P>
+
+For a discussion on <strong><IMG ALIGN=BOTTOM ALT="Sigma" SRC="Sigma.xbm">-types and existential types</strong>, see pages 41 - 43 in <A HREF="bibliography.html#ComputationAndReasoning">Computation and Reasoning</A>. See pages 32 - 33 in <A HREF="bibliography.html#ComputationAndReasoning">Computation and Reasoning</A> for more information about <STRONG>predicative universes and the reflection principle</STRONG>.<P>
+
+<li> <a name="recsyntax">16 February 1995</a>
+     <A
+HREF="http://www.dcs.ed.ac.uk/home/tms/">Thomas Schreiber</A><P>
+
+The syntax for <STRONG><a name="record syntax">Records</a></STRONG> has changed, <TT>Constructors</TT> are now called <TT>Fields</TT> e.g.,
+
+<LISTING>
+Record [person:Type]
+Fields [age:nat]
+       [town:string];
+</LISTING>
+
+will generate a new type <TT>person : Type(person)</TT> with a single constructor <TT>make_person : nat->string->person</TT> and the corresponding Martin Löf elimination and computation rules. Furthermore, LEGO derives the projections 
+<ul>
+<li><TT>age : person->nat</TT> 
+<li><TT>town : person->string</TT>.
+</ul>
+
+</ul>
+
+</BODY>
+<P><ADDRESS>
+<I>Last updated on 12 August 1997 by <a href="mailto:lego@dcs.ed.ac.uk">&lt;lego@dcs.ed.ac.uk&gt;</a> <BR>
+</I>
+</ADDRESS></HTML>

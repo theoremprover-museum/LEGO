@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The marker phase of a garbage collection algorithm</TITLE>
+<META NAME="description" CONTENT="The marker phase of a garbage collection algorithm">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1133" HREF="node82.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1131" HREF="node80.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1125" HREF="node80.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1135" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1134" HREF="node82.html">The correctness proof</A>
+<B>Up:</B> <A NAME="tex2html1132" HREF="node80.html">Example</A>
+<B> Previous:</B> <A NAME="tex2html1126" HREF="node80.html">Example</A>
+<BR> <P>
+<H3><A NAME="SECTION000225100000000000000">The marker phase of a garbage collection algorithm</A></H3>
+<P>
+The work documented in this section has been contributed by
+<A NAME="tex2html11" HREF="http://www.dcs.ed.ac.uk/generated/infopages/rb.html">Rod
+  Burstall</A> and
+Adriana Compagnoni.  The starting point in the development of the
+present example was the garbage collection algorithm presented in
+[<A HREF="node92.html#Benarigarbagecollection">Ben-Ari, 1984</A>]. The garbage collector consists of two
+phases. In the first phase, the collector marks all nodes accessible
+from the root, and in the second phase, all unmarked nodes are
+appended to a list of free nodes. In Ben-Ari's algorithm the memory is
+scanned to count the number of marked nodes to detect whether all
+accesible nodes have been marked. In our algorithm we use a flag <TT>
+  changed</TT> which is set to be true whenever a node is marked. Another
+difference is that instead of having in each memory cell an array with
+the nodes immediately accesible from it, we have a function
+<code>is_linked</code> which given two cell indexes <I>i</I> and <I>j</I> gives <TT>
+  true</TT> if and only if there is a link from <I>i</I> to <I>j</I>. We follow the
+convention that marked nodes are black and unmarked nodes are white.
+We assume that in an initial state all nodes are white. The algorithm
+<TT>mark</TT> then consists in
+<P>
+<OL><LI> blackening the root,<LI> propagating the colouring,<LI> collecting white nodes.
+</OL>
+<P>
+The collecting phase will also set all nodes white.
+<P>
+We represent the memory as an array <I>a</I> of colours (black and white)
+of size <I>n</I> with indexes from 0 to <I>n</I>-1,
+<P>
+<PRE> ** Module mark Imports lib_ipl 
+  changed = ... : location
+  i = ... : location
+  j = ... : location
+  a = ... : location
+  sort = ... : location-&gt;Type
+  black = ... : bool
+  white = ... : bool
+  isBlack = ... : bool-&gt;bool
+  isWhite = ... : bool-&gt;bool
+  n : nat
+  is_linked : nat-&gt;nat-&gt;bool
+  E = ... : Type
+  mark = ... : prog|sort</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

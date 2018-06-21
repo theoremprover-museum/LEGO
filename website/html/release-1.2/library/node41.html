@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>List</TITLE>
+<META NAME="description" CONTENT="List">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html668" HREF="node42.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html666" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html660" HREF="node40.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html670" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html669" HREF="node42.html">List Definitions</A>
+<B>Up:</B> <A NAME="tex2html667" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html661" HREF="node40.html">Max and Min</A>
+<BR> <P>
+<H1><A NAME="SECTION000140000000000000000">List</A></H1>
+<P>
+Another large section of the library is the directory <TT>lib_list</TT>.
+There are several files. The most basic is
+<TT>lib_list.l</TT> which contains just the definition
+of the inductive type list. The four files
+<TT>lib_list_Adjoin</TT>, <TT>lib_list_Distin</TT>, 
+<TT>lib_list_Member</TT> and  <TT>lib_list_Perm</TT>
+define the predicates Adjoin, Distin, Member and Perm
+respectively and prove theorems about them.
+The other files in this directory are divided 
+according to their dependency on other
+datatypes. The file <TT>lib_list_basics</TT>
+contains functions and theorems which do not depend
+on any other datatypes, <TT>lib_list_bool</TT> depends
+on the boolean datatype. <TT>lib_list_partial</TT>
+defines some properly partial functions using the sum
+and empty datatypes to construct ``partial'' result types,
+the ``length'' file defines functions dependent on
+the natural number type, principally ``length'' but
+also a couple of other functions. <TT>lib_list_misc</TT>
+contains the one function
+and theorem which require both sum and natural numbers.
+<P>
+<BR> <HR>
+<UL> 
+<LI> <A NAME="tex2html671" HREF="node42.html#SECTION000141000000000000000">List Definitions</A>
+<LI> <A NAME="tex2html672" HREF="node43.html#SECTION000142000000000000000">List Basics</A>
+<LI> <A NAME="tex2html673" HREF="node44.html#SECTION000143000000000000000">List functions with booleans</A>
+<LI> <A NAME="tex2html674" HREF="node45.html#SECTION000144000000000000000">Partial List functions</A>
+<LI> <A NAME="tex2html675" HREF="node46.html#SECTION000145000000000000000">Length-like list functions</A>
+<LI> <A NAME="tex2html676" HREF="node47.html#SECTION000146000000000000000">Other list functions</A>
+<LI> <A NAME="tex2html677" HREF="node48.html#SECTION000147000000000000000">Lists and products</A>
+<LI> <A NAME="tex2html678" HREF="node49.html#SECTION000148000000000000000">The Relation Adjoin</A>
+<LI> <A NAME="tex2html679" HREF="node50.html#SECTION000149000000000000000">Membership</A>
+<LI> <A NAME="tex2html680" HREF="node51.html#SECTION0001410000000000000000">Distinctness</A>
+<LI> <A NAME="tex2html681" HREF="node52.html#SECTION0001411000000000000000">Permutation</A>
+<LI> <A NAME="tex2html682" HREF="node53.html#SECTION0001412000000000000000">Sorted Lists</A>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

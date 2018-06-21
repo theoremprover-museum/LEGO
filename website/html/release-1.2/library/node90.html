@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Number Theory</TITLE>
+<META NAME="description" CONTENT="Number Theory">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1230" HREF="node91.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1228" HREF="node88.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1224" HREF="node89.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1232" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1231" HREF="node91.html">Other work</A>
+<B>Up:</B> <A NAME="tex2html1229" HREF="node88.html">Example Proof developments</A>
+<B> Previous:</B> <A NAME="tex2html1225" HREF="node89.html">The Rationals</A>
+<BR> <P>
+<H2><A NAME="SECTION000262000000000000000">Number Theory</A></H2>
+<P>
+This section describes briefly an example development
+of some theorems of number theory using the library.
+This development contains some 200 theorems, we just
+give some of the more important definitions and
+state the theorems proved.  The files are held in a 
+directory called <TT>number_theory</TT>.
+<P>
+First we need some more facts
+about integers.
+We define an elimination rule for the
+integers and an induction principle.
+<PRE>zedrecd = ... : {C:int.1-&gt;Type}(C zero_zed)-&gt;({x:int.1}(C x)-&gt;
+     C (plus_zed one_zed x))-&gt;({x:int.1}(C x)-&gt;
+     C (plus_zed minus_one_zed x))-&gt;{a:int.1}C (a.1,a.2)
+zedind = ... : {phi:int.1-&gt;Prop}(phi zero_zed)-&gt;
+     ({x:int.1}(phi x)-&gt;phi (plus_zed one_zed x))-&gt;
+     ({x:int.1}(phi x)-&gt;phi (plus_zed minus_one_zed x))-&gt;
+     {a:int.1}phi (a.1,a.2)</PRE>
+We need some more operations on integers.
+<PRE>abs_zed = [a:int.1](abs_nat a,zero) : int.1-&gt;int.1
+square_zed = [a:int.1]times_zed a a : int.1-&gt;int.1
+power_zed = [a:int.1]nat_iter one_zed (times_zed a) : int.1-&gt;nat-&gt;int.1</PRE>
+We work towards defining primeness--the four definitions given are
+all proved equivalent so whichever is the most convenient
+for a given proof can be used.
+<PRE>Associate = [a,b:int.1]and (Divides a b) (Divides b a) : int.1-&gt;int.1-&gt;P
+Coprime2 = [m,n:int.1]{a:int.1}(Divides a m)-&gt;(Divides a n)-&gt;
+     Associate a one_zed : int.1-&gt;int.1-&gt;Prop
+Prime1 = [p:int.1]and (Lt_zed one_zed p) 
+     ({a:int.1}or (Divides p a) (Coprime p a)) 
+     : int.1-&gt;Prop
+Prime2 = [p:int.1]and (Lt_zed one_zed p) 
+     ({a,b:int.1}(Divides p (times_zed a b))-&gt;
+     or (Divides p a) (Divides p b)) : int.1-&gt;Prop
+Prime3 = [p:int.1]and (Lt_zed one_zed p) ({t:int.1}(Divides t p)-&gt;
+     or (Associate t one_zed) (Associate t p)) : int.1-&gt;Prop
+Prime4 = [p:int.1]and (Lt_zed one_zed p) 
+     ({a:int.1}or (Divides p a) (Coprime2 p a)) 
+     : int.1-&gt;Prop</PRE>
+Some more definitions--we define integers modulo some constant as
+a quotient type.
+<PRE>Eq_mod = [n|int.1][a,b:int.1]Mod n a b : int.1-&gt;int.1-&gt;int.1-&gt;Prop
+modulo = [n|int.1]QU (Eq_mod|n) : int.1-&gt;Type(0)
+zero_mod == QU_class Eq_mod zero_zed:modulo;
+one_mod  == QU_class Eq_mod one_zed :modulo;
+power_mod == [aa:modulo]nat_iter one_mod (times_mod aa);
+power_div = [p:int.1][n:nat][x:int.1]
+     ((decide_Divides (power_zed p n) x)).1 
+     : int.1-&gt;nat-&gt;int.1-&gt;bool
+power_in = [p,x:int.1]nat_iter zero 
+     ([a:nat]if (power_div p (suc a) x) (suc a) a) (abs_nat x) 
+     : int.1-&gt;int.1-&gt;nat
+repre == [n:int.1]Ex[x:int.1]Ex[y:int.1]
+     eq n (plus_zed (square_zed x) (square_zed y))</PRE>
+And finally the theorems.
+<PRE>pigeon_hole = ... : {n|int.1}(Lt_zed zero_zed n)-&gt;
+     [m=abs_nat n]{l:list (modulo|n)}(Distin l)-&gt;Le (length l) m
+Fermat_Theorem = ... : {p:int.1}(Prime1 p)-&gt;
+     {aa:modulo|p}(not (Eq aa (zero_mod|p)))-&gt;
+     [pp=abs_nat p]Eq (power_mod aa (pred pp)) (one_mod|p)
+Lagrange_Theorem = ... : {n:int.1}(Lt_zed zero_zed n)-&gt;
+     iff (repre n) ({p:int.1}(Prime1 p)-&gt;
+     (Eq_mod|four_zed p three_zed)-&gt;Even (power_in p n))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

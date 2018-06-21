@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Sum Types</TITLE>
+<META NAME="description" CONTENT="Sum Types">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node24.html">
+<LINK REL="previous" HREF="node22.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node24.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html421"
+ HREF="node24.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html418"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html412"
+ HREF="node22.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html420"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html422"
+ HREF="node24.html">Inductive Sigma</A>
+<B> Up:</B> <A NAME="tex2html419"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html413"
+ HREF="node22.html">Product Types</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION000100000000000000000">
+Sum Types</A>
+</H1>
+<P>
+In the directory <TT>lib_sum</TT> there is a single file
+defining the sum type with constructors <TT>in1</TT> and <TT>in2</TT>.
+Also defined is the case function (essentially
+the iterator for sum).
+<P><PRE>
+ ** Module lib_sum Imports lib_eq_basics
+ $sum : (Type)-&gt;(Type)-&gt;Type(sum)
+ $in1_exp : {A:Type}{B:Type}A-&gt;sum A B
+ $in2_exp : {A:Type}{B:Type}B-&gt;sum A B
+ $sum_elim :
+    {A:Type}{B:Type}{C_sum:(sum A B)-&gt;Type}
+    ({x2:A}C_sum (in1_exp A B x2))-&gt;({x1:B}C_sum (in2_exp A B x1))-&gt;
+    {z:sum A B}C_sum z
+  sum_double_elim = ... :
+    {A:Type}{B:Type}{T_sum:(sum A B)-&gt;(sum A B)-&gt;Type}
+    ({x2,x2':A}T_sum (in1_exp A B x2) (in1_exp A B x2'))-&gt;
+    ({x2:A}{x1':B}T_sum (in1_exp A B x2) (in2_exp A B x1'))-&gt;
+    ({x1:B}{x2':A}T_sum (in2_exp A B x1) (in1_exp A B x2'))-&gt;
+    ({x1,x1':B}T_sum (in2_exp A B x1) (in2_exp A B x1'))-&gt;{z,z':sum A B}
+    T_sum z z'
+ ** Label (!sum!) sum
+ ** Label (!sum elim!) sum_elim
+ ** Label (!sum in1_exp!) in1_exp
+ ** Label (!sum in2_exp!) in2_exp
+[[A:Type][B:Type][C_sum:(sum A B)-&gt;Type]
+ [f_in1_exp:{x2:A}C_sum (in1_exp A B x2)]
+ [f_in2_exp:{x1:B}C_sum (in2_exp A B x1)][x2:A][x1:B]
+    sum_elim A B C_sum f_in1_exp f_in2_exp (in1_exp A B x2)  ==&gt;
+    f_in1_exp x2
+ || sum_elim A B C_sum f_in1_exp f_in2_exp (in2_exp A B x1)  ==&gt;
+    f_in2_exp x1]
+
+  in1 = ... : {s|Type}{t|Type}s-&gt;sum s t
+  in2 = ... : {s|Type}{t|Type}t-&gt;sum s t
+  case = ... : {s|Type}{t|Type}{u|Type}(s-&gt;u)-&gt;(t-&gt;u)-&gt;(sum s t)-&gt;u
+  sum_ind = ... :
+    {s|Type}{t|Type}{P:(sum s t)-&gt;Prop}({x:s}P (in1 x))-&gt;
+    ({y:t}P (in2 y))-&gt;{z:sum s t}P z
+  is_in1 = ... : {s|Type}{t|Type}(sum s t)-&gt;Prop
+  is_in2 = ... : {s|Type}{t|Type}(sum s t)-&gt;Prop
+  in1_or_in2 = ... : {s|Type}{t|Type}{x:sum s t}(is_in1 x \/ is_in2 x)
+  in1_not_in2 = ... : {s|Type}{t|Type}{x|s}not (is_in2 (in1|s|t x))
+  in2_not_in1 = ... : {s|Type}{t|Type}{x|t}not (is_in1 (in2|s|t x))
+  in1_inj = ... :
+    {s|Type}{t|Type}{x,y:s}(Eq (in1|s|t x) (in1|s|t y))-&gt;Eq x y
+  in2_inj = ... :
+    {s|Type}{t|Type}{x,y:t}(Eq (in2|s|t x) (in2|s|t y))-&gt;Eq x y
+</PRE>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

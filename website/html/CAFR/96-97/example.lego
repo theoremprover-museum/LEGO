@@ -1,0 +1,86 @@
+Lego> Goal {l:list nat}(is_true (contains_zero l)) -> Eq zero (prod_list l);
+Goal 
+  ?0 : {l:list nat}(is_true (contains_zero l))->Eq zero (prod_list l)
+Lego> Refine list_elim nat [l:list nat]
+(is_true (contains_zero l)) -> Eq zero (prod_list l);
+Refine by
+  list_elim nat
+            ([l:list nat](is_true (contains_zero l))->Eq zero (prod_list l))
+  ?2 : (is_true (contains_zero (nil nat)))->Eq zero (prod_list (nil nat))
+  ?3 : {x1:nat}{x2:list nat}
+       ((is_true (contains_zero x2))->Eq zero (prod_list x2))->
+       (is_true (contains_zero (cons1 nat x1 x2)))->
+       Eq zero (prod_list (cons1 nat x1 x2))
+Lego> intros;
+intros (1) 
+  H : is_true (contains_zero (nil nat))
+  ?4 : Eq zero (prod_list (nil nat))
+
+(*  true_not_false : not (Eq true false) *)
+
+Lego> Refine true_not_false;
+Refine by  true_not_false
+  ?5 : Eq true false
+Lego> Refine Eq_sym H;
+Refine by  Eq_sym H
+Discharge..  H
+  ?3 : {x1:nat}{x2:list nat}
+       ((is_true (contains_zero x2))->Eq zero (prod_list x2))->
+       (is_true (contains_zero (cons1 nat x1 x2)))->
+       Eq zero (prod_list (cons1 nat x1 x2))
+Lego> intros;
+intros (4) 
+  x1 : nat
+  x2 : list nat
+  x2_ih : (is_true (contains_zero x2))->Eq zero (prod_list x2)
+  H : is_true (contains_zero (cons1 nat x1 x2))
+  ?10 : Eq zero (prod_list (cons1 nat x1 x2))
+Lego> Equiv Eq zero (times x1 (prod_list x2));
+Equiv
+  ?10 : Eq zero (times x1 (prod_list x2))
+(* if_prop : {C|SET}{b:bool}((Eq b true)->C)->((Eq b false)->C)->C *)
+Lego> Refine if_prop (iszero x1);
+Refine by  if_prop (iszero x1)
+  ?12 : (Eq (iszero x1) true)->Eq zero (times x1 (prod_list x2))
+  ?13 : (Eq (iszero x1) false)->Eq zero (times x1 (prod_list x2))
+Lego> intros;
+intros (1) 
+  H1 : Eq (iszero x1) true
+  ?14 : Eq zero (times x1 (prod_list x2))
+Lego> Qrepl iszero_eqzero x1 H1;
+Qrepl  iszero_eqzero x1 H1
+x1 => zero
+  ?24 : Eq zero (times zero (prod_list x2))
+Lego> Refine Eq_refl;
+Refine by  Eq_refl
+Discharge..  H1
+  x1 : nat
+  x2 : list nat
+  x2_ih : (is_true (contains_zero x2))->Eq zero (prod_list x2)
+  H : is_true (contains_zero (cons1 nat x1 x2))
+  ?13 : (Eq (iszero x1) false)->Eq zero (times x1 (prod_list x2))
+Lego> intros;
+intros (1) 
+  H1 : Eq (iszero x1) false
+  ?27 : Eq zero (times x1 (prod_list x2))
+Lego> [h = Eq_subst H1 ([b:bool]is_true(if b true (contains_zero x2))) H];
+defn  h = Eq_subst H1 ([b:bool]is_true (if b true (contains_zero x2))) H
+      h : is_true (if false true (contains_zero x2))
+  (* time= 0.440000  gc= 0.010000  sys= 0.0 *)
+Lego> [ind = x2_ih h];
+defn  ind = x2_ih h
+      ind : Eq zero (prod_list x2)
+  (* time= 0.220000  gc= 0.0  sys= 0.0 *)
+Lego> Qrepl (Eq_sym ind);
+Qrepl  Eq_sym ind
+prod_list x2 => zero
+  ?40 : Eq zero (times x1 zero)
+(* times_zero : {n|nat}Eq zero (times n zero) *)
+Lego> Refine times_zero;
+Refine by  times_zero
+Discharge..  ind h H1
+Discharge..  H x2_ih x2 x1
+*** QED ***   (* time= 1.930000  gc= 0.020000  sys= 0.040000 *)
+
+
+

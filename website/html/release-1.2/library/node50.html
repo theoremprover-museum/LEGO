@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Membership</TITLE>
+<META NAME="description" CONTENT="Membership">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html779" HREF="node51.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html777" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html771" HREF="node49.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html781" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html780" HREF="node51.html">Distinctness</A>
+<B>Up:</B> <A NAME="tex2html778" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html772" HREF="node49.html">The Relation Adjoin</A>
+<BR> <P>
+<H2><A NAME="SECTION000149000000000000000">Membership</A></H2>
+<P>
+Using the relation <TT>Adjoin</TT> we define the membership relation 
+between elements of some type and lists over that type.
+<P>
+<PRE> ** Module lib_list_Member Imports lib_list_Adjoin lib_list_prod
+  Member = ... : {s|Type}s-&gt;(list s)-&gt;Prop
+  not_Member_nil = ... : {s|Type}{a|s}not (Member a (nil s))
+  Mem_ind = ... :
+    {s|Type}{l|list s}{a,b|s}
+    iff (Member b (cons a l)) (or (Member b l) (Eq a b))
+  Member_Adjoin = ... :
+    {s|Type}{l,al|list s}{a,b|s}(not (Eq a b))-&gt;(Adjoin a l al)-&gt;
+    (Member b al)-&gt;Member b l
+  Member_map = ... :
+    {s|Type}{u|Type}{l:list s}{a:s}{f:s-&gt;u}(Member a l)-&gt;
+    Member (f a) (map f l)
+  Member_map_inv = ... :
+    {s|Type}{u|Type}{l:list s}{b:u}{f:s-&gt;u}(Member b (map f l))-&gt;
+    Ex ([a:s]and (Member a l) (Eq (f a) b))
+  Member_append = ... :
+    {s|Type}{l1,l2:list s}{a:s}
+    iff (Member a (append l1 l2)) (or (Member a l1) (Member a l2))
+  Member_prod = ... :
+    {s|Type}{u|Type}{l1:list s}{l2:list u}{p:prod s u}
+    iff (Member p (prod_list l1 l2))
+        (and (Member (Fst p) l1) (Member (Snd p) l2))
+  Member_build = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}{a:s}
+    iff (Member a (build_list f n))
+        (Ex ([k:nat]and (Lt k n) (Eq (f k) a)))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

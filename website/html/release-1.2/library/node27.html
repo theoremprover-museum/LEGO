@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Theorems about Minus</TITLE>
+<META NAME="description" CONTENT="Theorems about Minus">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html516" HREF="node28.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html514" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html508" HREF="node26.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html518" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html517" HREF="node28.html">Theorems about Plus</A>
+<B>Up:</B> <A NAME="tex2html515" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html509" HREF="node26.html">Theorems about Successor</A>
+<BR> <P>
+<H2><A NAME="SECTION000133000000000000000">Theorems about Minus</A></H2>
+<P>
+Another small file gives a few theorems about truncated
+subtraction (<TT>minus</TT>).
+<P>
+<PRE> ** Module lib_nat_minus_thms Imports lib_nat/lib_nat_plus_thms
+  minus_suc_pred = ... :
+    {n,m:nat}Eq (minus n (suc m)) (minus (pred n) m)
+  minus_resp_suc = ... : {m,n:nat}Eq (minus (suc m) (suc n)) (minus m n)
+  n_minus_n_Eq_zero = ... : {n:nat}Eq (minus n n) zero
+  zero_minus_n_Eq_zero = ... : {n:nat}Eq (minus zero n) zero
+  minus_commutes_suc_l = ... :
+    {m,n,t|nat}(Eq (minus n m) (suc t))-&gt;
+    Eq (minus (suc n) m) (suc (minus n m))
+  minus_commutes_suc_r = ... :
+    {m,n,t|nat}(Eq (minus n m) (suc t))-&gt;Eq (minus n (suc m)) t
+  minus_monotone_l = ... :
+    {l:nat}{m,n,t|nat}(Eq (minus n m) (suc t))-&gt;
+    Eq (minus (plus n l) m) (suc (plus t l))
+  minus_inv_plus = ... : {m,n:nat}Eq n (minus (plus m n) m)
+  nonzero_inv_sp = ... : {x:nat}(not (Eq x zero))-&gt;Eq (suc (pred x)) x</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

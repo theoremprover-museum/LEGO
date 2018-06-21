@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Customizing the Library</TITLE>
+<META NAME="description" CONTENT="Customizing the Library">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html240" HREF="node5.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html238" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html232" HREF="node3.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html242" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html241" HREF="node5.html">Basic Library Files</A>
+<B>Up:</B> <A NAME="tex2html239" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html233" HREF="node3.html">Conventions</A>
+<BR> <P>
+<H1><A NAME="SECTION00040000000000000000">Customizing the Library</A></H1>
+<A NAME="custom">&#160;</A>
+<P>
+At present the library supports three definitions of
+(substitutive) equality: impredicative (Leibniz) equality
+and two versions of inductive equality.
+The library also allows the user to change the
+universe in which datatypes are defined, and
+the level over which their elimination rules
+can range.
+<P>
+The user chooses an equality by simply loading
+a library equality from those discussed below.
+It is also possible for a user to create their
+own equality file. Note that the equality
+files also configure the LEGO command <TT>Qrepl</TT>.
+<P>
+The universe levels are controlled by setting
+various LEGO variables before loading the
+library files. There are currently four
+variables: <TT>SET</TT>, <TT>TYPE</TT>, <TT>TYPE_minus1</TT>,
+and <TT>TYPE_minus2</TT>.
+<P>
+All inductive datatypes are put in the type universe
+given by the value of <TT>SET</TT>; furthermore
+equality <TT>Eq</TT> is also defined over this 
+type level. This variable can be set to 
+any type universe level, including <TT>Prop</TT>.
+<P>
+All inductive datatypes have an elimination
+rule which is quantified over some
+expression of the form <TT>datatype -&gt; TYPE</TT>.
+The value of <TT>TYPE</TT> can be chosen by the
+user to be any universe level. However
+we warn that many library file won't
+work if <TT>TYPE</TT> is set to <TT>Prop</TT>.
+See the final paragraph of this section for how to customize
+the library to work with <TT>TYPE</TT> as <TT>Prop</TT>.
+<P>
+A small number of library files also use the type universe
+variables <TT>TYPE_minus1</TT> and <TT>TYPE_minus2</TT>, which
+should be set to universe levels strictly below <TT>TYPE</TT>.
+As the names imply, <TT>TYPE_minus2</TT> should be set to a 
+level strictly below <TT>TYPE_minus1</TT>.
+<P>
+The library files on finite sets and vectors require certain
+restrictions to be imposed on the values assigned
+to the type universe variables.  In both these files
+<TT>TYPE_minus2</TT> must be at least <TT>Type(0)</TT>, 
+and consequently <TT>TYPE_minus1</TT> must be at least <TT>Type(1)</TT>
+and <TT>TYPE</TT> must be at least <TT>Type(2)</TT>.
+<TT>Type_minus1</TT> is also used in the definition 
+of inductive equality where its value can be any type universe
+including <TT>Prop</TT>.
+<P>
+To exploit typical ambiguity [<A HREF="node92.html#harperpollackuniverses">Harper and Pollack, 1991</A>],
+defintions<A NAME="tex2html5" HREF="footnode.html#76"><IMG  ALIGN=BOTTOM ALT="gif" SRC="http://www.dcs.ed.ac.uk/icons//foot_motif.gif"></A> need to be
+expanded as <EM>macros</EM>. Unfortunately, this is not feasable. To
+patch this problem, another subdirectory <TT>lib_Type</TT> has been
+provided which contains variants of other modules where all parameters
+have been replaced by <TT>Type</TT>. For convenience, these modules are
+accessed in the default path.
+<P>
+For the user who wishes to work with <TT>TYPE</TT>
+set to <TT>Prop</TT>, we give separate versions
+of four of the library files which include
+the single assumption <TT>true_not_false</TT> that
+the two boolean values <TT>true</TT> and <TT>false</TT>
+are not equal. These files can be loaded in
+preference to the standard ones by adding
+(the full pathname of) the top-level library directory
+<TT>lib_prop</TT> before the root of the library
+in the environment variable <TT>LEGOPATH</TT>.
+For example, if the library is held in
+<TT>$LEGOLIB</TT> then <TT>LEGOPATH</TT>
+should be set to
+<P>
+<TT>$LEGOLIB/lib_prop:$LEGOLIB:$LEGOLIB/lib_all</TT>
+<P>
+(plus any other directories, of course; the current
+working directory <TT>.</TT>&nbsp;being most usual).
+With this set-up, all the library files except
+vectors and finite sets will work.
+<P>
+<HR><A NAME="tex2html240" HREF="node5.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html238" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html232" HREF="node3.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html242" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html241" HREF="node5.html">Basic Library Files</A>
+<B>Up:</B> <A NAME="tex2html239" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html233" HREF="node3.html">Conventions</A>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

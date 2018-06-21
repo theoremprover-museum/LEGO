@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Extra lemmas for integers</TITLE>
+<META NAME="description" CONTENT="Extra lemmas for integers">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html939" HREF="node65.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html937" HREF="node63.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html931" HREF="node63.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html941" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html940" HREF="node65.html">The Integers-Definitions</A>
+<B>Up:</B> <A NAME="tex2html938" HREF="node63.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html932" HREF="node63.html">The Integers</A>
+<BR> <P>
+<H2><A NAME="SECTION000201000000000000000">Extra lemmas for integers</A></H2>
+<P>
+This file contains some lemmas about the 
+natural numbers which are needed for
+developing the integers with this particular representation.
+These lemmas are needed in order to prove cancellation
+of multiplication laws in the integers and rationals.
+For example, the first lemma is the (integer) theorem
+that if the product of two integers is zero, then one
+or other of the argument is equal to zero.
+All these lemmas are proved by a double induction on
+natural numbers.
+<P>
+<PRE> ** Module lib_int_nat_lemmas Imports lib_nat/lib_nat_Prop_rels
+  weird_thing = ... :
+    {x,y,a,b:nat}
+    (Eq (plus (times x a) (times y b)) (plus (times x b) (times y a)))-&gt;
+    or (Eq x y) (Eq a b)
+  weird_Lt = ... :
+    {x,y,a,b:nat}(Lt x y)-&gt;(Lt a b)-&gt;
+    Lt (plus (times x b) (times y a)) (plus (times x a) (times y b))
+  weird_Le = ... :
+    {x,y,a,b:nat}(Le x y)-&gt;(Le a b)-&gt;
+    Le (plus (times x b) (times y a)) (plus (times x a) (times y b))
+  weird_thing_Le = ... :
+    {x,y,a,b:nat}
+    (Le (plus (times x a) (times y b)) (plus (times x b) (times y a)))-&gt;
+    (Lt x y)-&gt;Le b a
+  weird_thing_Lt = ... :
+    {x,y,a,b:nat}
+    (Lt (plus (times x a) (times y b)) (plus (times x b) (times y a)))-&gt;
+    (Lt x y)-&gt;Lt b a</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,77 @@
+
+<HTML>
+<HEAD>
+<TITLE>Programming with recursion operators (due 25-Nov-1996)</TITLE>
+<!-- Created by: Thomas Schreiber,  2-Oct-1995 -->
+<!-- Changed by: Thomas Schreiber, 13-Nov-1995 -->
+
+</HEAD>
+<BODY>
+<P>
+<!--
+ <HR> 
+<A HREF="verification.html">
+<IMG ALIGN=MIDDLE SRC="www/icons/next_motif.gif"></A>
+<A HREF="exercises.html"> <IMG ALIGN=MIDDLE SRC="www/icons/up_motif.gif"></A>
+<A HREF="programming.html">
+ <IMG ALIGN=MIDDLE SRC="www/icons/previous_motif.gif"></A>
+<A HREF="www/packages/lego/index.html"><IMG ALIGN=MIDDLE SRC="www/icons/contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A HREF="verification.html">
+Type theory - a unifying framework for logic and computation</A><BR>
+<B> Up:</B> <A  HREF="exercises.html">Exercises</A>
+<B> Previous:</B> <A  HREF="programming.html">Programming in type theory</A>
+<HR> <P>
+-->
+<P>
+<H1>Programming with recursion operators</H1>
+
+Computer Aided Formal Reasoning<BR>
+Exercise 2<BR>
+<B>Deadline</B>: Monday, 25 November 1996<BR>
+
+ <P>
+Please submit your module(s) by Email to <a href="mailto:jlu@dcs.ed.ac.uk"><I>&lt;jlu@dcs.ed.ac.uk&gt;</I></a>
+<hr>
+<P>
+For this assignment, you will want to use the libraries pertaining
+to booleans (lib_bool,lib_bool_funs,and lib_bool_thms)
+natural numbers (lib_nat) and lists (lib_list_basics).
+<a href="http://www.dcs.ed.ac.uk/home/lego/html/library/newlib.html">
+You can browse these libraries on the web</a>.
+
+<OL>
+<LI> Write the following functions in Lego, using the appropriate
+recursion operators:
+<OL> 
+<LI> <TT> sum_list: (list nat) -> nat </TT> (add the elements of a list)<P> 
+<LI> <TT> iszero : nat -> bool </TT>(true if the argument is zero, 
+false otherwise) <P> 
+<LI> <TT> is_one : nat -> bool </TT>(true if the argument is suc zero, 
+false otherwise -- hint: use iszero) <P> 
+<LI> <TT> contains_zero :(list nat) -> bool ;</TT> (true if the list
+contains a zero) <P> 
+<LI> <TT> zero_list :(list nat) -> bool ;</TT> (true if the list
+is either empty or consists entirely of zeroes) <P> 
+</OL>
+
+<LI> 
+Prove the following properties of your functions:
+<OL> 
+<LI> <TT> iszero_eq_zero : {n:nat}(is_true (iszero n)) -> Eq n zero; </TT>
+ <P> 
+<LI> <TT> is_one_eq_one : {n:nat}(is_true (is_one n)) -> Eq n one; </TT>
+<P> 
+<LI> <TT> sum_zero_list_is_zero : 
+{l:list nat}(is_true (zero_list l)) ->  Eq (sum_list l) zero; </TT>
+<P>
+</OL>
+<P>
+Hint: induction is often the best way to prove things about inductively
+defined functions.
+<P>
+</OL>
+<ADDRESS> <A Name=Signature HREF="/home/lego/html/CAFR/index.html">
+Computer Aided Formal Reasoning</A></ADDRESS>
+</BODY>
+</HTML>

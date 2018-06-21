@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Boolean Theorems</TITLE>
+<META NAME="description" CONTENT="Boolean Theorems">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="previous" HREF="node20.html">
+<LINK REL="up" HREF="node18.html">
+<LINK REL="next" HREF="node22.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html402"
+ HREF="node22.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html399"
+ HREF="node18.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html395"
+ HREF="node20.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html401"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html403"
+ HREF="node22.html">Product Types</A>
+<B> Up:</B> <A NAME="tex2html400"
+ HREF="node18.html">The Booleans</A>
+<B> Previous:</B> <A NAME="tex2html396"
+ HREF="node20.html">Boolean Functions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00083000000000000000">
+Boolean Theorems</A>
+</H2>
+
+<P>
+This file contains various theorems about the above boolean functions,
+mostly proving that they have the expected meanings.
+
+<P>
+<PRE>
+ ** Module lib_bool_thms Imports lib_bool_funs
+  is_true_not_is_false = ... :
+    {b:bool}iff (is_true b) (not (is_false b))
+  bool_contrapos = ... :
+    {a,b|bool}((is_true a)-&gt;is_true b)-&gt;(is_false b)-&gt;is_false a
+  bool_contradiction = ... : {b|bool}(is_true b)-&gt;(is_false b)-&gt;absurd
+  if_absorbs = ... : {b:bool}{t|Type}{x:t}Eq (if b x x) x
+  if_character = ... :
+    {t|Type}{x,y,z|t}{b|bool}(Eq (if b x y) z)-&gt;(Eq x z \/ Eq y z)
+  Eq_resp_if = ... :
+    {t|Type}{x,y,x',y'|t}(Eq x x')-&gt;(Eq y y')-&gt;{b:bool}
+    Eq (if b x y) (if b x' y')
+  if_inside = ... :
+    {s|Type}{t|Type}{f:s-&gt;t}{x,y:s}{b:bool}
+    Eq (if b (f x) (f y)) (f (if b x y))
+  middle_four_if = ... :
+    {A|Type}{a,b,c,d:A}{x,y:bool}
+    Eq (if x (if y a b) (if y c d)) (if y (if x a c) (if x b d))
+  reduce_if_left = ... :
+    {A|Type}{a,b,c:A}{x:bool}Eq (if x (if x a b) c) (if x a c)
+  reduce_if_right = ... :
+    {A|Type}{a,b,c:A}{x:bool}Eq (if x a (if x b c)) (if x a c)
+  if_prop = ... : {C|Type}{b:bool}((Eq b true)-&gt;C)-&gt;((Eq b false)-&gt;C)-&gt;C
+  andalso_character = ... :
+    {a,b:bool}iff (is_true (andalso a b)) (is_true a /\ is_true b)
+  andalso_absorbs = ... : {b:bool}Eq (andalso b b) b
+  andalso_commutes = ... : {b,c:bool}Eq (andalso b c) (andalso c b)
+  andalso_false = ... : {b:bool}Eq (andalso b false) false
+  andalso_true = ... : {b:bool}Eq (andalso b true) b
+  inv_character = ... : {b:bool}iff (is_true (inv b)) (not (is_true b))
+  inv_character' = ... : {a,b:bool}iff (Eq (inv a) b) (Eq a (inv b))
+  inv_idemp = ... : {b:bool}Eq (inv (inv b)) b
+  inv_is_true_is_false = ... :
+    {n:bool}iff (is_true (inv n)) (is_false n)
+  inv_is_false_is_true = ... :
+    {n:bool}iff (is_false (inv n)) (is_true n)
+  orelse_character = ... :
+    {a,b:bool}iff (is_true (orelse a b)) (is_true a \/ is_true b)
+  orelse_absorbs = ... : {b:bool}Eq (orelse b b) b
+  orelse_assoc = ... :
+    {a,b,c:bool}Eq (orelse (orelse a b) c) (orelse a (orelse b c))
+  orelse_commutes = ... : {a,b:bool}Eq (orelse a b) (orelse b a)
+  orelse_false = ... : {b:bool}Eq (orelse b false) b
+  orelse_true = ... : {b:bool}Eq (orelse b true) true
+  deMorgan = ... :
+    {a,b:bool}iff (is_false (orelse a b)) (is_false a /\ is_false b)
+  deMorgan' = ... :
+    {a,b:bool}iff (is_false (andalso a b)) (is_false a \/ is_false b)
+  implies_character = ... :
+    {a,b:bool}iff (is_true (implies a b)) ((is_true a)-&gt;is_true b)
+  implies_false = ... : {n:bool}is_true (implies false n)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

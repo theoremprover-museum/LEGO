@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Square Roots</TITLE>
+<META NAME="description" CONTENT="Square Roots">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html549" HREF="node31.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html547" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html541" HREF="node29.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html551" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html550" HREF="node31.html">Order relations</A>
+<B>Up:</B> <A NAME="tex2html548" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html542" HREF="node29.html">Theorems about multiplication</A>
+<BR> <P>
+<H2><A NAME="SECTION000136000000000000000">Square Roots</A></H2>
+<P>
+In this file are theorems about squares and square roots.
+<P>
+<PRE> ** Module lib_nat_sqrt Imports lib_nat/lib_nat_iter
+     lib_nat/lib_nat_rels
+  square = ... : nat-&gt;nat
+  sqrt = ... : nat-&gt;nat
+  sqrt_cor = ... :
+    {n:nat}and (Le (square (sqrt n)) n) (Lt n (square (suc (sqrt n))))
+  sqrt_small = ... : {n:nat}(Lt one n)-&gt;Lt (sqrt n) n</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Hoare logic</TITLE>
+<META NAME="description" CONTENT="Hoare logic">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1100" HREF="node79.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1098" HREF="node73.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1092" HREF="node77.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1102" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1101" HREF="node79.html">Hoare logic: Inversion</A>
+<B>Up:</B> <A NAME="tex2html1099" HREF="node73.html">Imperative programs</A>
+<B> Previous:</B> <A NAME="tex2html1093" HREF="node77.html">An imperative programming language</A>
+<BR> <P>
+<H2><A NAME="SECTION000223000000000000000">Hoare logic</A></H2>
+<P>
+<A NAME="sechoare">&#160;</A>
+<P>
+We axiomatise Hoare Logic in L<font size=-1><small>EGO</small></font> and thus assign a semantics to the
+imperative programming language. The L<font size=-1><small>EGO</small></font> system uses the kind
+<TT>Prop</TT> as its logical universe, in fact, <TT>Prop</TT> is isomorphic to
+intuitionistic higher-order logic. But we are not only interested in
+formulae of raw intuitionistic higher-order logic, we also want to
+talk about the value of variables which depend on a dynamic
+environment. We therefore use the kind <TT>Env-&gt;Prop</TT>. It is
+straightforward to lift operations from <TT>Prop</TT> to <TT>Env-&gt;Prop</TT> e.g,
+<TT>limplies</TT> denotes implication. Hoare triples  <IMG WIDTH=73 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline391" SRC="img7.gif"  > 
+intuitively assert that if the program&nbsp;<I>S</I> is executed in a
+state&nbsp; <IMG WIDTH=10 HEIGHT=8 ALIGN=BOTTOM ALT="tex2html_wrap_inline395" SRC="img8.gif"  >  such that  <IMG WIDTH=25 HEIGHT=22 ALIGN=MIDDLE ALT="tex2html_wrap_inline397" SRC="img9.gif"  >  holds and <I>S</I> terminates,
+then it will produce a state&nbsp; <IMG WIDTH=8 HEIGHT=8 ALIGN=BOTTOM ALT="tex2html_wrap_inline401" SRC="img10.gif"  >  such that  <IMG WIDTH=20 HEIGHT=22 ALIGN=MIDDLE ALT="tex2html_wrap_inline403" SRC="img11.gif"  >  holds.
+<P>
+The most complicated rule deals with the assignment statement
+<P> <IMG WIDTH=327 HEIGHT=19 ALIGN=BOTTOM ALT="displaymath405" SRC="img12.gif"  > <P>because general updating is not
+expressible within the type theory, but fortunately, we only have to
+update values of variables. These are guarded by environments and
+therefore, updating can be achieved by functional composition.
+<P>
+<PRE> ** Module lib_hoare Imports lib_update lib_ipl
+ $HD :
+    {sort|location-&gt;Type}((Env sort)-&gt;Prop)-&gt;(prog|sort)-&gt;
+    ((Env sort)-&gt;Prop)-&gt;Prop
+ $Inv : {sort|location-&gt;Type}{p:(Env sort)-&gt;Prop}HD p (skip|sort) p
+ $Assign :
+    {sort|location-&gt;Type}{x:location}{t:(Env sort)-&gt;sort x}
+    {p:(Env sort)-&gt;Prop}
+    HD (compose p (update|sort x t)) (assign|sort x t) p
+ $Seq :
+    {sort|location-&gt;Type}{p,q,r:(Env sort)-&gt;Prop}{S1,S2:prog|sort}
+    (HD p S1 r)-&gt;(HD r S2 q)-&gt;HD p (seq S1 S2) q
+ $Ifthenelse :
+    {sort|location-&gt;Type}{p,q:(Env sort)-&gt;Prop}{b:(Env sort)-&gt;bool}
+    {S1,S2:prog|sort}
+    (HD ([sigma:Env sort]and (p sigma) (is_true (b sigma))) S1 q)-&gt;
+    (HD ([sigma:Env sort]and (p sigma) (is_false (b sigma))) S2 q)-&gt;
+    HD p (ifthenelse b S1 S2) q
+ $While :
+    {sort|location-&gt;Type}{p:(Env sort)-&gt;Prop}{b:(Env sort)-&gt;bool}
+    {S:prog|sort}
+    (HD ([sigma:Env sort]and (p sigma) (is_true (b sigma))) S p)-&gt;
+    HD p (while b S)
+       ([sigma:Env sort]and (p sigma) (is_false (b sigma)))
+ $Con :
+    {sort|location-&gt;Type}{p,p1,q,q1:(Env sort)-&gt;Prop}{S:prog|sort}
+    (limplies p p1)-&gt;(limplies q1 q)-&gt;(HD p1 S q1)-&gt;HD p S q
+ $HD_elim :
+    {sort|location-&gt;Type}
+    {C_HD:((Env sort)-&gt;Prop)-&gt;(prog|sort)-&gt;((Env sort)-&gt;Prop)-&gt;Prop}
+    ({p:(Env sort)-&gt;Prop}C_HD p (skip|sort) p)-&gt;
+    ({x:location}{t:(Env sort)-&gt;sort x}{p:(Env sort)-&gt;Prop}
+     C_HD (compose p (update|sort x t)) (assign|sort x t) p)-&gt;
+    ({p,q,r:(Env sort)-&gt;Prop}{S1,S2:prog|sort}(C_HD p S1 r)-&gt;
+     (C_HD r S2 q)-&gt;C_HD p (seq S1 S2) q)-&gt;
+    ({p,q:(Env sort)-&gt;Prop}{b:(Env sort)-&gt;bool}{S1,S2:prog|sort}
+     (C_HD ([sigma:Env sort]and (p sigma) (is_true (b sigma))) S1 q)-&gt;
+     (C_HD ([sigma:Env sort]and (p sigma) (is_false (b sigma))) S2 q)-&gt;
+     C_HD p (ifthenelse b S1 S2) q)-&gt;
+    ({p:(Env sort)-&gt;Prop}{b:(Env sort)-&gt;bool}{S:prog|sort}
+     (C_HD ([sigma:Env sort]and (p sigma) (is_true (b sigma))) S p)-&gt;
+     C_HD p (while b S)
+          ([sigma:Env sort]and (p sigma) (is_false (b sigma))))-&gt;
+    ({p,p1,q,q1:(Env sort)-&gt;Prop}{S:prog|sort}(limplies p p1)-&gt;
+     (limplies q1 q)-&gt;(C_HD p1 S q1)-&gt;C_HD p S q)-&gt;{p:(Env sort)-&gt;Prop}
+    {S:prog|sort}{q:(Env sort)-&gt;Prop}(HD p S q)-&gt;C_HD p S q
+* Conl = ... :
+    {sort|location-&gt;Type}{p,p1,q:(Env sort)-&gt;Prop}{S:prog|sort}
+    (limplies p p1)-&gt;(HD p1 S q)-&gt;HD p S q
+* Conr = ... :
+    {sort|location-&gt;Type}{p,q,q1:(Env sort)-&gt;Prop}{S:prog|sort}
+    (limplies q1 q)-&gt;(HD p S q1)-&gt;HD p S q
+* Inv_lemma = ... :
+    {sort|location-&gt;Type}{p,p':(Env sort)-&gt;Prop}(limplies p' p)-&gt;
+    HD p' (skip|sort) p
+* Assign_lemma = ... :
+    {sort|location-&gt;Type}{x:location}{t:(Env sort)-&gt;sort x}
+    {p,p':(Env sort)-&gt;Prop}(limplies p' (compose p (update|sort x t)))-&gt;
+    HD p' (assign|sort x t) p
+* While_lemma = ... :
+    {sort|location-&gt;Type}{p,q:(Env sort)-&gt;Prop}{b:(Env sort)-&gt;bool}
+    {S:prog|sort}
+    (limplies ([sigma:Env sort]and (p sigma) (is_false (b sigma))) q)-&gt;
+    (HD ([sigma:Env sort]and (p sigma) (is_true (b sigma))) S p)-&gt;
+    HD p (while b S) q</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

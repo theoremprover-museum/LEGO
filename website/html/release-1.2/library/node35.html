@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Iteration Principles</TITLE>
+<META NAME="description" CONTENT="Iteration Principles">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html604" HREF="node36.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html602" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html596" HREF="node34.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html606" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html605" HREF="node36.html">Induction Principles</A>
+<B>Up:</B> <A NAME="tex2html603" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html597" HREF="node34.html">Propositional Relations</A>
+<BR> <P>
+<H2><A NAME="SECTION0001311000000000000000">Iteration Principles</A></H2>
+<P>
+<PRE> ** Module lib_nat_iter Imports lib_nat lib_bool_funs
+* nat_iter_suc = ... :
+    {t|SET}{z:t}{s:t-&gt;t}{n:nat}
+    Eq (nat_iter z s (suc n)) (nat_iter (s z) s n)
+* while_cond1 = ... :
+    {f:nat-&gt;bool}[lll=nat_iter zero ([a:nat]if (f (suc a)) (suc a) a)]
+    (is_true (f zero))-&gt;{n:nat}is_true (f (lll n))
+* while_cond2 = ... :
+    {f:nat-&gt;bool}[lll=nat_iter zero ([a:nat]if (f (suc a)) (suc a) a)]
+    {n:nat}or (Eq (lll n) n) (is_false (f (suc (lll n))))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Set theory</TITLE>
+<META NAME="description" CONTENT="Set theory">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node66.html">
+<LINK REL="previous" HREF="node62.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node66.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html915"
+ HREF="node66.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html912"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html906"
+ HREF="node64.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html914"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html916"
+ HREF="node66.html">The Integers</A>
+<B> Up:</B> <A NAME="tex2html913"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html907"
+ HREF="node64.html">Relation closures</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000180000000000000000">
+Set theory</A>
+</H1>
+
+<P>
+The one file currently in this section contains the
+version of set theory developed for
+the work described in <A
+ HREF="node78.html#jones:rationals">Jones (1991)</A>.
+It defines a ``set'' to be the sigma type
+consisting of a type plus an equivalence relation
+over that type. Similarly a ``function'' between two
+sets is an arrow between the base types and a proof
+that the function respects equality. Also defined
+are (two-place) relations, two-place functions,
+and subsets (defined as predicates over the base types).
+
+<P>
+<PRE>
+ ** Module lib_sets_ccmj Imports lib_logic
+  eq_refl = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_sym = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_trans = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_rel = ... : (Type)-&gt;Type
+  set = ... : Type
+  eq = ... : {A|set}A.1-&gt;A.1-&gt;Prop
+  eq_refl_ax = ... : {A|set}eq_refl|A.1|A.2.1
+  eq_sym_ax = ... : {A|set}{x,y|A.1}(eq x y)-&gt;eq y x
+  eq_trans_ax = ... : {A|set}{x,y,z|A.1}(eq x y)-&gt;(eq y z)-&gt;eq x z
+  pres_eq = ... : {A,B|set}(A.1-&gt;B.1)-&gt;Prop
+  function = ... : set-&gt;set-&gt;Type
+  pres_eq_ax = ... : {A,B|set}{f|function A B}[f'4=f.1]pres_eq|A|B f'4
+  pr = ... : {A,B|set}A.1-&gt;B.1-&gt;A.1#B.1
+  cross_prod = ... : set-&gt;set-&gt;set
+  curry = ... : {A,B,C:set}(function|(cross_prod A B)|C)-&gt;A.1-&gt;B.1-&gt;C.1
+  comp = ... : {A,B,C|set}(function A B)-&gt;(function B C)-&gt;function A C
+  pres_l = ... : {A:set}(A.1-&gt;A.1-&gt;Prop)-&gt;Prop
+  pres_r = ... : {A:set}(A.1-&gt;A.1-&gt;Prop)-&gt;Prop
+  relation = ... : set-&gt;Type
+  rel_pres_eq_l = ... : {A|set}{R|relation A}pres_l A R.1
+  rel_pres_eq_r = ... : {A|set}{R|relation A}pres_r A R.1
+  subset = ... : set-&gt;Type
+  pres_eq2 = ... : {A,B:set}(A.1-&gt;A.1-&gt;B.1)-&gt;Prop
+  function2 = ... : set-&gt;set-&gt;Type
+  pres_eq_l = ... :
+    {A,B|set}{f|function2 A B}{x,y,z:A.1}(eq x y)-&gt;
+    eq (f.1 x z) (f.1 y z)
+  pres_eq_r = ... :
+    {A,B|set}{f|function2 A B}{x,y,z:A.1}(eq x y)-&gt;
+    eq (f.1 z x) (f.1 z y)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

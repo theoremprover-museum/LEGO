@@ -1,0 +1,75 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Induction Principles</TITLE>
+<META NAME="description" CONTENT="Induction Principles">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node29.html">
+<LINK REL="previous" HREF="node27.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node29.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html494"
+ HREF="node29.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html491"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html485"
+ HREF="node27.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html493"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html495"
+ HREF="node29.html">Theorems about Successor</A>
+<B> Up:</B> <A NAME="tex2html492"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html486"
+ HREF="node27.html">Iteration Principles</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000123000000000000000">
+Induction Principles</A>
+</H2>
+<P>
+This short file gives some induction principles which deal with
+the recursor and iterator on the natural numbers. For their
+use in inductive proofs using deliverables see (<A HREF=#mckinnaphd><tex2html_citekey_mark>##mckinnaphd<tex2html_cite_mark> ##mckinnaphd<tex2html_citeyear_mark></A>).
+<P><PRE>
+ ** Module lib_more_induction Imports lib_nat
+  nat_iter_induction = ... :
+    [Pred=[a:Type]a-&gt;Prop]{gamma|Type}{z|gamma}{s|gamma-&gt;gamma}
+    {phi:Pred gamma}(phi z)-&gt;({g:gamma}(phi g)-&gt;phi (s g))-&gt;
+    [rec=nat_iter z s]{n:nat}phi (rec n)
+  nat_rec_induction = ... :
+    [Rel=[a:Type][b:Type]a-&gt;b-&gt;Prop]{gamma|Type}{z|gamma}
+    {s|nat-&gt;gamma-&gt;gamma}{phi:Rel nat gamma}(phi zero z)-&gt;
+    ({m:nat}{g:gamma}(phi m g)-&gt;phi (suc m) (s m g))-&gt;[rec=nat_rec z s]
+    {n:nat}phi n (rec n)
+  nat_iter_induction_rev = ... :
+    [Pred=[a:Type]a-&gt;Prop]{gamma|Type}{z|gamma}{s|gamma-&gt;gamma}
+    {phi:Pred gamma}{n:nat}(phi (nat_iter z s n))-&gt;
+    ({g:gamma}(phi (s g))-&gt;phi g)-&gt;phi z
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

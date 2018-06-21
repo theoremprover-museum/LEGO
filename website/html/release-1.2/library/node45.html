@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Partial List functions</TITLE>
+<META NAME="description" CONTENT="Partial List functions">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html724" HREF="node46.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html722" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html716" HREF="node44.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html726" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html725" HREF="node46.html">Length-like list functions</A>
+<B>Up:</B> <A NAME="tex2html723" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html717" HREF="node44.html">List functions with booleans</A>
+<BR> <P>
+<H2><A NAME="SECTION000144000000000000000">Partial List functions</A></H2>
+<P>
+This file contains partial list functions whose
+type is lifted using the sum and empty datatype, e.g.
+head has type  <IMG WIDTH=90 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline359" SRC="img4.gif"  > . Other functions defined here
+include ``last'', which gives the last
+element of a list  and ``prune'' which deletes
+the last element of a list. Various theorems
+about these functions are proved.
+<P>
+<PRE> ** Module lib_list_partial Imports lib_list_bool lib_unit lib_sum
+  head = ... : {t|Type}(list t)-&gt;sum unit t
+  last = ... : {s|Type}(list s)-&gt;sum unit s
+  prune = ... : {s|Type}(list s)-&gt;sum unit (list s)
+  last_resp_cons = ... :
+    {t|Type}{l:list t}{a,b:t}
+    Eq (last (cons a l)) (last (cons b (cons a l)))
+  last_resp_append = ... :
+    {t|Type}{l,m:list t}{a:t}
+    Eq (last (append l (cons a m))) (last (cons a m))
+  last_gives_last = ... :
+    {t|Type}{l:list t}{a:t}Eq (last (append l (cons a (nil t)))) (in2 a)
+  prune_resp_cons = ... :
+    {t|Type}{l:list t}{a,b:t}
+    Eq (prune (cons b (cons a l)))
+       (case ([_:unit]in1 void) ([l'5:list t]in2 (cons b l'5))
+             (prune (cons a l)))
+  prune_non_empty_is_list = ... :
+    {t|Type}{l:list t}{a:t}Ex ([m:list t]Eq (prune (cons a l)) (in2 m))
+  prune_resp_append = ... :
+    {t|Type}{l,m:list t}{a:t}
+    Eq (prune (append l (cons a m)))
+       (case ([_:unit]in1 void) ([x:list t]in2 (append l x))
+             (prune (cons a m)))
+  prune_deletes_tip = ... :
+    {t|Type}{x:t}{l:list t}
+    Eq (prune (append l (cons x (nil t)))) (in2 l)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

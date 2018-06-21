@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Integers--Definitions</TITLE>
+<META NAME="description" CONTENT="The Integers--Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node69.html">
+<LINK REL="previous" HREF="node67.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node69.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html952"
+ HREF="node69.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html949"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html943"
+ HREF="node67.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html951"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html953"
+ HREF="node69.html">Basic Lemmas</A>
+<B> Up:</B> <A NAME="tex2html950"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html944"
+ HREF="node67.html">Extra lemmas for integers</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000192000000000000000">
+The Integers--Definitions</A>
+</H2>
+<P>
+In this file are
+given some basic definitions for the integers.
+The datatype itself, its equality, various constants 
+and some operations are defined.
+The internal sigma-type is used to define the
+pairs of integers. This is mainly because using 
+inductive cross-product is slower to run.
+<P><PRE>
+ ** Module lib_int_basics Imports lib_int_nat_lemmas lib_nat_minus_thms
+     lib_sets_ccmj
+  zed = ... : Type
+  Eq_zed = ... : zed-&gt;zed-&gt;Prop
+  Eq_refl_zed = ... : refl Eq_zed
+  Eq_sym_zed = ... : sym Eq_zed
+  Eq_trans_zed = ... : trans Eq_zed
+  int = ... : set
+  zero_zed = ... : int.1
+  one_zed = ... : int.1
+  two_zed = ... : int.1
+  three_zed = ... : int.1
+  four_zed = ... : int.1
+  minus_one_zed = ... : int.1
+  plus_zed = ... : int.1-&gt;int.1-&gt;int.1
+  times_zed = ... : int.1-&gt;int.1-&gt;int.1
+  minus_zed = ... : int.1-&gt;int.1-&gt;int.1
+  neg_zed = ... : int.1-&gt;int.1
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

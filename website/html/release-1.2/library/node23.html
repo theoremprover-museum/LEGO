@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Inductive Sigma</TITLE>
+<META NAME="description" CONTENT="Inductive Sigma">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html456" HREF="node24.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html454" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html448" HREF="node22.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html458" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html457" HREF="node24.html">The Natural Numbers</A>
+<B>Up:</B> <A NAME="tex2html455" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html449" HREF="node22.html">Sum Types</A>
+<BR> <P>
+<H1><A NAME="SECTION000120000000000000000">Inductive Sigma</A></H1>
+<P>
+In the directory <TT>lib_sigma</TT> we define the inductive sigma type, with
+its projections, a proof that the first projection is
+injective and the eta-rule for the dependent pairs. Products can then
+be defined as a non-dependent sigma type.
+<P>
+<PRE> ** Module lib_sigma Imports lib_eq_basics
+ $sigma : {A|Type}(A-&gt;Type)-&gt;Type(sigma)
+ $dep_pair : {A|Type}{B|A-&gt;Type}{a:A}(B a)-&gt;sigma|A|B
+ $sigma_elim :
+    {A|Type}{B|A-&gt;Type}{C_sigma:(sigma|A|B)-&gt;Type}
+    ({a:A}{b:B a}C_sigma (dep_pair a b))-&gt;{z:sigma|A|B}C_sigma z
+[[A|Type][B|A-&gt;Type][C_sigma:(sigma|A|B)-&gt;Type]
+ [f_dep_pair:{a:A}{b:B a}C_sigma (dep_pair a b)][a:A][b:B a]
+    sigma_elim C_sigma f_dep_pair (dep_pair a b)  ==&gt;  f_dep_pair a b]
+
+  sigma_rec = ... :
+    {A|Type}{B|A-&gt;Type}{T|Type}({a:A}(B a)-&gt;T)-&gt;(sigma|A|B)-&gt;T
+  sigma_ind = ... :
+    {A|Type}{B|A-&gt;Type}{P:(sigma|A|B)-&gt;Prop}
+    ({a:A}{b:B a}P (dep_pair a b))-&gt;{z:sigma|A|B}P z
+  sig_pi1 = ... : {A|Type}{B|A-&gt;Type}(sigma|A|B)-&gt;A
+  sig_pi2 = ... : {A|Type}{B|A-&gt;Type}{z:sigma|A|B}B (sig_pi1 z)
+  dep_pair_eta = ... :
+    {A|Type}{B|A-&gt;Type}{x:sigma|A|B}
+    Eq x (dep_pair (sig_pi1 x) (sig_pi2 x))
+  sig_pi1_inj = ... :
+    {A|Type}{B|A-&gt;Type}{x,y:sigma|A|B}(Eq x y)-&gt;
+    Eq (sig_pi1 x) (sig_pi1 y)
+  Sigma = ... : {A:Type}(A-&gt;Type)-&gt;Type(sigma)
+  Prod = ... : (Type)-&gt;(Type)-&gt;Type(sigma)
+  Pr = ... : {A|Type}{B|Type}A-&gt;B-&gt;sigma|A|([_:A]B)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

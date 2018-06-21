@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Rewrite Syntax</title>
+  </head>
+
+  <body>
+      <h1>LEGO Rewrite Syntax</h1>
+
+<hr>
+
+<p>
+
+In previous LEGO versions
+
+<pre>[NCC three ==> Z]</pre>
+
+was not valid syntax; even if the rule contained no match variables, a
+match variable context was required, as in
+
+<pre>[[_:nat]NCC (S(S(S Z))) ==> Z]</pre>
+
+Rewrites without a match variable context are now accepted if the
+first equation is preceeded by the choice operator <tt>||</tt>, so
+
+<pre>[||NCC (S(S(S Z))) ==> Z]</pre>
+
+is accepted.
+
+<p>
+
+<hr>
+
+<!-- Created: Wed Feb 12 17:56:55 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: 13-Feb-1997
+<!-- hhmts end -->
+
+  </body>
+</html>

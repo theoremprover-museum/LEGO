@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Sorted Lists</TITLE>
+<META NAME="description" CONTENT="Sorted Lists">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html813"
+ HREF="node57.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html810"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html806"
+ HREF="node55.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html812"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html814"
+ HREF="node57.html">Finite Sets</A>
+<B> Up:</B> <A NAME="tex2html811"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html807"
+ HREF="node55.html">Permutation</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION0001312000000000000000">
+Sorted Lists</A>
+</H2>
+This file sets up the predicate for sorted-ness of a list inductively
+using <TT>list_elim</TT>, from the predicate <TT>lelist</TT>, saying
+that a given element is less than some other list. The main purpose of
+the file is to establish a derived induction principle for sorted
+lists, <TT>sorted_list_induction</TT>, which was used to give a proof
+of insert sort in <A HREF=#mckinnaphd><tex2html_citekey_mark>##mckinnaphd<tex2html_cite_mark>'s (##mckinnaphd<tex2html_citeyear_mark>)</A> PhD thesis. 
+<PRE>
+ ** Module lib_list_sorted Imports lib_list_PermII
+  lengthisahomomorphismcons = ... :
+    {A|Type}{l|list A}{n|nat}(Eq (suc n) (length l))-&gt;
+    Ex ([a:A]Eq l (cons a (tail l)))
+  Rlist = ... : {A|Type}{B|Type}(Rel A B)-&gt;A-&gt;(list B)-&gt;Prop
+  Sorted = ... : {A|Type}(Rel A A)-&gt;Pred (list A)
+  SortSpec = ... : {A|Type}(Rel A A)-&gt;Rel (list A) (list A)
+  sortedlistinduction = ... :
+    {A|Type}{R:Rel A A}{B|Type}{phi:Rel (list A) B}{n|B}
+    {c|A-&gt;(list A)-&gt;B-&gt;B}(phi (nil A) n)-&gt;
+    ({a|A}{l|list A}{b|B}(Sorted R (cons a l))-&gt;(phi l b)-&gt;
+     phi (cons a l) (c a l b))-&gt;{l:list A}(Sorted R l)-&gt;
+    phi l (list_rec n ([a:A][l'12:list A][b:B]c a l'12 b) l)
+  nilSorted = ... : {A|Type}{R:Rel A A}Sorted R (nil A)
+  nilRlist = ... : {A|Type}{R:Rel A A}{c|A}Rlist R c (nil A)
+  heredSortedlemma = ... :
+    {A|Type}{R:Rel A A}{b|A}{n|list A}(Sorted R (cons b n))-&gt;Sorted R n
+  SortedImpliesRlist = ... :
+    {A|Type}{R:Rel A A}{b|A}{n|list A}(Sorted R (cons b n))-&gt;Rlist R b n
+  heredRlistlemma = ... :
+    {A|Type}{R:Rel A A}{b,c|A}{n|list A}(Rlist R c (cons b n))-&gt;
+    Rlist R c n
+  heredRlist1 = ... :
+    {A|Type}{R:Rel A A}{c|A}{m,n|list A}(Rlist R c (append m n))-&gt;
+    Rlist R c n
+  heredRlist2 = ... :
+    {A|Type}{R:Rel A A}{c|A}{m,n|list A}(Rlist R c (append m n))-&gt;
+    Rlist R c m
+  appclRlist = ... :
+    {A|Type}{R:Rel A A}{c|A}{m,n|list A}(Rlist R c m)-&gt;(Rlist R c n)-&gt;
+    Rlist R c (append m n)
+  heredSorted = ... :
+    {A|Type}{R:Rel A A}{m,n|list A}(Sorted R (append m n))-&gt;
+    (Sorted R m /\ Sorted R n)
+  RlistIsMonotone = ... :
+    {A|Type}{R:Rel A A}(trans R)-&gt;{b,c|A}{m|list A}(R c b)-&gt;
+    (Rlist R b m)-&gt;Rlist R c m
+  PermPreservesRlist = ... :
+    {A|Type}{R:Rel A A}{c|A}{m,n|list A}(Perm m n)-&gt;(Rlist R c m)-&gt;
+    Rlist R c n
+  SortedPermsHaveRHeads = ... :
+    {A|Type}{R:Rel A A}(refl R)-&gt;{b,c|A}{m,n|list A}
+    (Sorted R (cons b m))-&gt;(Sorted R (cons c n))-&gt;
+    (Perm (cons b m) (cons c n))-&gt;R b c
+  SortedPermsHaveEqualHeads = ... :
+    {A|Type}{R:Rel A A}(refl R)-&gt;({a,b|A}(R a b)-&gt;(R b a)-&gt;Eq a b)-&gt;
+    {b,c|A}{m,n|list A}(Sorted R (cons b m))-&gt;(Sorted R (cons c n))-&gt;
+    (Perm (cons b m) (cons c n))-&gt;Eq b c
+  SortedPermsAreEqual = ... :
+    {A|Type}{R:Rel A A}(refl R)-&gt;({a,b|A}(R a b)-&gt;(R b a)-&gt;Eq a b)-&gt;
+    {l,m|list A}(Sorted R l)-&gt;(Sorted R m)-&gt;(Perm l m)-&gt;Eq l m
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

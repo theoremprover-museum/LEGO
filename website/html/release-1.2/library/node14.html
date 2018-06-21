@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Setoids</TITLE>
+<META NAME="description" CONTENT="Setoids">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html356" HREF="node15.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html354" HREF="node7.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html350" HREF="node13.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html358" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html357" HREF="node15.html">The Empty Type</A>
+<B>Up:</B> <A NAME="tex2html355" HREF="node7.html">Providing logic and equality</A>
+<B> Previous:</B> <A NAME="tex2html351" HREF="node13.html">Altenkirch-Streicher Elimination Rule</A>
+<BR> <P>
+<H2><A NAME="SECTION00063000000000000000">Setoids</A></H2>
+<P>
+Setoids are algebraic structures characterised by a domain and an
+equality relation.
+<P>
+<PRE> ** Module lib_setoid Imports parameters
+ $Setoid : SET
+ $make_Setoid : {dom:SET}(dom-&gt;dom-&gt;Prop)-&gt;Setoid
+ $Setoid_elim :
+    {C_Setoid:Setoid-&gt;TYPE}
+    ({dom:SET}{eq1:dom-&gt;dom-&gt;Prop}C_Setoid (make_Setoid dom eq1))-&gt;
+    {z:Setoid}C_Setoid z
+[[C_Setoid:Setoid-&gt;TYPE]
+ [f_make_Setoid:{dom:SET}{eq1:dom-&gt;dom-&gt;Prop}
+  C_Setoid (make_Setoid dom eq1)][dom:SET][eq1:dom-&gt;dom-&gt;Prop]
+    Setoid_elim C_Setoid f_make_Setoid (make_Setoid dom eq1)  ==&gt;
+    f_make_Setoid dom eq1]
+
+  dom = ... : Setoid-&gt;SET
+  eq1 = ... : {z:Setoid}(dom z)-&gt;(dom z)-&gt;Prop
+  Setoid_eq = ... : {S|Setoid}(dom S)-&gt;(dom S)-&gt;Prop</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

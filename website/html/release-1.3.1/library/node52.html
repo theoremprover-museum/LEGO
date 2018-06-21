@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>The Relation Adjoin</TITLE>
+<META NAME="description" CONTENT="The Relation Adjoin">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node53.html">
+<LINK REL="previous" HREF="node51.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node53.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html771"
+ HREF="node53.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html768"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html762"
+ HREF="node51.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html770"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html772"
+ HREF="node53.html">Membership</A>
+<B> Up:</B> <A NAME="tex2html769"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html763"
+ HREF="node51.html">Lists and products</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000138000000000000000">
+The Relation Adjoin</A>
+</H2>
+<P>
+Intuitively, <TT>Adjoin a k l</TT> holds if it is possible to insert
+the element&nbsp;<TT>a</TT> in the list&nbsp;<TT>k</TT> and obtain the
+list&nbsp;<TT>l</TT>.  This relation can be used to define permutations, as
+seen below.
+<P><PRE>
+ ** Module lib_list_Adjoin Imports lib_list_length
+ $Adjoin : {s|Type}s-&gt;(list s)-&gt;(list s)-&gt;Prop
+ $ad1 : {s|Type}{a:s}{xs:list s}Adjoin a xs (cons a xs)
+ $ad2 :
+    {s|Type}{xs|list s}{a|s}{axs|list s}(Adjoin a xs axs)-&gt;{b:s}
+    Adjoin a (cons b xs) (cons b axs)
+ $Adjoin_elim :
+    {s|Type}{C_Adjoin:s-&gt;(list s)-&gt;(list s)-&gt;Prop}
+    ({a:s}{xs:list s}C_Adjoin a xs (cons a xs))-&gt;
+    ({xs|list s}{a|s}{axs|list s}(Adjoin a xs axs)-&gt;{b:s}
+     (C_Adjoin a xs axs)-&gt;C_Adjoin a (cons b xs) (cons b axs))-&gt;{x1|s}
+    {x2,x3|list s}(Adjoin x1 x2 x3)-&gt;C_Adjoin x1 x2 x3
+ ** Label (!Adjoin!) Adjoin
+ ** Label (!Adjoin elim!) Adjoin_elim
+ ** Label (!Adjoin ad1!) ad1
+ ** Label (!Adjoin ad2!) ad2
+[[s|Type][C_Adjoin:s-&gt;(list s)-&gt;(list s)-&gt;Prop]
+ [f_ad1:{a1:s}{xs1:list s}C_Adjoin a1 xs1 (cons a1 xs1)]
+ [f_ad2:{xs|list s}{a|s}{axs|list s}(Adjoin a xs axs)-&gt;{b:s}
+  (C_Adjoin a xs axs)-&gt;C_Adjoin a (cons b xs) (cons b axs)][a1:s]
+ [xs1:list s][xs|list s][a|s][axs|list s][x1:Adjoin a xs axs][b:s]
+    Adjoin_elim C_Adjoin f_ad1 f_ad2 (ad1 a1 xs1)  ==&gt;  f_ad1 a1 xs1
+ || Adjoin_elim C_Adjoin f_ad1 f_ad2 (ad2 x1 b)  ==&gt;
+    f_ad2 x1 b (Adjoin_elim C_Adjoin f_ad1 f_ad2 x1)]
+
+  Adjoin_inv = ... :
+    {s|Type}{a|s}{xs,ys|list s}(Adjoin a xs ys)-&gt;
+    (Eq ys (cons a xs) \/
+     Ex ([xs':list s]
+         Ex ([ys':list s]
+             Ex ([c:s]
+                 (Eq xs (cons c xs') /\ Eq ys (cons c ys') /\
+                  Adjoin a xs' ys')))))
+  Adjoin_inv_corr1 = ... :
+    {s|Type}{a,b|s}{xs,ys|list s}(Adjoin a (cons b xs) ys)-&gt;
+    (Eq ys (cons a (cons b xs)) \/
+     Ex ([ys':list s](Eq ys (cons b ys') /\ Adjoin a xs ys')))
+  Adjoin_inv_corr2 = ... :
+    {s|Type}{a,b|s}{xs,ys|list s}(Adjoin a xs (cons b ys))-&gt;
+    ((Eq a b /\ Eq xs ys) \/
+     Ex ([xs':list s](Eq xs (cons b xs') /\ Adjoin a xs' ys)))
+  Adjoin_inv_corr3 = ... :
+    {s|Type}{a|s}{xs|list s}(Adjoin a (nil s) xs)-&gt;
+    Eq xs (cons a (nil s))
+  Adjoin_inv_corr4 = ... :
+    {s|Type}{a|s}{xs|list s}not (Adjoin a xs (nil s))
+  Adjoin_inv_corr5 = ... :
+    {s|Type}{a|s}{xs|list s}(Adjoin a xs (cons a (nil s)))-&gt;
+    Eq xs (nil s)
+  Adjoin_com1 = ... :
+    {s|Type}{a,b|s}{xs,us,ys|list s}(Adjoin a xs ys)-&gt;(Adjoin b ys us)-&gt;
+    Ex ([zs:list s](Adjoin b xs zs /\ Adjoin a zs us))
+  Adjoin_com2 = ... :
+    {s|Type}{a,b|s}{xs,us,zs|list s}(Adjoin b zs xs)-&gt;(Adjoin a zs us)-&gt;
+    Ex ([ys:list s](Adjoin a xs ys /\ Adjoin b us ys))
+  Adjoin_com3 = ... :
+    {s|Type}{a,b|s}{xs,us,ys|list s}(Adjoin a xs ys)-&gt;(Adjoin b us ys)-&gt;
+    ((Eq us xs /\ Eq b a) \/
+     Ex ([zs:list s](Adjoin b zs xs /\ Adjoin a zs us)))
+  Adjoin_length_suc = ... :
+    {s|Type}{a|s}{l,al|list s}(Adjoin a l al)-&gt;
+    Eq (length al) (suc (length l))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

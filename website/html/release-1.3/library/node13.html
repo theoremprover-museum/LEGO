@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Altenkirch-Streicher Elimination Rule</TITLE>
+<META NAME="description" CONTENT="Altenkirch-Streicher Elimination Rule">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node14.html">
+<LINK REL="previous" HREF="node12.html">
+<LINK REL="up" HREF="node9.html">
+<LINK REL="next" HREF="node14.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html317"
+ HREF="node14.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html314"
+ HREF="node9.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html308"
+ HREF="node12.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html316"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html318"
+ HREF="node14.html">Theorems about Equality</A>
+<B> Up:</B> <A NAME="tex2html315"
+ HREF="node9.html">Equality</A>
+<B> Previous:</B> <A NAME="tex2html309"
+ HREF="node12.html">Paulin-Mohring's Inductive Equality</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION00052400000000000000">
+Altenkirch-Streicher Elimination Rule</A>
+</H3>
+
+<P>
+This file contains an extra elimination rule for
+Martin-L&#246;f's
+inductive equality proposed by
+Thorsten Altenkirch and Thomas Streicher.
+This new rule is used to prove the proposition
+<TT>Eq_unique</TT> below which allows one to prove
+e.g. that equality in inductive sigma types
+respects second projection.
+This rule has recently been shown not to be 
+derivable from the usual elimination rule for
+inductive equality (<A
+ HREF="node78.html#hofmann.streicher:grupoid">Hofmann &amp; Streicher, 1994</A>).
+
+<P>
+<PRE>
+ ** Module lib_AS_eq Imports lib_eq
+ $Eq_elim' :
+    {A|Type}{C:{a|A}(Eq a a)-&gt;Type}({a:A}C (Eq_refl a))-&gt;{a|A}{p:Eq a a}
+    C p
+  Eq_unique = ... : {A|Type}{a,b:A}{p,q:Eq a b}Eq p q
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

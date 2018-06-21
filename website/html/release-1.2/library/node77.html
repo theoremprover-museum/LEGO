@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>An imperative programming language</TITLE>
+<META NAME="description" CONTENT="An imperative programming language">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1089" HREF="node78.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1087" HREF="node73.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1081" HREF="node76.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1091" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1090" HREF="node78.html">Hoare logic</A>
+<B>Up:</B> <A NAME="tex2html1088" HREF="node73.html">Imperative programs</A>
+<B> Previous:</B> <A NAME="tex2html1082" HREF="node76.html">Updating</A>
+<BR> <P>
+<H2><A NAME="SECTION000222000000000000000">An imperative programming language</A></H2>
+<P>
+<A NAME="secipl">&#160;</A>
+<P>
+Assignments are the only statements in an imperative programming
+language responsible for changes on states. Consider any assignment
+<I>x</I>:=<I>t</I>. It expects two arguments, a variable&nbsp;<I>x</I> of some type&nbsp; <IMG WIDTH=5 HEIGHT=8 ALIGN=BOTTOM ALT="tex2html_wrap_inline377" SRC="img6.gif"  > 
+and an expression&nbsp;<I>t</I> which when evaluated in some environment yields
+an expression of type&nbsp; <IMG WIDTH=5 HEIGHT=8 ALIGN=BOTTOM ALT="tex2html_wrap_inline377" SRC="img6.gif"  > . The expression&nbsp;<I>t</I> may of course refer
+to some variable, but when we write something like <I>x</I>:=<I>x</I>+1, we mean
+to <EM>evaluate</EM> the variable&nbsp;<I>x</I> in the <EM>current
+  environment</EM> and update <I>x</I> in this environment. Notice that the
+environment is an implicit parameter to characterise the term in
+assignments, which cannot be avoided if we mix pure expressions with
+variables of the imperative programming language.
+<P>
+For an adequate encoding, we perform a functional abstraction and
+require the type of the second argument to explicitly mention the
+current environment i.e.,
+<P>
+<PRE>assign:{sort|location-&gt;Type}
+       {x:location}((Env sort)-&gt;sort x)-&gt;prog|sort.</PRE>
+<P>
+Boolean expressions in conditionals and loops may be
+represented similarly, yielding a many-sorted imperative programming
+language as an inductive type,
+<P>
+<PRE> ** Module lib_ipl Imports lib_locations
+ $prog : (location-&gt;Type)-&gt;Type(prog)
+ $skip : {sort|location-&gt;Type}prog|sort
+ $assign :
+    {sort|location-&gt;Type}{x:location}((Env sort)-&gt;sort x)-&gt;prog|sort
+ $seq : {sort|location-&gt;Type}(prog|sort)-&gt;(prog|sort)-&gt;prog|sort
+ $ifthenelse :
+    {sort|location-&gt;Type}((Env sort)-&gt;bool)-&gt;(prog|sort)-&gt;(prog|sort)-&gt;
+    prog|sort
+ $while :
+    {sort|location-&gt;Type}((Env sort)-&gt;bool)-&gt;(prog|sort)-&gt;prog|sort
+ $prog_elim :
+    {sort|location-&gt;Type}{C_prog:(prog|sort)-&gt;TYPE}
+    (C_prog (skip|sort))-&gt;
+    ({x:location}{x8:(Env sort)-&gt;sort x}C_prog (assign x x8))-&gt;
+    ({x6,x7:prog|sort}(C_prog x6)-&gt;(C_prog x7)-&gt;C_prog (seq x6 x7))-&gt;
+    ({x3:(Env sort)-&gt;bool}{x4,x5:prog|sort}(C_prog x4)-&gt;(C_prog x5)-&gt;
+     C_prog (ifthenelse x3 x4 x5))-&gt;
+    ({x1:(Env sort)-&gt;bool}{x2:prog|sort}(C_prog x2)-&gt;
+     C_prog (while x1 x2))-&gt;{z:prog|sort}C_prog z
+[[sort|location-&gt;Type][C_prog:(prog|sort)-&gt;TYPE]
+ [f_skip:C_prog (skip|sort)]
+ [f_assign:{x:location}{x8:(Env sort)-&gt;sort x}C_prog (assign x x8)]
+ [f_seq:{x6,x7:prog|sort}(C_prog x6)-&gt;(C_prog x7)-&gt;C_prog (seq x6 x7)]
+ [f_ifthenelse:{x3:(Env sort)-&gt;bool}{x4,x5:prog|sort}(C_prog x4)-&gt;
+  (C_prog x5)-&gt;C_prog (ifthenelse x3 x4 x5)]
+ [f_while:{x1:(Env sort)-&gt;bool}{x2:prog|sort}(C_prog x2)-&gt;
+  C_prog (while x1 x2)][x:location][x8:(Env sort)-&gt;sort x]
+ [x6,x7:prog|sort][x3:(Env sort)-&gt;bool][x4,x5:prog|sort]
+ [x1:(Env sort)-&gt;bool][x2:prog|sort]
+    prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+              (skip|sort)  ==&gt;  f_skip
+ || prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+              (assign x x8)  ==&gt;  f_assign x x8
+ || prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+              (seq x6 x7)  ==&gt;
+    f_seq x6 x7
+          (prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+                     x6)
+          (prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+                     x7)
+ || prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+              (ifthenelse x3 x4 x5)  ==&gt;
+    f_ifthenelse x3 x4 x5
+                 (prog_elim C_prog f_skip f_assign f_seq f_ifthenelse
+                            f_while x4)
+                 (prog_elim C_prog f_skip f_assign f_seq f_ifthenelse
+                            f_while x5)
+ || prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+              (while x1 x2)  ==&gt;
+    f_while x1 x2
+            (prog_elim C_prog f_skip f_assign f_seq f_ifthenelse f_while
+                       x2)]
+
+  ifthen = ... :
+    {sort|location-&gt;Type}((Env sort)-&gt;bool)-&gt;(prog|sort)-&gt;prog|sort
+  limplies = ... :
+    {sort|location-&gt;Type}((Env sort)-&gt;Prop)-&gt;((Env sort)-&gt;Prop)-&gt;Prop
+  Assertion_or = ... :
+    {sort|location-&gt;Type}((Env sort)-&gt;Prop)-&gt;((Env sort)-&gt;Prop)-&gt;
+    (Env sort)-&gt;Prop
+* limplies_refl = ... :
+    {sort|location-&gt;Type}{P:(Env sort)-&gt;Prop}limplies P P
+* limplies_trans = ... :
+    {sort|location-&gt;Type}{P,Q,R:(Env sort)-&gt;Prop}(limplies P Q)-&gt;
+    (limplies Q R)-&gt;limplies P R</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

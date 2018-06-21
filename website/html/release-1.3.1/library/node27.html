@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Iteration Principles</TITLE>
+<META NAME="description" CONTENT="Iteration Principles">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node28.html">
+<LINK REL="previous" HREF="node26.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node28.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html483"
+ HREF="node28.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html480"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html474"
+ HREF="node26.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html482"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html484"
+ HREF="node28.html">Induction Principles</A>
+<B> Up:</B> <A NAME="tex2html481"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html475"
+ HREF="node26.html">Natural Numbers: Basic Definitions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000122000000000000000">
+Iteration Principles</A>
+</H2>
+<P><PRE>
+ ** Module lib_nat_iter Imports lib_nat lib_bool_funs
+  nat_iter_suc = ... :
+    {t|Type}{z:t}{s:t-&gt;t}{n:nat}
+    Eq (nat_iter z s (suc n)) (nat_iter (s z) s n)
+  while_cond1 = ... :
+    {f:nat-&gt;bool}[lll=nat_iter zero ([a:nat]if (f (suc a)) (suc a) a)]
+    (is_true (f zero))-&gt;{n:nat}is_true (f (lll n))
+  while_cond2 = ... :
+    {f:nat-&gt;bool}[lll=nat_iter zero ([a:nat]if (f (suc a)) (suc a) a)]
+    {n:nat}(Eq (lll n) n \/ is_false (f (suc (lll n))))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

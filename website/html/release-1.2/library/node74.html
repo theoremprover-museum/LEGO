@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Locations</TITLE>
+<META NAME="description" CONTENT="Locations">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1056" HREF="node75.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1054" HREF="node73.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1048" HREF="node73.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1058" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1057" HREF="node75.html">Basic defintion of locations</A>
+<B>Up:</B> <A NAME="tex2html1055" HREF="node73.html">Imperative programs</A>
+<B> Previous:</B> <A NAME="tex2html1049" HREF="node73.html">Imperative programs</A>
+<BR> <P>
+<H2><A NAME="SECTION000221000000000000000">Locations</A></H2>
+<P>
+<A NAME="seclocations">&#160;</A>
+<P>
+Variables (<TT>location</TT>s) are an essential ingredient of imperative
+programs. These must not be confused with L<font size=-1><small>EGO</small></font>'s variables,
+because the latter cannot be accessed by syntactic means. In order to computationally
+distinguish between different variables, we introduce <TT>location</TT> as a
+new type isomorphic to natural numbers. By lifting the equality from <code>nat</code> to <TT>location</TT>, we may obtain a
+decidable equality 
+such that two variables are different, if and only if their underlying
+addresses differ.
+<P>
+In real programming languages, variables are used for a variety of
+types. A novelty of this work is that it does cater for arbitrary
+types expressible in a Unifying Theory of Dependent Types. In the
+declaration part of the program, variables must be mapped to their
+types. In this context, environments map variables to their sorts,
+<P>
+<code>Env = [sort:location-&gt;Type]{x:location}sort x</code>.
+<P>
+<BR> <HR>
+<UL> 
+<LI> <A NAME="tex2html1059" HREF="node75.html#SECTION000221100000000000000">Basic defintion of locations</A>
+<LI> <A NAME="tex2html1060" HREF="node76.html#SECTION000221200000000000000">Updating</A>
+</UL>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

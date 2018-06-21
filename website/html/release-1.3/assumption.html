@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3: Assumption</title>
+  </head>
+
+  <body><P>
+ <HR> 
+<A HREF="config_eq.html">
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//previous_motif_gr.gif">
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A  HREF="config_eq.html">Configure Equality</A>
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Version 1.3</A>
+<HR> 
+      <h1>LEGO Version 1.3: Assumption</h1>
+      The command <tt>Assumption</tt> constructs a proof term for the
+      current goal if it is a (first-order) instance of any of the
+      current assumptions. <tt>Assumption</tt> <var>RELGOAL</var> is an
+      abbreviation for <tt>Next</tt> <var>RELGOAL</var><tt>;
+      Assumption</tt>. 
+
+      <h2>Example</h2>
+      <ul>
+	<li><pre>
+      x : nat
+      H : {n:nat}(x << (three + n))
+      ?1 : x << three</pre>
+      will be resolved by <tt>Assumption</tt>.</li>
+	<li> It will however fail
+      with <cite>Error: Goal cannot be closed by an instance of any
+	    assumption</cite> when invoked in the following
+	  situation<pre>
+      x : nat
+      H : {n:nat}(n << four)->(x << n)
+      ?1 : x << three</pre>
+      because a refinement by <tt>H</tt> would yield the subgoal
+      <tt>three << four</tt></li>.</ul>
+
+      <h2>Assumption and Immed</h2>
+      The commands <tt>Try Assumption</tt> and <tt>Immed</tt> are
+      equivalent in a proof state with a <em>single</em> visible goal.
+      In a proof state with multiple goals, throwing
+      <tt>Assumption</tt> at a specific goal may well be a better
+      strategy than invoking <tt>Immed</tt>. The latter tactic may
+      incorrectly unify some existential variables. It may also take a
+    <em>long</em> time to process. <p>Notice
+      that <tt>Immed</tt> <em>never</em> fails. </p>
+
+      <hr>
+      <address><a href="mailto:lego@dcs.ed.ac.uk">LEGO Team</a></address>
+<!-- Created: Mon Feb 17 13:15:36 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: Tue Jun 23 16:23:07 BST 1998
+<!-- hhmts end -->
+  </body>
+</html>

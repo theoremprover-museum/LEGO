@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Some theorems about Modulo</TITLE>
+<META NAME="description" CONTENT="Some theorems about Modulo">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node71.html">
+<LINK REL="previous" HREF="node69.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node71.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html974"
+ HREF="node71.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html971"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html965"
+ HREF="node69.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html973"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html975"
+ HREF="node71.html">Boolean valued functions on</A>
+<B> Up:</B> <A NAME="tex2html972"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html966"
+ HREF="node69.html">Basic Lemmas</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000194000000000000000">
+Some theorems about Modulo</A>
+</H2>
+<P>
+This file defines the relation Modulo, and proves
+a couple of theorems about it.
+<P><PRE>
+ ** Module lib_int_mod Imports lib_int_basics_thms
+  Mod = ... : int.1-&gt;int.1-&gt;int.1-&gt;Prop
+  plus_resp_mod = ... :
+    {m,x1,x2,r1,r2|int.1}(Mod m x1 r1)-&gt;(Mod m x2 r2)-&gt;
+    Mod m (plus_zed x1 x2) (plus_zed r1 r2)
+  times_resp_Mod = ... :
+    {m,x1,x2,r1,r2|int.1}(Mod m x1 r1)-&gt;(Mod m x2 r2)-&gt;
+    Mod m (times_zed x1 x2) (times_zed r1 r2)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

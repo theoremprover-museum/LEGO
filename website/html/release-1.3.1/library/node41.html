@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Max and Min</TITLE>
+<META NAME="description" CONTENT="Max and Min">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node42.html">
+<LINK REL="previous" HREF="node40.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node42.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html640"
+ HREF="node42.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html637"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html631"
+ HREF="node40.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html639"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html641"
+ HREF="node42.html">Division</A>
+<B> Up:</B> <A NAME="tex2html638"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html632"
+ HREF="node40.html">The predicate Even</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION0001211000000000000000">
+Max and Min</A>
+</H2>
+<P>
+The final file for natural numbers defines the functions
+max and min and proves various theorems about them.
+It requires most of the other nat library files.
+The functions min and max are defined explicitly 
+using double iteration rather than by showing that
+the order relation on nat is complete.
+<P><PRE>
+ ** Module lib_max_min Imports lib_nat_Prop_rels
+  max = ... : nat-&gt;nat-&gt;nat
+  min = ... : nat-&gt;nat-&gt;nat
+  max_Le_left = ... : {x,y:nat}Le x (max x y)
+  max_Le_right = ... : {x,y:nat}Le y (max x y)
+  max_is_least = ... : {x,y,z:nat}(Le x z)-&gt;(Le y z)-&gt;Le (max x y) z
+  min_Le_left = ... : {x,y:nat}Le (min x y) y
+  min_Le_right = ... : {x,y:nat}Le (min x y) x
+  min_is_greatest = ... : {x,y,z:nat}(Le z x)-&gt;(Le z y)-&gt;Le z (min x y)
+  max_sym = ... : {n,m:nat}Eq (max n m) (max m n)
+  max_assoc = ... : {m,n,o:nat}Eq (max (max m n) o) (max m (max n o))
+  max_suc_pred = ... :
+    {m,n:nat}Eq (max m (suc n)) (suc (max (pred m) n))
+  min_sym = ... : {n,m:nat}Eq (min n m) (min m n)
+  Le_min_left = ... : {x,y:nat}(Le x y)-&gt;Eq (min x y) x
+  Le_min_right = ... : {x,y:nat}(Le y x)-&gt;Eq (min x y) y
+  Le_max_right = ... : {x,y:nat}(Le x y)-&gt;Eq (max x y) y
+  Le_max_left = ... : {x,y:nat}(Le y x)-&gt;Eq (max x y) x
+  min_idemp = ... : {a:nat}Eq (min a a) a
+  max_resp_times = ... :
+    {x,y,a:nat}Eq (max (times a x) (times a y)) (times a (max x y))
+  min_resp_times = ... :
+    {x,y,a:nat}Eq (min (times a x) (times a y)) (times a (min x y))
+  max_resp_plus = ... :
+    {a,b,x:nat}Eq (max (plus a x) (plus b x)) (plus (max a b) x)
+  min_resp_plus = ... :
+    {a,b,x:nat}Eq (min (plus a x) (plus b x)) (plus (min a b) x)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

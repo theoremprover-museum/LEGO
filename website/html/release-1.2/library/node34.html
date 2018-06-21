@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Propositional Relations</TITLE>
+<META NAME="description" CONTENT="Propositional Relations">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html593" HREF="node35.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html591" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html585" HREF="node33.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html595" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html594" HREF="node35.html">Iteration Principles</A>
+<B>Up:</B> <A NAME="tex2html592" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html586" HREF="node33.html">Propositional Strict Inequality</A>
+<BR> <P>
+<H2><A NAME="SECTION0001310000000000000000">Propositional Relations</A></H2>
+<P>
+This file incorporates both propositional inequalities and
+gives several additional theorems involving both
+inequalities.
+<P>
+<PRE> ** Module lib_nat_Prop_rels Imports lib_nat/lib_nat_Lt
+     lib_nat/lib_nat_Le
+  Lt_Le_trans = ... : {x,y,z|nat}(Lt x y)-&gt;(Le y z)-&gt;Lt x z
+  Le_Lt_trans = ... : {x,y,z|nat}(Le x y)-&gt;(Lt y z)-&gt;Lt x z
+  Lt_imp_Le = ... : {x,y:nat}(Lt x y)-&gt;Le x y
+  Lt_Le_resp_plus = ... :
+    {x,y,a,b:nat}(Lt x y)-&gt;(Le a b)-&gt;Lt (plus x a) (plus y b)
+  Le_Lt_resp_plus = ... :
+    {x,y,a,b:nat}(Le x y)-&gt;(Lt a b)-&gt;Lt (plus x a) (plus y b)
+  decide_nat = ... : {x,y:nat}or (Le x y) (Lt y x)
+  Le_is_Lt_or_Eq = ... : {x,y:nat}(Le x y)-&gt;or (Lt x y) (Eq x y)
+  zero_or_pos = ... : {n:nat}or (Eq n zero) (Lt zero n)
+  Lt_imp_Le_suc = ... : {x,y:nat}(Lt x (suc y))-&gt;Le x y
+  Le_imp_Lt_suc = ... : {x,y:nat}(Le x y)-&gt;Lt x (suc y)
+  Lt_resp_times_both = ... :
+    {x,y,a,b:nat}(Lt x y)-&gt;(Lt a b)-&gt;Lt (times a x) (times b y)
+  Lt_imp_Le_suc' = ... : {x,y:nat}(Lt x y)-&gt;Le (suc x) y
+  Le_imp_Lt_suc' = ... : {x,y:nat}(Le (suc x) y)-&gt;Lt x y
+  minus_well_le = ... :
+    {m,n:nat}(Lt zero m)-&gt;(Le m n)-&gt;Lt (plus (minus n m) m) (plus n m)
+  not_Le_imp_Lt = ... : {x,y:nat}(not (Le x y))-&gt;Lt y x
+  not_Lt_imp_Le = ... : {x,y:nat}(not (Lt x y))-&gt;Le y x
+  Le_minus_zero = ... : {a,b:nat}(Le a b)-&gt;Eq (minus a b) zero
+  Le_resp_minus = ... : {a,b,c:nat}(Le a b)-&gt;Le (minus c b) (minus c a)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Boolean-valued Relations</TITLE>
+<META NAME="description" CONTENT="Boolean-valued Relations">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html626" HREF="node38.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html624" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html618" HREF="node36.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html628" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html627" HREF="node38.html">All order relations</A>
+<B>Up:</B> <A NAME="tex2html625" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html619" HREF="node36.html">Induction Principles</A>
+<BR> <P>
+<H2><A NAME="SECTION0001313000000000000000">Boolean-valued Relations</A></H2>
+<P>
+The order relations on nat are decidable so another
+way to represent them is via boolean valued functions.
+The following file defines boolean-valued strict and
+non-strict inequality plus the boolean-valued equality.
+Most of the propositional order relation theorems have a boolean
+counterpart, the most useful of which are included in
+the library.
+<P>
+<PRE> ** Module lib_nat_bool_rels Imports lib_nat_suc_thms lib_bool_thms
+  lt = ... : nat-&gt;nat-&gt;bool
+  le = ... : nat-&gt;nat-&gt;bool
+  nat_eq = ... : nat-&gt;nat-&gt;bool
+  zero_lt_suc = ... : {n:nat}is_true (lt zero (suc n))
+  zero_le_suc = ... : {n:nat}is_true (le zero (suc n))
+  not_n_lt_zero = ... : {n:nat}is_false (lt n zero)
+  lt_resp_suc = ... : {n,m:nat}Eq (lt n m) (lt (suc n) (suc m))
+  le_resp_suc = ... : {n,m:nat}Eq (le n m) (le (suc n) (suc m))
+  not_n_lt_n = ... : {n:nat}is_false (lt n n)
+  n_lt_suc_n = ... : {n:nat}is_true (lt n (suc n))
+  not_lt_suc_is_suc = ... : {m,n:nat}(is_false (lt m (suc n)))-&gt;is_suc m
+  lt_weak_trans = ... :
+    {m,n|nat}(is_true (lt m n))-&gt;is_true (lt m (suc n))
+  lt_left_suc = ... :
+    {n,m:nat}(is_true (lt (suc n) m))-&gt;is_true (lt n m)
+  lt_suc_character = ... :
+    {m,n:nat}(is_true (lt n (suc m)))-&gt;or (Eq n m) (is_true (lt n m))
+  lt_character = ... :
+    {n,m:nat}
+    or (and (is_true (lt n m)) (is_false (lt m n)))
+       (or (and (is_true (lt m n)) (is_false (lt n m))) (Eq n m))
+  le_character = ... :
+    {n,m:nat}
+    or (and (is_true (le n m)) (is_false (le m n)))
+       (or (and (is_true (le m n)) (is_false (le n m))) (Eq n m))
+  le_refl = ... : {n:nat}is_true (le n n)
+  le_zero_imp_zero = ... : {n:nat}iff (is_true (le n zero)) (Eq n zero)
+  le_not_lt_imp_Eq = ... :
+    {i,n:nat}(and (is_true (le i n)) (is_false (lt i n)))-&gt;Eq i n
+  lt_imp_le_suc = ... :
+    {x,y|nat}(is_true (lt x y))-&gt;is_true (le (suc x) y)
+  nat_eq_character = ... : {m,n:nat}iff (is_true (nat_eq m n)) (Eq m n)
+  nat_eq_character' = ... :
+    {m,n:nat}iff (is_false (nat_eq m n)) (not (Eq m n))
+  nat_eq_sym = ... : {m,n:nat}Eq (nat_eq m n) (nat_eq n m)
+  nat_eq_refl = ... : {n:nat}is_true (nat_eq n n)
+  odd = ... : nat-&gt;bool
+  even = ... : nat-&gt;bool</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

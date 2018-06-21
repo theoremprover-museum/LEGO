@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Membership</TITLE>
+<META NAME="description" CONTENT="Membership">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node54.html">
+<LINK REL="previous" HREF="node52.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node54.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html785"
+ HREF="node54.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html782"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html776"
+ HREF="node52.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html784"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html786"
+ HREF="node54.html">Distinctness</A>
+<B> Up:</B> <A NAME="tex2html783"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html777"
+ HREF="node52.html">The Relation Adjoin</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000139000000000000000">
+Membership</A>
+</H2>
+
+<P>
+Using the relation <TT>Adjoin</TT> we define the membership relation 
+between elements of some type and lists over that type.
+
+<P>
+<PRE>
+ ** Module lib_list_Member Imports lib_list_Adjoin lib_list_prod
+  Member = ... : {s|Type}s-&gt;(list s)-&gt;Prop
+  not_Member_nil = ... : {s|Type}{a|s}not (Member a (nil s))
+  Mem_ind = ... :
+    {s|Type}{l|list s}{a,b|s}
+    iff (Member b (cons a l)) (Member b l \/ Eq a b)
+  Member_Adjoin = ... :
+    {s|Type}{l,al|list s}{a,b|s}(not (Eq a b))-&gt;(Adjoin a l al)-&gt;
+    (Member b al)-&gt;Member b l
+  Member_map = ... :
+    {s|Type}{u|Type}{l:list s}{a:s}{f:s-&gt;u}(Member a l)-&gt;
+    Member (f a) (map f l)
+  Member_map_inv = ... :
+    {s|Type}{u|Type}{l:list s}{b:u}{f:s-&gt;u}(Member b (map f l))-&gt;
+    Ex ([a:s](Member a l /\ Eq (f a) b))
+  Member_append = ... :
+    {s|Type}{l1,l2:list s}{a:s}
+    iff (Member a (append l1 l2)) (Member a l1 \/ Member a l2)
+  Member_prod = ... :
+    {s|Type}{u|Type}{l1:list s}{l2:list u}{p:prod s u}
+    iff (Member p (prod_list l1 l2))
+     (Member (Fst p) l1 /\ Member (Snd p) l2)
+  Member_build = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}{a:s}
+    iff (Member a (build_list f n)) (Ex ([k:nat](Lt k n /\ Eq (f k) a)))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

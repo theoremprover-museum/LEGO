@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Library files for elimination over Prop</TITLE>
+<META NAME="description" CONTENT="Library files for elimination over Prop">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1197" HREF="node88.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1195" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1189" HREF="node86.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1199" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1198" HREF="node88.html">Example Proof developments</A>
+<B>Up:</B> <A NAME="tex2html1196" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html1190" HREF="node86.html">Library files for eliminating </A>
+<BR> <P>
+<H1><A NAME="SECTION000250000000000000000">Library files for elimination over <TT>Prop</TT></A></H1>
+<P>
+The library directory <TT>lib_prop</TT> contains
+four subdirectories 
+<TT>lib_bool</TT>, <TT>lib_sum</TT>,
+<TT>lib_nat</TT> and <TT>lib_list</TT>. Each of these
+directories contains a single file <TT>lib_bool.l</TT>
+etc. These files contain the same theorems as the
+corresponding files in the main library. 
+They are for using impredicative (in <TT>Prop</TT>)
+datatypes with elimination over <TT>Prop</TT>. Under this
+framework it is not provable that <TT>true</TT> is
+not equal to <TT>false</TT> and similar results for
+other datatypes. It is normal to assume these results.
+These files all depend on <TT>lib_bool</TT> which 
+contains <TT>true_not_false</TT> as an assumption.
+This assumption is used in the other files to
+prove those theorems which require it.
+See section&nbsp;<A HREF="node4.html#custom">3</A> (particularly 
+the final paragraph) for how to use these files
+in conjunction with the rest of the library.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The predicate Even</TITLE>
+<META NAME="description" CONTENT="The predicate Even">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html648" HREF="node40.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html646" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html640" HREF="node38.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html650" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html649" HREF="node40.html">Max and Min</A>
+<B>Up:</B> <A NAME="tex2html647" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html641" HREF="node38.html">All order relations</A>
+<BR> <P>
+<H2><A NAME="SECTION0001315000000000000000">The predicate Even</A></H2>
+<P>
+In this section we define the predicate ``Even'', and
+prove some theorems characterising it.
+<P>
+<PRE> ** Module lib_nat_Even Imports lib_nat/lib_nat
+  Even = ... : nat-&gt;Prop
+  ev1 = ... : Even zero
+  ev2 = ... : {n:nat}(Even n)-&gt;Even (suc (suc n))
+  Even_elim_nondep = ... :
+    {T:nat-&gt;Prop}(T zero)-&gt;({n:nat}(T n)-&gt;T (suc (suc n)))-&gt;{n:nat}
+    (Even n)-&gt;T n
+  Even_inv = ... :
+    {n:nat}(Even n)-&gt;
+    or (Eq n zero) (Ex ([x:nat]and (Eq n (suc (suc x))) (Even x)))
+  Even_inv' = ... : {n:nat}(Even (suc (suc n)))-&gt;Even n</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

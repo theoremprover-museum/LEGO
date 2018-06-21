@@ -1,0 +1,39 @@
+<HTML>
+<HEAD>
+<TITLE>lego-mode: Installation (20-Feb-1995)</TITLE>
+<!-- Created by: Thomas Schreiber, 15-Feb-1995 -->
+<!-- Changed by: Thomas Schreiber, 20-Feb-1995 -->
+
+
+</HEAD>
+<BODY><P>
+ <HR> 
+<A HREF="emacs-customisation.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+<A HREF="tools.html"> <IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A  HREF="emacs-customisation.html"> Customisation </A>
+<B> Up:</B> <A  HREF="tools.html">Tools</A>
+
+<HR> <P>
+
+ <H1>lego-mode: Installation</H1> 
+You need to copy the <a href="emacs.html#files"> above files</a>
+
+
+to a directory in your load-path and decompress them (using <TT>gunzip</TT>). Furthermore, insert 
+
+<LISTING>
+(setq auto-mode-alist (cons '("\\.l$" . lego-mode) auto-mode-alist))
+(autoload 'lego-mode "lego-mode" "Major mode for editing Lego proof scripts." t)
+(autoload 'lego-shell "lego-mode" "Inferior shell invoking lego." t)
+</LISTING>
+
+in your <TT>.emacs</TT> file.
+
+</BODY>
+<P><ADDRESS>
+<I>Last updated on 20 February 1995 by <A
+HREF="http://www.dcs.ed.ac.uk/home/tms/">Thomas Schreiber</A> &lt;lego@dcs.ed.ac.uk&gt; <BR>
+</I>
+</ADDRESS></HTML>

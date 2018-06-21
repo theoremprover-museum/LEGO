@@ -1,0 +1,125 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Propositional relations on integers</TITLE>
+<META NAME="description" CONTENT="Propositional relations on integers">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node73.html">
+<LINK REL="previous" HREF="node71.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node73.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html999"
+ HREF="node73.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html996"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html990"
+ HREF="node71.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html998"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html1000"
+ HREF="node73.html">Max and min on</A>
+<B> Up:</B> <A NAME="tex2html997"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html991"
+ HREF="node71.html">Boolean valued functions on</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000196000000000000000">
+Propositional relations on integers</A>
+</H2>
+
+<P>
+In this file we define the order relations on integers and
+prove a number of theorems about them.
+
+<P>
+<PRE>
+ ** Module lib_int_Prop_rels Imports lib_int_basics_thms
+     lib_nat_Prop_rels
+  Le_zed = ... : int.1-&gt;int.1-&gt;Prop
+  Lt_zed = ... : int.1-&gt;int.1-&gt;Prop
+  Le_resp_eq_l = ... : {a,b,x:int.1}(eq a b)-&gt;(Le_zed a x)-&gt;Le_zed b x
+  Le_resp_eq_r = ... : {a,b,x:int.1}(eq a b)-&gt;(Le_zed x a)-&gt;Le_zed x b
+  Lt_resp_eq_l = ... : {a,b,x:int.1}(eq a b)-&gt;(Lt_zed a x)-&gt;Lt_zed b x
+  Lt_resp_eq_r = ... : {a,b,x:int.1}(eq a b)-&gt;(Lt_zed x a)-&gt;Lt_zed x b
+  prod_pos_is_pos = ... :
+    {x,y:zed}(Lt_zed zero_zed x)-&gt;(Lt_zed zero_zed y)-&gt;
+    Lt_zed zero_zed (times_zed x y)
+  pos_imp_non_zero = ... :
+    {x:int.1}(Lt_zed zero_zed x)-&gt;not (eq x zero_zed)
+  eq_imp_Le_zed = ... : {x,y:int.1}(eq x y)-&gt;Le_zed x y
+  Le_resp_times_zed = ... :
+    {x,y,z:int.1}(Le_zed x y)-&gt;(Le_zed zero_zed z)-&gt;
+    Le_zed (times_zed z x) (times_zed z y)
+  Lt_resp_times_zed = ... :
+    {x,y,z:int.1}(Lt_zed x y)-&gt;(Lt_zed zero_zed z)-&gt;
+    Lt_zed (times_zed z x) (times_zed z y)
+  Le_times_cancel_left_zed = ... :
+    {x,y,a:int.1}(Lt_zed zero_zed a)-&gt;
+    (Le_zed (times_zed a x) (times_zed a y))-&gt;Le_zed x y
+  Lt_times_cancel_left_zed = ... :
+    {x,y,a:int.1}(Lt_zed zero_zed a)-&gt;
+    (Lt_zed (times_zed a x) (times_zed a y))-&gt;Lt_zed x y
+  Lt_on_neg = ... :
+    {x,y:int.1}(Lt_zed x y)-&gt;Lt_zed (neg_zed y) (neg_zed x)
+  Lt_on_neg_rev = ... :
+    {x,y:int.1}(Lt_zed (neg_zed y) (neg_zed x))-&gt;Lt_zed x y
+  Le_on_neg = ... :
+    {x,y:int.1}(Le_zed x y)-&gt;Le_zed (neg_zed y) (neg_zed x)
+  Le_on_neg_rev = ... :
+    {x,y:int.1}(Le_zed (neg_zed y) (neg_zed x))-&gt;Le_zed x y
+  Le_antisym_zed = ... : {x,y:int.1}(Le_zed x y)-&gt;(Le_zed y x)-&gt;eq y x
+  Le_trans_zed = ... :
+    {x,y,z:int.1}(Le_zed x y)-&gt;(Le_zed y z)-&gt;Le_zed x z
+  not_refl_Lt_zed = ... : {x:int.1}not (Lt_zed x x)
+  Lt_trans_zed = ... :
+    {x,y,z:int.1}(Lt_zed x y)-&gt;(Lt_zed y z)-&gt;Lt_zed x z
+  Le_Lt_trans_zed = ... :
+    {x,y,z:int.1}(Le_zed x y)-&gt;(Lt_zed y z)-&gt;Lt_zed x z
+  Lt_Le_trans_zed = ... :
+    {x,y,z:int.1}(Lt_zed x y)-&gt;(Le_zed y z)-&gt;Lt_zed x z
+  Le_resp_plus_both_zed = ... :
+    {x,y,a,b:int.1}(Le_zed x y)-&gt;(Le_zed a b)-&gt;
+    Le_zed (plus_zed x a) (plus_zed y b)
+  Lt_resp_plus_both_zed = ... :
+    {x,y,a,b:int.1}(Lt_zed x y)-&gt;(Lt_zed a b)-&gt;
+    Lt_zed (plus_zed x a) (plus_zed y b)
+  Lt_resp_plus_zed = ... :
+    {x,y,z:int.1}(Lt_zed x y)-&gt;Lt_zed (plus_zed z x) (plus_zed z y)
+  prod_Le_is_pos = ... :
+    {x,y:zed}(Le_zed zero_zed x)-&gt;(Le_zed zero_zed y)-&gt;
+    Le_zed zero_zed (times_zed x y)
+  decide_int = ... : {x,y:int.1}(Le_zed x y \/ Lt_zed y x)
+  Le_is_Lt_or_Eq_zed = ... :
+    {x,y:int.1}(Le_zed x y)-&gt;(Lt_zed x y \/ eq x y)
+  Le_resp_times_zed_neg = ... :
+    {x,y,z:int.1}(Le_zed x y)-&gt;(Lt_zed z zero_zed)-&gt;
+    Le_zed (times_zed z y) (times_zed z x)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

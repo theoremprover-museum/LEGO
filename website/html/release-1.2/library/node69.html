@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Boolean valued functions on the integers</TITLE>
+<META NAME="description" CONTENT="Boolean valued functions on the integers">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html994" HREF="node70.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html992" HREF="node63.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html986" HREF="node68.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html996" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html995" HREF="node70.html">Propositional relations on integers</A>
+<B>Up:</B> <A NAME="tex2html993" HREF="node63.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html987" HREF="node68.html">Some integer facts for </A>
+<BR> <P>
+<H2><A NAME="SECTION000206000000000000000">Boolean valued functions on the integers</A></H2>
+<P>
+This file defines equality, strict and non-strict inequality as
+boolean valued functions. It also defines the boolean valued test for
+zero and positive and proves some theorems about them.
+<P>
+<PRE> ** Module lib_int_bool Imports lib_integers/lib_int_Prop_rels
+     lib_nat/lib_nat_rels
+  int_eq_zero = ... : int.1-&gt;bool
+  int_Le_bool = ... : int.1-&gt;int.1-&gt;bool
+  int_eq_bool = ... : int.1-&gt;int.1-&gt;bool
+  int_Lt_bool = ... : int.1-&gt;int.1-&gt;bool
+  bool_pos = ... : int.1-&gt;bool
+  bool_pos_true_imp_pos = ... :
+    {x:int.1}(Eq (bool_pos x) true)-&gt;Le_zed zero_zed x
+  bool_pos_false_imp_pos = ... :
+    {x:int.1}(Eq (bool_pos x) false)-&gt;Lt_zed x zero_zed
+  pos_imp_bool_pos_true = ... :
+    {x:int.1}(Le_zed zero_zed x)-&gt;Eq (bool_pos x) true
+  pos_imp_bool_pos_false = ... :
+    {x:int.1}(Lt_zed x zero_zed)-&gt;Eq (bool_pos x) false</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

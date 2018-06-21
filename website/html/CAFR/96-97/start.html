@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<TITLE>CAFR 96 - Getting started with Lego</TITLE>
+<META NAME="description" CONTENT="No Title">
+<META NAME="keywords" CONTENT="info">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+</HEAD>
+<BODY LANG="EN">
+<H1> Getting started with Lego </H1>
+ <P>
+The first step in getting started with Lego is to 
+set an environment variable specifying which version
+is desired.
+There are several versions of Lego available; some are 
+essentially alpha test versions of new extensions, so are
+not the best for beginners.  The version we want is
+called "cafr", so you should put the following line
+in your .benv file in your home directory:
+ <P>
+<KBD>export LEGOVERSION=cafr</KBD>
+ <P>
+(You may have to create the file .benv; this file is 
+executed every time a shell starts in a new environment.)
+ <P>
+This choice will not take effect unless you now 
+logout and login again; however, for today the
+default version will be fine.
+ <P>
+Create a directory called lego in your home directory.
+Copy the file <A HREF="example.l">example.l</A> into your lego
+directory.  (The full path for this file on CS machines
+<KBD>/home/lego/pub/html/CAFR/96-97/example.l</KBD>.)
+Now edit this file with xemacs.
+ <P>
+Xemacs  will automatically load a special mode for Lego files
+if the file extension is ".l".  
+The first line of the example file creates a module
+called "example", and specifies that it imports another
+module called "lib_logic".  All commands are terminated by
+a semicolon.
+ <P>
+If you press the third mouse button, you will get a popup
+menu of Lego commands.  Choose "Start LEGO".  
+ <P>
+Lego will start in another buffer.  The two buffers
+communicate, so that you can type commands in your own file
+and send them to the Lego process.  You can do this
+via the menu, or directly with some shortcuts.  Of course, 
+you can type directly to lego
+as well if you wish, but your commands will not
+be saved in a file.
+ <P>
+First, process the whole buffer, either by selecting
+this option from the menu or by typing ^c^b (that's 
+control-c, control-b).  This will load in the requested
+libraries and process all of the commands.
+ <P>
+The lecture notes contain an explanation of what each
+step does in this example proof.  To run through the first 
+proof step-by-step, you can process each line in 
+turn with ^c^j. Notice that this moves you automatically
+to the next line in the file.  
+ <P>
+If you try to process the second proof in the file
+in the same way, Lego will complain because it already
+has a proof called "example", which it saved the first
+time it went through the file.  You can modify the
+name and step through this proof as well.
+ <P>
+When you are typing your own proofs, it is nice to 
+have Lego process your commands automatically, as
+you go along.  To do this, you can choose "toggle
+active ;" from the menu (alternatively, type ^c ;).
+This will send each command to Lego as soon as you
+type the concluding semicolon.
+ <P>
+Now you are ready to try your own proofs!
+<P><ADDRESS>
+<I>Judith Underwood <BR>
+</I>
+jlu@dcs.ed.ac.uk
+</ADDRESS>
+</BODY>
+</HTML>

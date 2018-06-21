@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3.1: Conditional Visibility</title>
+  </head>
+
+  <body>
+ <P>
+ <HR> 
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+<A HREF="../../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Versin 1.3.1</A>
+<HR>      <h1>LEGO Version 1.3.1: Conditional Visibility</h1>
+
+Pi- and lambda-bindings in LEGO are marked with a visibility, indicating
+whether, in the corresponding applications, the relevant arguments are
+syntactically
+<UL>
+<LI> <B>explicit</B>, indicated by `:', as in <TT>nil:{A:Type}list A</TT>, or
+<LI> <B>implicit</B>, indicated by `|', as in
+     <TT>cons:{A|Type}A->(list A)->list A</TT>
+</UL>
+
+The intention is that earlier arguments which can be inferred from the
+types of later arguments may safely be suppressed.
+<P>
+
+A parameter, when discharged, carries its original visibility with it into
+each place it is bound. This meant that in definitions such as
+<TT>list</TT>, either the element type was always implicit and <TT>nil</TT>
+was awkward, or it was always explicit and <TT>cons</TT> was awkward. The
+unsatisfactory workaround was to make it explicit, rename the <TT>cons</TT>
+constructor, then define <TT>cons</TT> as a lambda term with the correct
+visibility. Some appearances of the renamed constructor were inevitable.
+<P>
+
+Hence <B>conditional</B> visibility, indicated by `?'. When a
+conditionally visible variable is bound, its visibility is made
+implicit if it occurs in a subsequent pi-bound argument of its range
+type, and explicit otherwise.  Consequently, <TT>[A?Prop][a?A]a</TT>
+is translated as <TT>[A|Prop][a:A]a</TT>, since in its type
+<TT>{A|Prop}A->A</TT>, the <TT>A</TT> occurs in the argument type
+immediately left of the <TT>-></TT>.
+<P>
+
+The same holds for discharging, so that<BR>
+<PRE>
+Inductive [list:SET]
+Parameters [A?SET]
+Constructors
+  [nil:list]
+  [cons:A->list->list];
+Discharge A;
+</PRE>
+leaves <TT>A</TT> explicit for <TT>list</TT> and <TT>nil</TT>, but implicit
+for <TT>cons</TT> and <TT>list_elim</TT>.
+<P>
+
+The library definitions of <tt>list</tt> and <tt>vector</tt> have been
+updated to use this new feature. This afftects the visibility of the
+type parameter for <tt>list_elim</tt>, <tt>vcons</tt>, <tt>vect_elim</tt>
+and so forth, hence some proof scripts may break. Most of the problems
+arising from this can be fixed by replacing <tt>list_elim</tt> with
+<tt>list_elim|</tt> and likewise for the others, so that the first
+argument supplied is taken as the implicit parameter.
+</body>
+</html>

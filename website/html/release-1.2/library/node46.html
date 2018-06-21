@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Length-like list functions</TITLE>
+<META NAME="description" CONTENT="Length-like list functions">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html735" HREF="node47.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html733" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html727" HREF="node45.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html737" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html736" HREF="node47.html">Other list functions</A>
+<B>Up:</B> <A NAME="tex2html734" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html728" HREF="node45.html">Partial List functions</A>
+<BR> <P>
+<H2><A NAME="SECTION000145000000000000000">Length-like list functions</A></H2>
+<P>
+This section contains the list functions
+which require the natural number datatype;
+the most important of these functions
+is the ``length'' function which returns
+the length of a list. Also given is
+the nth function which returns
+the  element of a list and
+a function called <TT>build_list</TT>
+which constructs the list corresponding
+to the first ``n'' elements of a stream
+represented as a function from nat to
+the elements of some set.
+<P>
+<PRE> ** Module lib_list_length Imports lib_list_basics lib_nat_Lt
+  length = ... : {s|Type}(list s)-&gt;nat
+  nth = ... : nat-&gt;{t|Type}(list t)-&gt;t-&gt;t
+  build_list = ... : {s|Type}(nat-&gt;s)-&gt;nat-&gt;list s
+  list_length_induction = ... :
+    {t|Type}{P:(list t)-&gt;Prop}
+    ({l:list t}({x:list t}(Lt (length x) (length l))-&gt;P x)-&gt;P l)-&gt;
+    {k:list t}P k
+  length_zero_nil = ... :
+    {s|Type}{l:list s}(Eq (length l) zero)-&gt;Eq l (nil s)
+  length_map = ... :
+    {s|Type}{t|Type}{l:list s}{f:s-&gt;t}Eq (length (map f l)) (length l)
+  length_build_list = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}Eq (length (build_list f n)) n
+  length_append = ... :
+    {s|Type}{l1,l2:list s}
+    Eq (length (append l1 l2)) (plus (length l1) (length l2))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>All order relations</TITLE>
+<META NAME="description" CONTENT="All order relations">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html637" HREF="node39.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html635" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html629" HREF="node37.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html639" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html638" HREF="node39.html">The predicate Even</A>
+<B>Up:</B> <A NAME="tex2html636" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html630" HREF="node37.html">Boolean-valued Relations</A>
+<BR> <P>
+<H2><A NAME="SECTION0001314000000000000000">All order relations</A></H2>
+<P>
+The next file is very short in itself but it loads all
+the other order relation files. The theorems in it relate 
+the propositional or logical relations with their
+boolean counterparts.
+<P>
+<PRE> ** Module lib_nat_rels Imports lib_nat/lib_nat_Prop_rels
+     lib_nat/lib_nat_bool_rels
+  le_true_imp_Le = ... : {n,m:nat}(Eq (le n m) true)-&gt;Le n m
+  le_false_imp_Lt = ... : {n,m:nat}(Eq (le n m) false)-&gt;Lt m n
+  Le_imp_le_true = ... : {n,m:nat}(Le n m)-&gt;Eq (le n m) true
+  Lt_imp_le_false = ... : {n,m:nat}(Lt m n)-&gt;Eq (le n m) false
+  lt_true_imp_Lt = ... : {n,m:nat}(Eq (lt n m) true)-&gt;Lt n m
+  lt_false_imp_Le = ... : {n,m:nat}(Eq (lt n m) false)-&gt;Le m n
+  Lt_imp_lt_true = ... : {n,m:nat}(Lt n m)-&gt;Eq (lt n m) true
+  Le_imp_lt_false = ... : {n,m:nat}(Le n m)-&gt;Eq (lt m n) false</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

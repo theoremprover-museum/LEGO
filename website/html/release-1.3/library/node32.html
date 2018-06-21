@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Theorems about multiplication</TITLE>
+<META NAME="description" CONTENT="Theorems about multiplication">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node33.html">
+<LINK REL="previous" HREF="node31.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node33.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html541"
+ HREF="node33.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html538"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html532"
+ HREF="node31.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html540"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html542"
+ HREF="node33.html">Square Roots</A>
+<B> Up:</B> <A NAME="tex2html539"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html533"
+ HREF="node31.html">Theorems about Plus</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000127000000000000000">
+Theorems about multiplication</A>
+</H2>
+
+<P>
+In this file are theorems about
+multiplication, including those also involving addition
+e.g. the distributivity laws.
+
+<P>
+<PRE>
+ ** Module lib_nat_times_thms Imports lib_nat_plus_thms
+  times_plus_dist_r = ... :
+    {i,j,k|nat}Eq (times (plus i j) k) (plus (times i k) (times j k))
+  times_plus_dist_l = ... :
+    {i,j,k|nat}Eq (times i (plus j k)) (plus (times i j) (times i k))
+  times_assoc = ... :
+    {i,j,k|nat}Eq (times (times i j) k) (times i (times j k))
+  times_zero = ... : {n|nat}Eq zero (times n zero)
+  times_one = ... : {n|nat}Eq n (times one n)
+  zero_times_lemma = ... :
+    {m,n|nat}(Eq zero (times m n))-&gt;(Eq zero m \/ Eq zero n)
+  one_times_lemma = ... :
+    {m,n|nat}(Eq one (times m n))-&gt;(Eq one m /\ Eq one n)
+  times_commutes = ... : {m,n|nat}Eq (times m n) (times n m)
+  times_cancel_right = ... :
+    {a,x,y:nat}(Eq (times x (suc a)) (times y (suc a)))-&gt;Eq x y
+  times_two = ... : {n:nat}Eq (times two n) (plus n n)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

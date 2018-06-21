@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Rationals</TITLE>
+<META NAME="description" CONTENT="The Rationals">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1221" HREF="node90.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1219" HREF="node88.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1213" HREF="node88.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1223" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1222" HREF="node90.html">Number Theory</A>
+<B>Up:</B> <A NAME="tex2html1220" HREF="node88.html">Example Proof developments</A>
+<B> Previous:</B> <A NAME="tex2html1214" HREF="node88.html">Example Proof developments</A>
+<BR> <P>
+<H2><A NAME="SECTION000261000000000000000">The Rationals</A></H2>
+<P>
+In this section we describe
+a development of the rational numbers from the library integers.
+In this work a rational number is represented by the sigma type
+consisting of a pair of integers and a proof that the
+second on is strictly greater than zero. The tuple
+(<I>i</I>,<I>j</I>,<I>p</I>:0&lt;<I>j</I>) represents the rational <I>i</I>/<I>j</I>.
+This choice makes the definition of order relations, max
+and min very simple (since 
+ <IMG WIDTH=278 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline491" SRC="img29.gif"  > )
+but complicates the definition of reciprocal and
+division.
+<P>
+The file defines the usual operations on rationals
+and proves that they satisfy the field axioms.
+We give the computation part of the function definitions
+but use <TT>...</TT> to indicate omission of the proof
+term part. We omit the theorems in this
+listing.
+<PRE>** Mark &quot;rat&quot; **
+
+Rat_carrier = int.1#&lt;j:int.1&gt;Lt_zed zero_zed j : Type
+eq_on_rats = [r,s:Rat_carrier]
+     eq (times_zed r.1 s.2.1) (times_zed r.2.1 s.1) 
+     : Rat_carrier-&gt;Rat_carrier-&gt;Prop
+rat_eq_refl = ... : eq_refl|Rat_carrier|eq_on_rats
+rat_eq_sym = ... : eq_sym|Rat_carrier|eq_on_rats
+rat_eq_trans = ... : eq_trans|Rat_carrier|eq_on_rats
+rat =  &lt;Rat_carrier:Type&gt;
+     &lt;eq_on_rats:Rat_carrier -&gt; Rat_carrier -&gt; Prop&gt; ...: set
+plus_on_rats = [r,s:rat.1]
+     (plus_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1),
+     times_zed r.2.1 s.2.1,...) : int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : rat.1-&gt;rat.1-&gt;rat.1
+times_on_rats = [r,s:rat.1]
+     (times_zed r.1 s.1,times_zed r.2.1 s.2.1, ... 
+     :int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : rat.1-&gt;rat.1-&gt;rat.1
+minus_on_rats = [r,s:rat.1]
+     (minus_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1),
+     times_zed r.2.1 s.2.1,... :int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : rat.1-&gt;rat.1-&gt;rat.1
+lesseq_rel = 
+     [r,s:rat.1]Le_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1) 
+     : rat.1-&gt;rat.1-&gt;Prop
+lessst_rel = 
+     [r,s:rat.1]Lt_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1) 
+     : rat.1-&gt;rat.1-&gt;Prop
+ze = (zero_zed,one_zed,zero_Lt_suc_n zero) : rat.1
+one_rat = (one_zed,one_zed,zero_Lt_suc_n zero) : rat.1
+two_rat = (two_zed,one_zed,zero_Lt_suc_n zero) : rat.1
+one_over = [x:nonzeRat](if (bool_pos x.1.1) x.1.2.1 (neg_zed x.1.2.1),
+     if (bool_pos x.1.1) x.1.1 (neg_zed x.1.1),... 
+     :int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : nonzeRat-&gt;rat.1
+divide = ... : rat.1-&gt;nonzeRat-&gt;rat.1
+max_on_rats = [r,s:rat.1]
+     (max_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1),
+     times_zed r.2.1 s.2.1, ... :int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : rat.1-&gt;rat.1-&gt;rat.1
+min_on_rats = [r,s:rat.1]
+     (min_zed (times_zed r.1 s.2.1) (times_zed r.2.1 s.1),
+     times_zed r.2.1 s.2.1, ... :int.1#&lt;j:int.1&gt;Lt_zed zero_zed j) 
+     : rat.1-&gt;rat.1-&gt;rat.1
+half_of = (half, ... : &lt;f:rat.1-&gt;rat.1&gt;pres_eq|rat|rat f) 
+     : function rat rat
+rat_bool_pos = [r:rat.1]bool_pos r.1 : rat.1-&gt;bool</PRE>
+<P>
+These definitions and theorems in the example file,
+together with about 50 assumed lemmas are enough to 
+run the construction of the real numbers described
+in [<A HREF="node92.html#jonesrationals">Jones, 1992</A>].
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

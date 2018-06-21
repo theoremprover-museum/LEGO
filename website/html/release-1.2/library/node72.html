@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Specification and development of functional programs</TITLE>
+<META NAME="description" CONTENT="Specification and development of functional programs">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1025" HREF="node73.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1023" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1017" HREF="node71.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1027" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1026" HREF="node73.html">Imperative programs</A>
+<B>Up:</B> <A NAME="tex2html1024" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html1018" HREF="node71.html">Max and min on </A>
+<BR> <P>
+<H1><A NAME="SECTION000210000000000000000">Specification and development of functional programs</A></H1>
+<P>
+For detailed documentation, see chapter&nbsp;8 in
+[<A HREF="node92.html#luotypetheoryforcs">Luo, 1994</A>].
+<P>
+<PRE> ** Module lib_adt_basics Imports lib_sigma lib_setoid
+  STR = ... : Type
+ $SPEC : Type(SPEC)
+ $make_SPEC : {Str:STR}(Str-&gt;Prop)-&gt;SPEC
+ $SPEC_elim :
+    {C_SPEC:SPEC-&gt;Type}
+    ({Str:STR}{Ax:Str-&gt;Prop}C_SPEC (make_SPEC Str Ax))-&gt;{z:SPEC}C_SPEC z
+[[C_SPEC:SPEC-&gt;Type]
+ [f_make_SPEC:{Str:STR}{Ax:Str-&gt;Prop}C_SPEC (make_SPEC Str Ax)][Str:STR]
+ [Ax:Str-&gt;Prop]
+    SPEC_elim C_SPEC f_make_SPEC (make_SPEC Str Ax)  ==&gt;
+    f_make_SPEC Str Ax]
+
+  Str = ... : SPEC-&gt;STR
+  Ax = ... : {z:SPEC}(Str z)-&gt;Prop
+  Spec = ... : STR-&gt;Type
+  Model = ... : SPEC-&gt;Type(sigma)
+  Consistent = ... : SPEC-&gt;Prop
+  Impl = ... : {S|STR}(Spec S)-&gt;(Spec S)-&gt;Prop
+  Sat = ... : {SP,SP'|SPEC}((Str SP')-&gt;Str SP)-&gt;Prop
+ $IMPL1 : SPEC-&gt;SPEC-&gt;Type(IMPL1)
+ $make_IMPL1 :
+    {SP,SP'|SPEC}{refn:(Str SP')-&gt;Str SP}(Sat refn)-&gt;IMPL1|SP|SP'
+ $IMPL1_elim :
+    {SP,SP'|SPEC}{C_IMPL1:(IMPL1|SP|SP')-&gt;Type}
+    ({refn:(Str SP')-&gt;Str SP}{sat:Sat refn}
+     C_IMPL1 (make_IMPL1 refn sat))-&gt;{z:IMPL1|SP|SP'}C_IMPL1 z
+[[SP,SP'|SPEC][C_IMPL1:(IMPL1|SP|SP')-&gt;Type]
+ [f_make_IMPL1:{refn:(Str SP')-&gt;Str SP}{sat:Sat refn}
+  C_IMPL1 (make_IMPL1 refn sat)][refn:(Str SP')-&gt;Str SP][sat:Sat refn]
+    IMPL1_elim C_IMPL1 f_make_IMPL1 (make_IMPL1 refn sat)  ==&gt;
+    f_make_IMPL1 refn sat]
+
+  refn = ... : {SP,SP'|SPEC}(IMPL1|SP|SP')-&gt;(Str SP')-&gt;Str SP
+  sat = ... : {SP,SP'|SPEC}{z:IMPL1|SP|SP'}Sat (refn z)
+  IMPL = ... : SPEC-&gt;SPEC-&gt;Type(IMPL1)
+  Extend = ... :
+    {SP:SPEC}{ext_str:(Str SP)-&gt;STR}
+    [S'=Sigma (Str SP) ([s:Str SP]ext_str s)](S'-&gt;Prop)-&gt;SPEC
+  Extend_AxOnly = ... : {SP:SPEC}((Str SP)-&gt;Prop)-&gt;SPEC
+  Join = ... : {S|STR}(Spec S)-&gt;(Spec S)-&gt;SPEC
+  Cross = ... : SPEC-&gt;SPEC-&gt;SPEC
+  SigmaCirc = ... : {SP:SPEC}((Str SP)-&gt;SPEC)-&gt;SPEC
+  Pi = ... : {SP:SPEC}((Str SP)-&gt;SPEC)-&gt;SPEC
+  Con = ... : {S,S'|STR}(S'-&gt;S)-&gt;(Spec S')-&gt;Spec S
+  Sel = ... : {S,S'|STR}(S'-&gt;S)-&gt;(Spec S)-&gt;Spec S'
+  Abs = ... : {S|STR}(S-&gt;S-&gt;Prop)-&gt;(Spec S)-&gt;Spec S
+  Hide = ... : {S|STR}{SP:SPEC}((Str SP)-&gt;S)-&gt;SPEC</PRE>
+<P>
+An example of the the abstract datatype of stacks, with axiomatisation,
+proofs of congruence properties, and implementation as an array are
+also included.
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Product Types</TITLE>
+<META NAME="description" CONTENT="Product Types">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node23.html">
+<LINK REL="previous" HREF="node18.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node23.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html413"
+ HREF="node23.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html410"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html404"
+ HREF="node21.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html412"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html414"
+ HREF="node23.html">Sum Types</A>
+<B> Up:</B> <A NAME="tex2html411"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html405"
+ HREF="node21.html">Boolean Theorems</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00090000000000000000">
+Product Types</A>
+</H1>
+
+<P>
+There is one library file in the directory <TT>lib_prod</TT> with the 
+definition of (non-dependent) cross-product. As well as the basic
+definitions there are also theorems giving the <IMG
+ WIDTH="15" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.gif"
+ ALT="$\eta$">-rule
+for pairs and the fact that pairing is extensional. 
+
+<P>
+<PRE>
+ ** Module lib_prod Imports lib_eq_basics
+ $prod : (Type)-&gt;(Type)-&gt;Type(prod)
+ $pair1 : {A:Type}{B:Type}A-&gt;B-&gt;prod A B
+ $prod_elim :
+    {A:Type}{B:Type}{C_prod:(prod A B)-&gt;Type}
+    ({a:A}{b:B}C_prod (pair1 A B a b))-&gt;{z:prod A B}C_prod z
+[[A:Type][B:Type][C_prod:(prod A B)-&gt;Type]
+ [f_pair1:{a:A}{b:B}C_prod (pair1 A B a b)][a:A][b:B]
+    prod_elim A B C_prod f_pair1 (pair1 A B a b)  ==&gt;  f_pair1 a b]
+
+  prod_is_pair1 = ... : {A:Type}{B:Type}(prod A B)-&gt;Type
+  prod_pair1_injective = ... :
+    {A:Type}{B:Type}{ix0,iy0|A}{ix1,iy1|B}
+    (Eq (pair1 A B ix0 ix1) (pair1 A B iy0 iy1))-&gt;{P|Type}
+    ((Eq ix0 iy0)-&gt;(Eq ix1 iy1)-&gt;P)-&gt;P
+  Pair = ... : {A|Type}{B|Type}A-&gt;B-&gt;prod A B
+  prod_rec = ... : {s|Type}{t|Type}{u|Type}(s-&gt;t-&gt;u)-&gt;(prod s t)-&gt;u
+  prod_ind = ... :
+    {s|Type}{t|Type}{P:(prod s t)-&gt;Prop}({a:s}{b:t}P (Pair a b))-&gt;
+    {p:prod s t}P p
+  Fst = ... : {s|Type}{t|Type}(prod s t)-&gt;s
+  Snd = ... : {s|Type}{t|Type}(prod s t)-&gt;t
+  prod_eta = ... :
+    {s|Type}{t|Type}{p:prod s t}Eq p (Pair (Fst p) (Snd p))
+  prod_ext = ... :
+    {s|Type}{t|Type}{p,q:prod s t}(Eq (Fst p) (Fst q))-&gt;
+    (Eq (Snd p) (Snd q))-&gt;Eq p q
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Lists and products</TITLE>
+<META NAME="description" CONTENT="Lists and products">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html757" HREF="node49.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html755" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html749" HREF="node47.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html759" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html758" HREF="node49.html">The Relation Adjoin</A>
+<B>Up:</B> <A NAME="tex2html756" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html750" HREF="node47.html">Other list functions</A>
+<BR> <P>
+<H2><A NAME="SECTION000147000000000000000">Lists and products</A></H2>
+<P>
+In this file the functions and theorems involving cross-product
+and list are collected together. The function
+<TT>prod_list</TT> creates a list of all possible pairs from the two
+original lists.
+<P>
+<PRE> ** Module lib_list_prod Imports lib_list_length lib_list_bool lib_prod
+  assoc = ... : {A|Type}{B|Type}(A-&gt;bool)-&gt;B-&gt;(list (prod A B))-&gt;B
+  list_prod_dom = ... : {A|Type}{B|Type}(list (prod A B))-&gt;list A
+  cod = ... : {A|Type}{B|Type}(list (prod A B))-&gt;list B
+  zip = ... : {A|Type}{B|Type}(list A)-&gt;(list B)-&gt;list (prod A B)
+  prod_list = ... : {s|Type}{t|Type}(list s)-&gt;(list t)-&gt;list (prod s t)
+  length_prod = ... :
+    {s|Type}{t|Type}{l1:list s}{l2:list t}
+    Eq (length (prod_list l1 l2)) (times (length l1) (length l2))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

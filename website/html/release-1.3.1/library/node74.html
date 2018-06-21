@@ -1,0 +1,230 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Specification and development of functional programs</TITLE>
+<META NAME="description" CONTENT="Specification and development of functional programs">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node75.html">
+<LINK REL="previous" HREF="node66.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node75.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1016"
+ HREF="node75.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1013"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1007"
+ HREF="node73.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1015"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html1017"
+ HREF="node75.html">Pure Martin L&#246;f type</A>
+<B> Up:</B> <A NAME="tex2html1014"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html1008"
+ HREF="node73.html">Max and min on</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H1><A NAME="SECTION000200000000000000000">
+Specification and development of functional programs</A>
+</H1>
+<P>
+This module contains the basic definitions of the program
+specification and data refinement framework and the definitions of
+some basic specification operations.  See
+(<A HREF=#luorefinement><tex2html_citekey_mark>##luorefinement<tex2html_cite_mark> ##luorefinement<tex2html_citeyear_mark></A>)(<A HREF=#luotypetheoryforcs><tex2html_citekey_mark>##luotypetheoryforcs<tex2html_cite_mark> ##luotypetheoryforcs<tex2html_citeyear_mark></A>, Chapter 8) for further
+details of the framework for data refinement.
+<P><PRE>
+ ** Module lib_adt_basics Imports lib_sigma lib_setoid
+  STR = ... : Type
+ $SPEC : Type(SPEC)
+ $make_SPEC : {Str:STR}(Str-&gt;Prop)-&gt;SPEC
+ $SPEC_elim :
+    {C_SPEC:SPEC-&gt;Type}
+    ({Str:STR}{Ax:Str-&gt;Prop}C_SPEC (make_SPEC Str Ax))-&gt;{z:SPEC}C_SPEC z
+[[C_SPEC:SPEC-&gt;Type]
+ [f_make_SPEC:{Str:STR}{Ax:Str-&gt;Prop}C_SPEC (make_SPEC Str Ax)][Str:STR]
+ [Ax:Str-&gt;Prop]
+    SPEC_elim C_SPEC f_make_SPEC (make_SPEC Str Ax)  ==&gt;
+    f_make_SPEC Str Ax]
+
+  Str = ... : SPEC-&gt;STR
+  Ax = ... : {z:SPEC}(Str z)-&gt;Prop
+  Spec = ... : STR-&gt;Type
+  Model = ... : SPEC-&gt;Type(sigma)
+  Consistent = ... : SPEC-&gt;Prop
+  Impl = ... : {S|STR}(Spec S)-&gt;(Spec S)-&gt;Prop
+  Sat = ... : {SP,SP'|SPEC}((Str SP')-&gt;Str SP)-&gt;Prop
+ $IMPL1 : SPEC-&gt;SPEC-&gt;Type(IMPL1)
+ $make_IMPL1 :
+    {SP,SP'|SPEC}{refn:(Str SP')-&gt;Str SP}(Sat refn)-&gt;IMPL1|SP|SP'
+ $IMPL1_elim :
+    {SP,SP'|SPEC}{C_IMPL1:(IMPL1|SP|SP')-&gt;Type}
+    ({refn:(Str SP')-&gt;Str SP}{sat:Sat refn}
+     C_IMPL1 (make_IMPL1 refn sat))-&gt;{z:IMPL1|SP|SP'}C_IMPL1 z
+[[SP,SP'|SPEC][C_IMPL1:(IMPL1|SP|SP')-&gt;Type]
+ [f_make_IMPL1:{refn:(Str SP')-&gt;Str SP}{sat:Sat refn}
+  C_IMPL1 (make_IMPL1 refn sat)][refn:(Str SP')-&gt;Str SP][sat:Sat refn]
+    IMPL1_elim C_IMPL1 f_make_IMPL1 (make_IMPL1 refn sat)  ==&gt;
+    f_make_IMPL1 refn sat]
+
+  refn = ... : {SP,SP'|SPEC}(IMPL1|SP|SP')-&gt;(Str SP')-&gt;Str SP
+  sat = ... : {SP,SP'|SPEC}{z:IMPL1|SP|SP'}Sat (refn z)
+  IMPL = ... : SPEC-&gt;SPEC-&gt;Type(IMPL1)
+  Extend = ... :
+    {SP:SPEC}{ext_str:(Str SP)-&gt;STR}
+    [S'=Sigma (Str SP) ([s:Str SP]ext_str s)](S'-&gt;Prop)-&gt;SPEC
+  Extend_AxOnly = ... : {SP:SPEC}((Str SP)-&gt;Prop)-&gt;SPEC
+  Join = ... : {S|STR}(Spec S)-&gt;(Spec S)-&gt;SPEC
+  Cross = ... : SPEC-&gt;SPEC-&gt;SPEC
+  SigmaCirc = ... : {SP:SPEC}((Str SP)-&gt;SPEC)-&gt;SPEC
+  Pi = ... : {SP:SPEC}((Str SP)-&gt;SPEC)-&gt;SPEC
+  Con = ... : {S,S'|STR}(S'-&gt;S)-&gt;(Spec S')-&gt;Spec S
+  Sel = ... : {S,S'|STR}(S'-&gt;S)-&gt;(Spec S)-&gt;Spec S'
+  Abs = ... : {S|STR}(S-&gt;S-&gt;Prop)-&gt;(Spec S)-&gt;Spec S
+  Hide = ... : {S|STR}{SP:SPEC}((Str SP)-&gt;S)-&gt;SPEC
+</PRE>
+<P>
+An example of the the abstract datatype of stacks, with axiomatisation,
+proofs of congruence properties, and implementation as an array is
+also included.
+<P><PRE>
+ ** Module lib_adt_array Imports lib_nat lib_adt_basics
+ $Str_ARRAY : STR
+ $make_Str_ARRAY :
+    {Array:Setoid}(dom Array)-&gt;(nat-&gt;(dom Array)-&gt;nat-&gt;dom Array)-&gt;
+    ((dom Array)-&gt;nat-&gt;nat)-&gt;Str_ARRAY
+ $Str_ARRAY_elim :
+    {C_Str_ARRAY:Str_ARRAY-&gt;Type}
+    ({Array:Setoid}{newarray:dom Array}
+     {assign:nat-&gt;(dom Array)-&gt;nat-&gt;dom Array}
+     {access:(dom Array)-&gt;nat-&gt;nat}
+     C_Str_ARRAY (make_Str_ARRAY Array newarray assign access))-&gt;
+    {z:Str_ARRAY}C_Str_ARRAY z
+[[C_Str_ARRAY:Str_ARRAY-&gt;Type]
+ [f_make_Str_ARRAY:{Array:Setoid}{newarray:dom Array}
+  {assign:nat-&gt;(dom Array)-&gt;nat-&gt;dom Array}
+  {access:(dom Array)-&gt;nat-&gt;nat}
+  C_Str_ARRAY (make_Str_ARRAY Array newarray assign access)]
+ [Array:Setoid][newarray:dom Array]
+ [assign:nat-&gt;(dom Array)-&gt;nat-&gt;dom Array][access:(dom Array)-&gt;nat-&gt;nat]
+    Str_ARRAY_elim C_Str_ARRAY f_make_Str_ARRAY
+     (make_Str_ARRAY Array newarray assign access)  ==&gt;
+    f_make_Str_ARRAY Array newarray assign access]
+
+  Array = ... : Str_ARRAY-&gt;Setoid
+  newarray = ... : {z:Str_ARRAY}dom (Array z)
+  assign = ... : {z:Str_ARRAY}nat-&gt;(dom (Array z))-&gt;nat-&gt;dom (Array z)
+  access = ... : {z:Str_ARRAY}(dom (Array z))-&gt;nat-&gt;nat
+  EqARRAY = ... : Str_ARRAY-&gt;Prop
+  AxARRAY1 = ... : Str_ARRAY-&gt;Prop
+  AxARRAY2 = ... : Str_ARRAY-&gt;Prop
+  Ax_ARRAY = ... : Str_ARRAY-&gt;Prop
+  ARRAY = ... : SPEC
+</PRE>
+<P><PRE>
+ ** Module lib_adt_stack Imports lib_nat lib_adt_basics
+  eq = ... : {S|Setoid}(dom S)-&gt;(dom S)-&gt;Prop
+ $Str_STACK : STR
+ $make_Str_STACK :
+    {Stack:Setoid}(dom Stack)-&gt;(nat-&gt;(dom Stack)-&gt;dom Stack)-&gt;
+    ((dom Stack)-&gt;dom Stack)-&gt;((dom Stack)-&gt;nat)-&gt;Str_STACK
+ $Str_STACK_elim :
+    {C_Str_STACK:Str_STACK-&gt;Type}
+    ({Stack:Setoid}{empty:dom Stack}{push:nat-&gt;(dom Stack)-&gt;dom Stack}
+     {pop:(dom Stack)-&gt;dom Stack}{top:(dom Stack)-&gt;nat}
+     C_Str_STACK (make_Str_STACK Stack empty push pop top))-&gt;
+    {z:Str_STACK}C_Str_STACK z
+[[C_Str_STACK:Str_STACK-&gt;Type]
+ [f_make_Str_STACK:{Stack:Setoid}{empty:dom Stack}
+  {push:nat-&gt;(dom Stack)-&gt;dom Stack}{pop:(dom Stack)-&gt;dom Stack}
+  {top:(dom Stack)-&gt;nat}
+  C_Str_STACK (make_Str_STACK Stack empty push pop top)][Stack:Setoid]
+ [empty:dom Stack][push:nat-&gt;(dom Stack)-&gt;dom Stack]
+ [pop:(dom Stack)-&gt;dom Stack][top:(dom Stack)-&gt;nat]
+    Str_STACK_elim C_Str_STACK f_make_Str_STACK
+     (make_Str_STACK Stack empty push pop top)  ==&gt;
+    f_make_Str_STACK Stack empty push pop top]
+
+  Stack = ... : Str_STACK-&gt;Setoid
+  empty = ... : {z:Str_STACK}dom (Stack z)
+  push = ... : {z:Str_STACK}nat-&gt;(dom (Stack z))-&gt;dom (Stack z)
+  pop = ... : {z:Str_STACK}(dom (Stack z))-&gt;dom (Stack z)
+  top = ... : {z:Str_STACK}(dom (Stack z))-&gt;nat
+  EqSTACK = ... : Str_STACK-&gt;Prop
+  AxSTACK1 = ... : Str_STACK-&gt;Prop
+  AxSTACK2 = ... : Str_STACK-&gt;Prop
+  AxSTACK3 = ... : Str_STACK-&gt;Prop
+  AxSTACK4 = ... : Str_STACK-&gt;Prop
+  Ax_STACK = ... : Str_STACK-&gt;Prop
+  STACK = ... : SPEC
+</PRE>
+<P><PRE>
+ ** Module lib_adt_stack_cong Imports lib_adt_basics lib_adt_stack
+  RespSTACKpush = ... : Str_STACK-&gt;Prop
+  RespSTACKpop = ... : Str_STACK-&gt;Prop
+  RespSTACKtop = ... : Str_STACK-&gt;Prop
+  RespSTACK = ... : Str_STACK-&gt;Prop
+  STACK_CONG = ... : SPEC
+  iterate = ... : {A|Type}(A-&gt;A)-&gt;nat-&gt;A-&gt;A
+  pop_iterate = ... :
+    {S:Str STACK_CONG}(Ax STACK_CONG S)-&gt;{s:dom (Stack S)}{x:nat}
+    eq (iterate (pop S) (suc x) s) (iterate (pop S) x (pop S s))
+  pop_iterate_resp = ... :
+    {S:Str STACK_CONG}(Ax STACK_CONG S)-&gt;{s,s':dom (Stack S)}(eq s s')-&gt;
+    {x:nat}eq (iterate (pop S) x s) (iterate (pop S) x s')
+  pop_iterate_empty = ... :
+    {S:Str STACK_CONG}(Ax STACK_CONG S)-&gt;{i:nat}
+    eq (iterate (pop S) i (empty S)) (empty S)
+  pop_iterate_push = ... :
+    {S:Str STACK_CONG}(Ax STACK_CONG S)-&gt;{s:dom (Stack S)}{k,m:nat}
+    eq (iterate (pop S) (suc k) (push S m s)) (iterate (pop S) k s)
+</PRE>
+<P><PRE>
+ ** Module lib_adt_list_stack Imports lib_list_basics lib_adt_stack_cong
+  listStack = ... : Str_STACK
+  eqStackL = ... : EqSTACK listStack
+  axStack1L = ... : AxSTACK1 listStack
+  axStack2L = ... : AxSTACK2 listStack
+  axStack3L = ... : AxSTACK3 listStack
+  axStack4L = ... : AxSTACK4 listStack
+  listStack_correct = ... : Ax_STACK listStack
+  respStackL = ... : RespSTACK listStack
+  listStack_correct_cong = ... : Ax STACK_CONG listStack
+</PRE>
+<P><PRE>
+ ** Module lib_adt_stack_by_array Imports lib_nat_Lt lib_adt_stack
+     lib_adt_array
+  refnSA = ... : (Str ARRAY)-&gt;Str STACK
+  equivSTACK = ... : {A:Str ARRAY}Equivalence (eq|(Stack (refnSA A)))
+  axSTACK1 = ... : {A:Str ARRAY}AxSTACK1 (refnSA A)
+  axSTACK2 = ... : {A:Str ARRAY}AxSTACK2 (refnSA A)
+  axSTACK3 = ... : {A:Str ARRAY}(Ax ARRAY A)-&gt;AxSTACK3 (refnSA A)
+  axSTACK4 = ... : {A:Str ARRAY}(Ax ARRAY A)-&gt;AxSTACK4 (refnSA A)
+  sat_refnSA = ... : Sat refnSA
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

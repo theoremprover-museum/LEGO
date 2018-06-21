@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Max and min on integers</TITLE>
+<META NAME="description" CONTENT="Max and min on integers">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="previous" HREF="node72.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node74.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html1008"
+ HREF="node74.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html1005"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html1001"
+ HREF="node72.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html1007"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html1009"
+ HREF="node74.html">Specification and development of</A>
+<B> Up:</B> <A NAME="tex2html1006"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html1002"
+ HREF="node72.html">Propositional relations on integers</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000197000000000000000">
+Max and min on integers</A>
+</H2>
+
+<P>
+In this section max and min are defined on integers and a number
+of theorems proved about them.
+
+<P>
+<PRE>
+ ** Module lib_int_max_min Imports lib_int_basics_thms lib_int_Prop_rels
+     lib_max_min
+  min_zed = ... : int.1-&gt;int.1-&gt;int.1
+  max_zed = ... : int.1-&gt;int.1-&gt;int.1
+  max_resp_eq = ... :
+    {a,b,x,y:int.1}(eq a b)-&gt;(eq x y)-&gt;eq (max_zed a x) (max_zed b y)
+  min_resp_eq = ... :
+    {a,b,x,y:int.1}(eq a b)-&gt;(eq x y)-&gt;eq (min_zed a x) (min_zed b y)
+  max_Le_left_zed = ... : {x,y:int.1}Le_zed x (max_zed x y)
+  max_Le_right_zed = ... : {x,y:int.1}Le_zed y (max_zed x y)
+  min_Le_left_zed = ... : {x,y:int.1}Le_zed (min_zed x y) x
+  min_Le_right_zed = ... : {x,y:int.1}Le_zed (min_zed x y) y
+  max_is_least_zed = ... :
+    {x,y,z:int.1}(Le_zed x z)-&gt;(Le_zed y z)-&gt;Le_zed (max_zed x y) z
+  min_is_greatest_zed = ... :
+    {x,y,z:int.1}(Le_zed z x)-&gt;(Le_zed z y)-&gt;Le_zed z (min_zed x y)
+  max_resp_plus_zed = ... :
+    {x,y,z:int.1}
+    eq (max_zed (plus_zed z x) (plus_zed z y))
+     (plus_zed z (max_zed x y))
+  min_resp_plus_zed = ... :
+    {x,y,z:int.1}
+    eq (min_zed (plus_zed z x) (plus_zed z y))
+     (plus_zed z (min_zed x y))
+  Le_min_left_zed = ... : {x,y:int.1}(Le_zed x y)-&gt;eq (min_zed x y) x
+  Le_min_right_zed = ... : {x,y:int.1}(Le_zed y x)-&gt;eq (min_zed x y) y
+  Le_max_right_zed = ... : {x,y:int.1}(Le_zed x y)-&gt;eq (max_zed x y) y
+  Le_max_left_zed = ... : {x,y:int.1}(Le_zed y x)-&gt;eq (max_zed x y) x
+  max_resp_times_zed = ... :
+    {x,y,a:int.1}(Le_zed zero_zed a)-&gt;
+    eq (max_zed (times_zed a x) (times_zed a y))
+     (times_zed a (max_zed x y))
+  min_resp_times_zed = ... :
+    {x,y,a:int.1}(Le_zed zero_zed a)-&gt;
+    eq (min_zed (times_zed a x) (times_zed a y))
+     (times_zed a (min_zed x y))
+  max_sym_zed = ... : {x,y:int.1}eq (max_zed x y) (max_zed y x)
+  min_sym_zed = ... : {x,y:int.1}eq (min_zed x y) (min_zed y x)
+  min_zed_idemp = ... : {a|zed}Eq_zed (min_zed a a) a
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

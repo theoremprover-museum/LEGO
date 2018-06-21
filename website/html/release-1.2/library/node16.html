@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Unit Type</TITLE>
+<META NAME="description" CONTENT="The Unit Type">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html378" HREF="node17.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html376" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html370" HREF="node15.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html380" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html379" HREF="node17.html">The Booleans</A>
+<B>Up:</B> <A NAME="tex2html377" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html371" HREF="node15.html">The Empty Type</A>
+<BR> <P>
+<H1><A NAME="SECTION00080000000000000000">The Unit Type</A></H1>
+<P>
+The one element type is defined in the directory <TT>lib_unit</TT>.
+<P>
+<PRE> ** Module lib_unit Imports lib_eq_basics
+ $unit : Type(unit)
+ $void : unit
+ $unit_elim : {C_unit:unit-&gt;Type}(C_unit void)-&gt;{z:unit}C_unit z
+[[C_unit:unit-&gt;Type][f_void:C_unit void]
+    unit_elim C_unit f_void void  ==&gt;  f_void]
+
+  unit_rec = ... : {t|Type}t-&gt;unit-&gt;t
+  unit_ind = ... : {P:unit-&gt;Prop}(P void)-&gt;{u:unit}P u
+  is_void = ... : unit-&gt;Prop
+  all_units_void = ... : {x:unit}is_void x
+  all_units_same = ... : {x,y:unit}Eq x y</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

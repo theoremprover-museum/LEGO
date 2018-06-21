@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>List Basics</TITLE>
+<META NAME="description" CONTENT="List Basics">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node47.html">
+<LINK REL="previous" HREF="node45.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node47.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html708"
+ HREF="node47.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html705"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html699"
+ HREF="node45.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html707"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html709"
+ HREF="node47.html">List functions with booleans</A>
+<B> Up:</B> <A NAME="tex2html706"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html700"
+ HREF="node45.html">List Definitions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000132000000000000000">
+List Basics</A>
+</H2>
+
+<P>
+This file defines some basic list functions--where
+basic really just means pure list functions which
+do not require any other datatype.
+These functions include a head function--<TT>hd</TT>
+which takes an extra argument which is the value
+returned for a empty list, tail, fold, append,
+map and reverse. Some theorems about these
+functions are also given (but not enough).
+
+<P>
+<PRE>
+ ** Module lib_list_basics Imports lib_list
+  singleton = ... : {t|Type}t-&gt;list t
+  hd = ... : {t|Type}t-&gt;(list t)-&gt;t
+  tail = ... : {t|Type}(list t)-&gt;list t
+  fold = ... : {s|Type}{t|Type}(t-&gt;s-&gt;t)-&gt;t-&gt;(list s)-&gt;t
+  foldright = ... : {B|Type}{A|Type}(A-&gt;B-&gt;B)-&gt;(list A)-&gt;B-&gt;B
+  foldleft = ... : {B|Type}{A|Type}(A-&gt;B-&gt;B)-&gt;(list A)-&gt;B-&gt;B
+  map = ... : {s|Type}{t|Type}(s-&gt;t)-&gt;(list s)-&gt;list t
+  append = ... : {t|Type}(list t)-&gt;(list t)-&gt;list t
+  tack = ... : {t|Type}t-&gt;(list t)-&gt;list t
+  reverse = ... : {t|Type}(list t)-&gt;list t
+  flatten = ... : {t|Type}(list (list t))-&gt;list t
+  cons_injective = ... :
+    {t|Type}{k,l|list t}{x,y|t}(Eq (cons x k) (cons y l))-&gt;
+    Eq (tail (cons x k)) (tail (cons y l))
+  cons_inj = ... :
+    {s|Type}{a,b|s}{xs,ys|list s}(Eq (cons a xs) (cons b ys))-&gt;
+    (Eq a b /\ Eq xs ys)
+  l_not_cons_l = ... : {t|Type}{l:list t}{x:t}not (Eq l (cons x l))
+  append_cons = ... :
+    {t|Type}{k,l:list t}{x:t}
+    Ex2 ([y:t][j:list t]Eq (append k (cons x l)) (cons y j))
+  nil_not_append_cons = ... :
+    {t|Type}{x:t}{k,l:list t}not (Eq (nil t) (append k (cons x l)))
+  append_assoc = ... :
+    {t|Type}{j,k,l:list t}
+    Eq (append j (append k l)) (append (append j k) l)
+  append_nil = ... : {t|Type}{l:list t}Eq (append l (nil t)) l
+  append_reverse = ... :
+    {t|Type}{l,m:list t}
+    Eq (reverse (append l m)) (append (reverse m) (reverse l))
+  append_strict = ... :
+    {t|Type}{k,l:list t}(Eq (append k l) (nil t))-&gt;
+    (Eq k (nil t) /\ Eq l (nil t))
+  double_reverse_is_identity = ... :
+    {t|Type}{l:list t}Eq (reverse (reverse l)) l
+  foldright_append_lem = ... :
+    {s|Type}{t|Type}{g:s-&gt;t-&gt;t}{G,H:list s}{b:t}
+    Eq (foldright g (append G H) b) (foldright g G (foldright g H b))
+  foldleft_append_lem = ... :
+    {s|Type}{t|Type}{g:s-&gt;t-&gt;t}{G,H:list s}{b:t}
+    Eq (foldleft g (append G H) b) (foldleft g H (foldleft g G b))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Natural Numbers: Basic Definitions</TITLE>
+<META NAME="description" CONTENT="Natural Numbers: Basic Definitions">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html494" HREF="node26.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html492" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html486" HREF="node24.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html496" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html495" HREF="node26.html">Theorems about Successor</A>
+<B>Up:</B> <A NAME="tex2html493" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html487" HREF="node24.html">The Natural Numbers</A>
+<BR> <P>
+<H2><A NAME="SECTION000131000000000000000">Natural Numbers: Basic Definitions</A></H2>
+<P>
+The basic definitions are held in the file <TT>lib_nat</TT>.
+We find it useful to define the double iterator
+and double induction, and the constants <TT>one</TT> to <TT>ten</TT>.
+This file also defines the algebraic functions addition, multiplication
+and exponentiation. We also define <TT>pred</TT> (predecessor) in one step
+from this we define truncated subtraction (<TT>minus</TT>).
+<P>
+<PRE> ** Module lib_nat Imports lib_bool
+ $nat : SET
+ $zero : nat
+ $suc : nat-&gt;nat
+ $nat_elim :
+    {C_nat:nat-&gt;TYPE}(C_nat zero)-&gt;
+    ({x1:nat}(C_nat x1)-&gt;C_nat (suc x1))-&gt;{z:nat}C_nat z
+[[C_nat:nat-&gt;TYPE][f_zero:C_nat zero]
+ [f_suc:{x1:nat}(C_nat x1)-&gt;C_nat (suc x1)][x1:nat]
+    nat_elim C_nat f_zero f_suc zero  ==&gt;  f_zero
+ || nat_elim C_nat f_zero f_suc (suc x1)  ==&gt;
+    f_suc x1 (nat_elim C_nat f_zero f_suc x1)]
+
+  nat_rec = ... : {t|TYPE}t-&gt;(nat-&gt;t-&gt;t)-&gt;nat-&gt;t
+  nat_iter = ... : {t|TYPE}t-&gt;(t-&gt;t)-&gt;nat-&gt;t
+  nat_ind = ... :
+    {P:nat-&gt;Prop}(P zero)-&gt;({n:nat}(P n)-&gt;P (suc n))-&gt;{n:nat}P n
+  nat_double_elim = ... :
+    {T:nat-&gt;nat-&gt;TYPE}(T zero zero)-&gt;
+    ({n:nat}(T zero n)-&gt;T zero (suc n))-&gt;
+    ({m:nat}({n:nat}T m n)-&gt;T (suc m) zero)-&gt;
+    ({m:nat}({n:nat}T m n)-&gt;{n:nat}(T (suc m) n)-&gt;T (suc m) (suc n))-&gt;
+    {m,n:nat}T m n
+  nat_diagonal_iter = ... :
+    {C|TYPE}(nat-&gt;C)-&gt;(nat-&gt;C)-&gt;(C-&gt;C)-&gt;nat-&gt;nat-&gt;C
+  nat_diagonal_ind = ... :
+    {phi:nat-&gt;nat-&gt;Prop}({m:nat}phi zero m)-&gt;({n:nat}phi (suc n) zero)-&gt;
+    ({n,m:nat}(phi n m)-&gt;phi (suc n) (suc m))-&gt;{n,m:nat}phi n m
+  nat_d_rec_for_int = ... :
+    {C:nat-&gt;nat-&gt;TYPE}(C zero zero)-&gt;({m,n:nat}(C m n)-&gt;C (suc m) n)-&gt;
+    ({m,n:nat}(C m n)-&gt;C m (suc n))-&gt;{m,n:nat}C m n
+  is_suc = ... : nat-&gt;Prop
+  is_zero = ... : nat-&gt;Prop
+  zero_not_suc = ... : {n:nat}not (Eq zero (suc n))
+  suc_not_zero = ... : not (is_suc zero)
+  zero_or_suc = ... : {n:nat}or (Eq n zero) (is_suc n)
+  one = ... : nat
+  two = ... : nat
+  three = ... : nat
+  four = ... : nat
+  five = ... : nat
+  six = ... : nat
+  seven = ... : nat
+  eight = ... : nat
+  nine = ... : nat
+  ten = ... : nat
+  plus = ... : nat-&gt;nat-&gt;nat
+  times = ... : nat-&gt;nat-&gt;nat
+  exp = ... : nat-&gt;nat-&gt;nat
+  pred = ... : nat-&gt;nat
+  minus = ... : nat-&gt;nat-&gt;nat
+  ackerman = ... : nat-&gt;nat-&gt;nat
+  if_zero = ... : {t|TYPE}nat-&gt;t-&gt;t-&gt;t
+  zero_not_one = ... : not (Eq zero one)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

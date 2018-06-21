@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<TITLE>Advanced exercises (due Friday, 13 December 1996)</TITLE>
+
+</HEAD>
+<BODY>
+<P>
+<P>
+<H1>Advanced exercises</H1>
+
+Computer Aided Formal Reasoning<BR>
+Exercise 3<BR>
+<B>Deadline</B>: Friday,13 December 1996<BR>
+
+ <P>
+Please submit your module(s) by Email to <a href="mailto:jlu@dcs.ed.ac.uk"><I>&lt;jlu@dcs.ed.ac.uk&gt;</I></a>
+<hr>
+<P>
+
+<OL>
+<LI> Implement the abstract data type of arrays
+<a href="array_adt.l">(available here)</a> using lists.
+You might want to look at  <a href=
+"http://www.dcs.ed.ac.uk/home/lego/html/library/node72.html">
+lib_adt_basics,</a> the library module which defines ADT
+operations.
+<P>
+<LI>
+<ol> <li> Define functions <tt> div:nat->nat->nat </tt> and 
+<tt> mod:nat->nat->nat </tt> which, when given arguments
+n and k compute the integer 
+part of n divided by k and the remainder.  Since n 
+divided by zero is undefined, you can either exclude
+it directly by defining your function so that
+div n k is really n divided by (suc k) (and similarly for
+mod) or you
+can return some other value (like n).  If you choose the first
+option, remove the assumption Lt zero k from the following
+problems.
+<p>
+<li> Prove 
+<tt>
+{k,n:nat}(Lt zero k) -> Lt (mod n k) k
+</tt>.
+<p>
+<li>
+Extra credit:  Prove
+<tt>
+{k:nat}{n:nat}(Lt zero k) ->
+Eq n (plus (mod n k) (times k (div n k))).
+</tt>
+</ol>
+</p>
+Hint: you may wish to look at the libraries on boolean valued
+relations and all order relations.
+</OL>
+<ADDRESS> <A Name=Signature HREF="/home/lego/html/CAFR/index.html/">
+Computer Aided Formal Reasoning</A></ADDRESS>
+</BODY>
+</HTML>

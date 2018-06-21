@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Natural Numbers: Basic theorems</TITLE>
+<META NAME="description" CONTENT="Natural Numbers: Basic theorems">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1175" HREF="node86.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1173" HREF="node83.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1169" HREF="node84.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1177" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1176" HREF="node86.html">Library files for eliminating </A>
+<B>Up:</B> <A NAME="tex2html1174" HREF="node83.html">Pure Martin L&#246;f type </A>
+<B> Previous:</B> <A NAME="tex2html1170" HREF="node84.html">Basic properties</A>
+<BR> <P>
+<H2><A NAME="SECTION000232000000000000000">Natural Numbers: Basic theorems</A></H2>
+<P>
+<A NAME="seclib_ML_naat">&#160;</A>
+<P>
+<PRE>   fun nat_diagonal f _ a b = f a b if a and b stem from the same constructor
+      |nat_diagonal _ g a b = g a b
+
+   fun nat_diagonal_const f _ a b = f if a and b stem from the same constructor
+      |nat_diagonal_const g _ _ _ = g
+
+   val nat_filter = nat_diagonal_const unit empty
+
+   fun nat_Thm 0       0       = unit
+      |nat_Thm 0       (suc n) = {n:nat}(Eq 0 (suc n))-&gt;empty
+      |nat_Thm (suc m) 0       = {m:nat}(Eq (suc m) 0)-&gt;empty
+      |nat_Thm (suc m) (suc n) = injective suc</PRE>
+<P>
+<PRE> ** Module lib_ML_nat Imports lib_empty lib_unit lib_nat
+  nat_diagonal = ... : {C|Type}(nat-&gt;nat-&gt;C)-&gt;(nat-&gt;nat-&gt;C)-&gt;nat-&gt;nat-&gt;C
+  nat_diagonal_const = ... : {C|Type}C-&gt;C-&gt;nat-&gt;nat-&gt;C
+  nat_filter = ... : nat-&gt;nat-&gt;Type
+  nat_Thm = ... : nat-&gt;nat-&gt;SET
+  nat_thm = ... : {u,v:nat}nat_Thm u v</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

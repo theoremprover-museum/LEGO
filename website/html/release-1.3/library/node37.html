@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Propositional Relations</TITLE>
+<META NAME="description" CONTENT="Propositional Relations">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node38.html">
+<LINK REL="previous" HREF="node36.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node38.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html601"
+ HREF="node38.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html598"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html592"
+ HREF="node36.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html600"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html602"
+ HREF="node38.html">Boolean-valued Relations</A>
+<B> Up:</B> <A NAME="tex2html599"
+ HREF="node34.html">Order relations</A>
+<B> Previous:</B> <A NAME="tex2html593"
+ HREF="node36.html">Propositional Strict Inequality</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H3><A NAME="SECTION000129300000000000000">
+Propositional Relations</A>
+</H3>
+
+<P>
+This file incorporates both propositional inequalities and
+gives several additional theorems involving both
+inequalities. 
+
+<P>
+<PRE>
+ ** Module lib_nat_Prop_rels Imports lib_nat_Lt lib_nat_Le
+  Lt_Le_trans = ... : {x,y,z|nat}(Lt x y)-&gt;(Le y z)-&gt;Lt x z
+  Le_Lt_trans = ... : {x,y,z|nat}(Le x y)-&gt;(Lt y z)-&gt;Lt x z
+  Lt_imp_Le = ... : {x,y:nat}(Lt x y)-&gt;Le x y
+  Lt_Le_resp_plus = ... :
+    {x,y,a,b:nat}(Lt x y)-&gt;(Le a b)-&gt;Lt (plus x a) (plus y b)
+  Le_Lt_resp_plus = ... :
+    {x,y,a,b:nat}(Le x y)-&gt;(Lt a b)-&gt;Lt (plus x a) (plus y b)
+  decide_nat = ... : {x,y:nat}(Le x y \/ Lt y x)
+  Le_is_Lt_or_Eq = ... : {x,y:nat}(Le x y)-&gt;(Lt x y \/ Eq x y)
+  zero_or_pos = ... : {n:nat}(Eq n zero \/ Lt zero n)
+  Lt_imp_Le_suc = ... : {x,y:nat}(Lt x (suc y))-&gt;Le x y
+  Le_imp_Lt_suc = ... : {x,y:nat}(Le x y)-&gt;Lt x (suc y)
+  Lt_resp_times_both = ... :
+    {x,y,a,b:nat}(Lt x y)-&gt;(Lt a b)-&gt;Lt (times a x) (times b y)
+  Lt_imp_Le_suc' = ... : {x,y:nat}(Lt x y)-&gt;Le (suc x) y
+  Le_imp_Lt_suc' = ... : {x,y:nat}(Le (suc x) y)-&gt;Lt x y
+  minus_well_le = ... :
+    {m,n:nat}(Lt zero m)-&gt;(Le m n)-&gt;Lt (plus (minus n m) m) (plus n m)
+  not_Le_imp_Lt = ... : {x,y:nat}(not (Le x y))-&gt;Lt y x
+  not_Lt_imp_Le = ... : {x,y:nat}(not (Lt x y))-&gt;Le y x
+  Le_minus_zero = ... : {a,b:nat}(Le a b)-&gt;Eq (minus a b) zero
+  Le_resp_minus = ... : {a,b,c:nat}(Le a b)-&gt;Le (minus c b) (minus c a)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

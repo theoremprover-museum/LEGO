@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Vector Definitions</TITLE>
+<META NAME="description" CONTENT="Vector Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node60.html">
+<LINK REL="previous" HREF="node58.html">
+<LINK REL="up" HREF="node58.html">
+<LINK REL="next" HREF="node60.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html848"
+ HREF="node60.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html845"
+ HREF="node58.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html839"
+ HREF="node58.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html847"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html849"
+ HREF="node60.html">Vector Basics</A>
+<B> Up:</B> <A NAME="tex2html846"
+ HREF="node58.html">Vectors</A>
+<B> Previous:</B> <A NAME="tex2html840"
+ HREF="node58.html">Vectors</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000151000000000000000">
+Vector Definitions</A>
+</H2>
+<P>
+Vectors are another datatype indexed by <TT>nat</TT> but this time <TT>
+  vect A n</TT> is the collection of lists of length <TT>n</TT>, with
+elements in <TT>A</TT>. With this datatype we can define the
+(family of) total functions ``nth'' for any natural number <I>n</I> which
+take an element of the finite set <IMG WIDTH="120" HEIGHT="33" ALIGN="MIDDLE" BORDER="0"
+ SRC="img8.gif"
+ ALT="$\{0,\ldots,n-1\}$"> and a list of
+length <I>n</I> and returns the appropriate element of the list.  In this
+file we prove that the ``nth'' function defined here is equivalent
+(modulo the appropriate conversions) to the ``nth'' function in the
+list library.
+<P>
+As with lists, older versions of the library have the element type
+parameter explicit throughout. Now, with conditional visibility, the
+parameter is explicit for <TT>vect</TT> and <TT>vnil</TT>, but implicit for
+<TT>vcons</TT> and <TT>vect_elim</TT>. This may necessitate small changes
+to existing proof scripts.
+<P><PRE>
+ ** Module lib_vectors Imports lib_finite lib_list_length
+ $vect : (Type)-&gt;nat-&gt;Type(vect)
+ $vnil : {A:Type}vect A zero
+ $vcons : {A|Type}A-&gt;{n|nat}(vect A n)-&gt;vect A (suc n)
+ $vect_elim :
+    {A|Type}{C_vect:{n|nat}(vect A n)-&gt;Type}(C_vect (vnil A))-&gt;
+    ({a:A}{n|nat}{v:vect A n}(C_vect v)-&gt;C_vect (vcons a v))-&gt;{n|nat}
+    {z:vect A n}C_vect z
+ ** Label (!vect!) vect
+ ** Label (!vect elim!) vect_elim
+ ** Label (!vect vnil!) vnil
+ ** Label (!vect vcons!) vcons
+[[A|Type][C_vect:{n|nat}(vect A n)-&gt;Type][f_vnil:C_vect (vnil A)]
+ [f_vcons:{a:A}{n|nat}{v:vect A n}(C_vect v)-&gt;C_vect (vcons a v)][a:A]
+ [n|nat][v:vect A n]
+    vect_elim C_vect f_vnil f_vcons (vnil A)  ==&gt;  f_vnil
+ || vect_elim C_vect f_vnil f_vcons (vcons a v)  ==&gt;
+    f_vcons a v (vect_elim C_vect f_vnil f_vcons v)]
+
+  vect_elim_ne = ... :
+    {A|Type}{C:{n|nat}(vect A (suc n))-&gt;Type}
+    ({a:A}{n|nat}{v:vect A n}C (vcons a v))-&gt;{n|nat}{v:vect A (suc n)}
+    C v
+  vect_elim'_lemma = ... :
+    {A|Type}{n:nat}{m:vect A (suc n)}{P:(vect A (suc n))-&gt;Type}
+    ({a:A}{m'6:vect A n}P (vcons a m'6))-&gt;P m
+  vect_rec = ... :
+    {A|Type}{C|Type}C-&gt;(A-&gt;{n|nat}(vect A n)-&gt;C-&gt;C)-&gt;{n|nat}(vect A n)-&gt;
+    C
+  vect_iter = ... :
+    {A|Type}{C|Type}C-&gt;(nat-&gt;A-&gt;C-&gt;C)-&gt;{n|nat}(vect A n)-&gt;C
+  vect_ind = ... :
+    {A|Type}{P:{n:nat}(vect A n)-&gt;Prop}(P (vnil A))-&gt;
+    ({a:A}{n|nat}{v:vect A n}(P v)-&gt;P (vcons a v))-&gt;{n|nat}{z:vect A n}
+    P z
+  vnil_lemma = ... :
+    {A|Type}{n:nat}{v:vect A n}
+    nat_elim|([x:nat](vect A x)-&gt;Prop)
+     ([v'4:vect A zero]Eq v'4 (vnil A))
+     ([x:nat][_:(vect A x)-&gt;Prop][_:vect A (suc x)]trueProp) n v
+  vect_zero_eq_vnil = ... : {A|Type}{v:vect A zero}Eq v (vnil A)
+  vect_head = ... : {A|Type}{n|nat}(vect A (suc n))-&gt;A
+  vect_tail = ... : {A|Type}{n|nat}(vect A (suc n))-&gt;vect A n
+  cons_inj_lemma1 = ... :
+    {A|Type}{a,b:A}{n:nat}{v:vect A n}(Eq (vcons a v) (vcons b v))-&gt;
+    Eq a b
+  cons_inj_lemma2 = ... :
+    {A|Type}{a:A}{n:nat}{v,w:vect A n}(Eq (vcons a v) (vcons a w))-&gt;
+    Eq v w
+  vect_head_cons_tail = ... :
+    {A|Type}{n|nat}{v:vect A (suc n)}
+    Eq (vcons (vect_head v) (vect_tail v)) v
+  vect_nth = ... : {A|Type}{n|nat}(fin n)-&gt;(vect A n)-&gt;A
+  vect_update = ... : {A|Type}{n|nat}(fin n)-&gt;(vect A n)-&gt;A-&gt;vect A n
+  vect_character = ... :
+    {A:Type}
+    [vect_character_rhs=nat_elim ([n:nat](vect A n)-&gt;vect A n)
+                         ([_:vect A zero]vnil A)
+                         ([x1:nat][_:(vect A x1)-&gt;vect A x1]
+                          [v:vect A (suc x1)]
+                          vcons (vect_head v) (vect_tail v))]{n|nat}
+    {v:vect A n}Eq v (vect_character_rhs n v)
+  vect_zip = ... :
+    {A|Type}{n:nat}(A-&gt;A-&gt;A)-&gt;(vect A n)-&gt;(vect A n)-&gt;vect A n
+  vector_to_list = ... : {A|Type}{n|nat}(vect A n)-&gt;list A
+  vector_to_list_resp_cons = ... :
+    {A|Type}{n|nat}{v:vect A n}{a:A}
+    Eq (cons|A a (vector_to_list v)) (vector_to_list (vcons a v))
+  vect_nth_equiv_nth = ... :
+    {A|Type}{n|nat}{x:fin n}{v:vect A n}{a:A}
+    Eq (vect_nth x v) (nth (fin_to_nat x) (vector_to_list v) a)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

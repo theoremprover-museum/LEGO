@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Boolean Definition</TITLE>
+<META NAME="description" CONTENT="Boolean Definition">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node20.html">
+<LINK REL="previous" HREF="node18.html">
+<LINK REL="up" HREF="node18.html">
+<LINK REL="next" HREF="node20.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html379"
+ HREF="node20.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html376"
+ HREF="node18.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html370"
+ HREF="node18.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html378"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html380"
+ HREF="node20.html">Boolean Functions</A>
+<B> Up:</B> <A NAME="tex2html377"
+ HREF="node18.html">The Booleans</A>
+<B> Previous:</B> <A NAME="tex2html371"
+ HREF="node18.html">The Booleans</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION00081000000000000000">
+Boolean Definition</A>
+</H2>
+<P>
+The file <TT>lib_bool</TT> gives the basic definition of the boolean
+type with its recursor and induction principle and
+propositional functions <TT>is_true</TT>
+and <TT>is_false</TT> which are used in the two
+characterisation theorems that true is not equal to false
+and that any boolean is either true or false.
+<P><PRE>
+ ** Module lib_bool Imports lib_eq_basics
+ $bool : Type(bool)
+ $true : bool
+ $false : bool
+ $bool_elim :
+    {C_bool:bool-&gt;TYPE}(C_bool true)-&gt;(C_bool false)-&gt;{z:bool}C_bool z
+ ** Label (!bool!) bool
+ ** Label (!bool elim!) bool_elim
+ ** Label (!bool true!) true
+ ** Label (!bool false!) false
+[[C_bool:bool-&gt;TYPE][f_true:C_bool true][f_false:C_bool false]
+    bool_elim C_bool f_true f_false true  ==&gt;  f_true
+ || bool_elim C_bool f_true f_false false  ==&gt;  f_false]
+
+   Gen (!bool is true!) as bool_is_true = ... : bool-&gt;Type
+   Gen (!bool is false!) as bool_is_false = ... : bool-&gt;Type
+   Gen (!bool true injective!) as bool_true_injective = ... :
+    (Eq true true)-&gt;{P|Type}P-&gt;P
+   Gen (!bool false injective!) as bool_false_injective = ... :
+    (Eq false false)-&gt;{P|Type}P-&gt;P
+  bool_rec = ... : {T|Type}T-&gt;T-&gt;bool-&gt;T
+  bool_ind = ... : {P:bool-&gt;Prop}(P true)-&gt;(P false)-&gt;{b:bool}P b
+  bool_double_elim = ... :
+    {T:bool-&gt;bool-&gt;Type}(T true true)-&gt;(T true false)-&gt;(T false true)-&gt;
+    (T false false)-&gt;{x,y:bool}T x y
+  is_true = ... : bool-&gt;Prop
+  is_false = ... : bool-&gt;Prop
+  true_not_false = ... : not (Eq true false)
+  true_or_false = ... : {b:bool}(is_true b \/ is_false b)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

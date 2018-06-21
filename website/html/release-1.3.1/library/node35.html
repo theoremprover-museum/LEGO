@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Propositional Inequality</TITLE>
+<META NAME="description" CONTENT="Propositional Inequality">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node34.html">
+<LINK REL="up" HREF="node34.html">
+<LINK REL="next" HREF="node36.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html576"
+ HREF="node36.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html573"
+ HREF="node34.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html567"
+ HREF="node34.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html575"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html577"
+ HREF="node36.html">Propositional Strict Inequality</A>
+<B> Up:</B> <A NAME="tex2html574"
+ HREF="node34.html">Order relations</A>
+<B> Previous:</B> <A NAME="tex2html568"
+ HREF="node34.html">Order relations</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H3><A NAME="SECTION000129100000000000000">
+Propositional Inequality</A>
+</H3>
+<P>
+The order relation <IMG WIDTH="17" HEIGHT="28" ALIGN="MIDDLE" BORDER="0"
+ SRC="img5.gif"
+ ALT="$\leq$"> is defined in one file, with
+its associated theorems. There is some redundancy e.g.
+<TT>Le_resp_plus</TT> is trivially implied by 
+<TT>Le_resp_plus_both</TT>.
+Having both theorems available is useful in further
+development.
+<P><PRE>
+ ** Module lib_nat_Le Imports lib_nat_times_thms lib_nat_minus_thms
+  Le = ... : nat-&gt;nat-&gt;Prop
+  Le_plus_lemma1 = ... : {m,n|nat}Le m (plus m n)
+  Le_plus_lemma2 = ... : {m,n|nat}Le n (plus m n)
+  Le_suc_lemma = ... : {m,n|nat}(Le m (suc n))-&gt;(Le m n \/ Eq (suc n) m)
+  Le_antisym = ... : {m,n:nat}(Le m n)-&gt;(Le n m)-&gt;Eq n m
+  Le_suc = ... : {x:nat}Le x (suc x)
+  Le_resp_suc = ... : {x,y:nat}(Le x y)-&gt;Le (suc x) (suc y)
+  Le_resp_pred = ... : {x,y:nat}(Le (suc x) (suc y))-&gt;Le x y
+  Le_zero_n = ... : {n:nat}Le zero n
+  Le_incl_pred = ... : {x:nat}Le (pred x) x
+  not_Le_zero_n = ... : {n:nat}not (Le (suc n) zero)
+  Le_suc_pred = ... : {a,b|nat}(Le (suc a) b)-&gt;Le a (pred b)
+  eq_imp_Le = ... : {x,y:nat}(Eq x y)-&gt;Le x y
+  Le_trans = ... : {x,y,z|nat}(Le x y)-&gt;(Le y z)-&gt;Le x z
+  Le_resp_plus = ... : {x,y,z:nat}(Le x y)-&gt;Le (plus z x) (plus z y)
+  Le_resp_sub = ... : {x,y,z:nat}(Le (plus z x) (plus z y))-&gt;Le x y
+  Le_resp_plus_both = ... :
+    {x,y,a,b:nat}(Le x y)-&gt;(Le a b)-&gt;Le (plus x a) (plus y b)
+  Le_resp_times = ... : {x,y,a:nat}(Le x y)-&gt;Le (times a x) (times a y)
+  Le_times_cancel = ... :
+    {x,y,a:nat}(Le (times x (suc a)) (times y (suc a)))-&gt;Le x y
+  Le_resp_times_both = ... :
+    {a,b,x,y:nat}(Le a b)-&gt;(Le x y)-&gt;Le (times a x) (times b y)
+  plus_inv_minus = ... : {m,n:nat}(Le m n)-&gt;Eq n (plus (minus n m) m)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Theorems about Minus</TITLE>
+<META NAME="description" CONTENT="Theorems about Minus">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node31.html">
+<LINK REL="previous" HREF="node29.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node31.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html516"
+ HREF="node31.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html513"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html507"
+ HREF="node29.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html515"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html517"
+ HREF="node31.html">Theorems about Plus</A>
+<B> Up:</B> <A NAME="tex2html514"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html508"
+ HREF="node29.html">Theorems about Successor</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000125000000000000000">
+Theorems about Minus</A>
+</H2>
+<P>
+Another small file gives a few theorems about truncated
+subtraction (<TT>minus</TT>).
+<P><PRE>
+ ** Module lib_nat_minus_thms Imports lib_nat_plus_thms
+  minus_suc_pred = ... :
+    {n,m:nat}Eq (minus n (suc m)) (minus (pred n) m)
+  minus_resp_suc = ... : {m,n:nat}Eq (minus (suc m) (suc n)) (minus m n)
+  n_minus_n_Eq_zero = ... : {n:nat}Eq (minus n n) zero
+  zero_minus_n_Eq_zero = ... : {n:nat}Eq (minus zero n) zero
+  minus_commutes_suc_l = ... :
+    {m,n,t|nat}(Eq (minus n m) (suc t))-&gt;
+    Eq (minus (suc n) m) (suc (minus n m))
+  minus_commutes_suc_r = ... :
+    {m,n,t|nat}(Eq (minus n m) (suc t))-&gt;Eq (minus n (suc m)) t
+  minus_monotone_l = ... :
+    {l:nat}{m,n,t|nat}(Eq (minus n m) (suc t))-&gt;
+    Eq (minus (plus n l) m) (suc (plus t l))
+  minus_inv_plus = ... : {m,n:nat}Eq n (minus (plus m n) m)
+  nonzero_inv_sp = ... : {x:nat}(not (Eq x zero))-&gt;Eq (suc (pred x)) x
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

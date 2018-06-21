@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Hoare logic: Inversion</TITLE>
+<META NAME="description" CONTENT="Hoare logic: Inversion">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1111" HREF="node80.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1109" HREF="node73.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1103" HREF="node78.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1113" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1112" HREF="node80.html">Example</A>
+<B>Up:</B> <A NAME="tex2html1110" HREF="node73.html">Imperative programs</A>
+<B> Previous:</B> <A NAME="tex2html1104" HREF="node78.html">Hoare logic</A>
+<BR> <P>
+<H2><A NAME="SECTION000224000000000000000">Hoare logic: Inversion</A></H2>
+<P>
+Given a Hoare triple  <IMG WIDTH=67 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline407" SRC="img13.gif"  > , what properties can we infer?
+<code>hoare_inversion</code> is a collection of such lemmas depending on
+<I>p</I>, <I>S</I> and&nbsp;<I>q</I>.
+<P>
+<UL><LI>  <IMG WIDTH=100 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline415" SRC="img14.gif"  >  implies  <IMG WIDTH=49 HEIGHT=20 ALIGN=MIDDLE ALT="tex2html_wrap_inline417" SRC="img15.gif"  > .<LI>  <IMG WIDTH=108 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline419" SRC="img16.gif"  >  implies that a state&nbsp;<I>r</I> must exist such that
+ <IMG WIDTH=84 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline423" SRC="img17.gif"  >  and  <IMG WIDTH=47 HEIGHT=20 ALIGN=MIDDLE ALT="tex2html_wrap_inline425" SRC="img18.gif"  > .<LI>  <IMG WIDTH=107 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline427" SRC="img19.gif"  >  implies that an intermediate state&nbsp;<I>r</I> must
+exist such that  <IMG WIDTH=79 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline431" SRC="img20.gif"  >  and  <IMG WIDTH=79 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline433" SRC="img21.gif"  > <LI>  <IMG WIDTH=226 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline435" SRC="img22.gif"  > 
+implies that  <IMG WIDTH=109 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline437" SRC="img23.gif"  >  and  <IMG WIDTH=122 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline439" SRC="img24.gif"  > .<LI>  <IMG WIDTH=201 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline441" SRC="img25.gif"  >  implies
+that a state&nbsp;<I>r</I> must exist such that  <IMG WIDTH=48 HEIGHT=20 ALIGN=MIDDLE ALT="tex2html_wrap_inline445" SRC="img26.gif"  > ,
+ <IMG WIDTH=99 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline447" SRC="img27.gif"  >  and  <IMG WIDTH=103 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline449" SRC="img28.gif"  > .
+</UL>
+<P>
+<PRE> ** Module lib_hoare_inversion Imports lib_hoare
+  hoare_Inversion = ... :
+    {sort|location-&gt;Type}[Env'=Env sort][prog'=prog|sort]
+    [Assertion=Env'-&gt;Prop]Assertion-&gt;Assertion-&gt;prog'-&gt;Prop
+  hoare_inversion_cons = ... :
+    {sort|location-&gt;Type}[Env'=Env sort][prog'=prog|sort]
+    [Assertion=Env'-&gt;Prop]{p,p',q,q':Assertion}(limplies p p')-&gt;
+    (limplies q' q)-&gt;{S:prog'}(HD p' S q')-&gt;(hoare_Inversion p' q' S)-&gt;
+    hoare_Inversion p q S
+  hoare_inversion = ... :
+    {sort|location-&gt;Type}[Env'=Env sort][prog'=prog|sort]
+    [Assertion=Env'-&gt;Prop]{p|Assertion}{S|prog'}{q|Assertion}
+    (HD p S q)-&gt;hoare_Inversion p q S</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,178 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3: qnify, Qnify and Configure Qnify</title>
+  </head>
+
+  <body>
+ <P>
+ <HR> 
+<A HREF="patterns.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+
+<A HREF="inversion.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Next:</B> <A  HREF="patterns.html">Relaxed Patterns and Inductive Types</A>
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Version 1.3</A>
+<B> Previous:</B> <A HREF="inversion.html"> Inversion and Invert</A>
+<HR>       <h1>Lego Version 1.3: qnify, Qnify and Configure Qnify</h1>
+
+First-order unification problems involving only constructors and
+variables are decidable and have most general unifiers. We have
+provided a tactic which automates (most of) this procedure. Since it
+uses Qrepl to perform substitutions, it has acquired the name <b>qnify</b>.
+<P>
+<b>qnify</b> works on unification problems represented as equational premises
+in the goal. It can be called in three ways:
+<P>
+<TABLE CELLPADDING=2>
+  <TR>
+    <TD><UL><li><TT>qnify n;</TT>
+</TD>
+    <TD>where the problem is to be the leftmost <TT>n</TT>
+     equational premises</TD></TR>
+  <TR>
+    <TD><UL><li><TT>qnify;</TT>
+</TD>
+    <TD>where the problem is to be all the equational premises</TD></TR>
+  <TR>
+    <TD><UL><li><TT>qnify H;</TT> 
+</TD>
+    <TD>which is equivalent to <TT>Refine cut H; qnify 1;</TT></TD></TR>
+</TABLE>
+<P>
+<b>qnify</b> essentially sequences calls to other tactics which implement
+transitions in the unification process. These transitions are (in
+order of priority):
+<P>
+<TABLE CELLPADDING=2>
+  <TR>
+    <TD><UL><li><b>conflict</b></TD>
+    <TD ALIGN=center VALIGN=center COLSPAN=2>
+<TT>-----------------------------------</TT><br>
+  <TT>(Eq (coni blah) (conj blah))->P</TT>
+</TD></TR>
+<TR><TD></TD></TR>
+  <TR>
+    <TD><UL><li><b>injectivity</b></TD>
+    <TD ALIGN=center VALIGN=center COLSPAN=2>
+        <TT>(Eq xi1 yi1)->..->(Eq xiji yiji)->P</TT><br>
+<TT>-------------------------------------------------</TT><br>
+  <TT>(Eq (coni xi1 .. xiji) (coni yi1 .. yiji))->P</TT>
+</TD></TR>
+<TR><TD></TD></TR>
+  <TR>
+    <TD><UL><li><b>coalescence</b></TD>
+    <TD ALIGN=center VALIGN=center>
+   <TT>P[x:=y]</TT><br>
+<TT>---------------</TT><br>
+  <TT>(Eq x y)->P</TT></TD>
+  <TD><TT>x</TT>,<TT>y</TT> distinct variables</TD></TR>
+<TR><TD></TD></TR>
+  <TR>
+    <TD><UL><li><b>elimination</b></TD>
+    <TD ALIGN=center VALIGN=center>
+   <TT>P[x:=M]</TT><br>
+<TT>---------------</TT><br>
+  <TT>(Eq x M)->P</TT></TD>
+  <TD><TT>x</TT> not free in <TT>M</TT></TD></TR>
+</TD></TR>
+<TR><TD></TD></TR>
+  <TR>
+    <TD><UL><li><b>deletion</b></TD>
+    <TD ALIGN=center VALIGN=center COLSPAN=2>
+   <TT>P</TT><br>
+<TT>--------</TT><br>
+  <TT>A->P</TT></TD></TR>
+</TABLE>
+<P>
+
+So, for example, given a binary <tt>tree</tt> type with constructors
+<tt>leaf</tt> and <tt>node</tt>, generated with the Theorems switch
+set, consider the goal:
+
+<P><PRE>
+  ?0: {x:tree}(Eq (node x leaf) (node (node leaf leaf) x))->absurd
+</PRE><P>
+Now let's prove it at one stroke:
+<P><PRE>
+  Lego> qnify;
+  (* deletion *)
+  ?1: (Eq (node x leaf) (node (node leaf leaf) x))->absurd
+  (* injectivity *)
+  ?2: (Eq x (node leaf leaf))->(Eq leaf x)->absurd
+  (* elimination *)
+  ?3: (Eq leaf (node leaf leaf))->absurd
+  (* conflict *)
+  *** QED ***
+</PRE><P>
+Conflict and injectivity are implemented using the gadgets generated
+by the Theorems switch, hence the goal-orientated shape of the
+injectivity theorems. Coalescence and elimination (and the symmetric
+cases) are implemented using Qrepl. Deletion is just intros.
+<P>
+The coalescence rule compares the depth in context of the two
+variables and substitutes the more global for the more local. This
+seems to be the more useful way round in most cases.
+<P>
+The <b>Qnify</b> tactic has similar syntax and behaviour to
+<b>qnify</b>, except that it performs head normalisation in order to
+reveal more equations in constructor form. (The relationship is similar
+to that of <b>Intros</b> to <b>intros</b>.)
+Hence<p>
+<pre>
+  ?: (Eq zero (plus (suc x) y))->absurd
+</pre>
+<p>
+will be proven directly by <b>Qnify</b> but not by <b>qnify</b>.
+<p>
+Note that <b>Qnify</b> will not work correctly with an equality symbol
+which has a definitional expansion (eg Leibnitz equality) unless that
+definition is frozen, as head normalisation will otherwise <i>remove</i> the
+occurrence of the equality symbol rather than revealing it.
+<p>
+Both tactics can be equipped with an occurs-check rule for disproving
+cyclic equations:
+<TABLE CELLPADDING=2>
+  <TR>
+    <TD><UL><li><b>checking</b></TD>
+    <TD ALIGN=center VALIGN=center>
+<TT>--------------------------------------</TT><br>
+  <TT>(Eq x (coni1 .. (conin x) .. ))->P</TT>
+</TD></TR>
+</TABLE>
+This is done with the command
+<ul>
+<li> <tt>Configure Qnify</tt> <i>nat</i> <i>suc_n_not_n</i><tt>;</tt>
+</ul>
+All first-order cyclic equations in inductive datatypes can be mapped
+onto the equation of a natural number with its successor. <b>Configure
+Qnify</b> registers the names of the appropriate datatype and disproof.
+The library definition of the natural numbers contains an appropriate
+configuration.
+However, should no such configuration be supplied, the elimination
+transition nonetheless performs an occurs-check.
+Equations <TT>(Eq x M)</TT> with
+<TT>x</TT> free in <TT>M</TT> but not equal to <TT>M</TT> are merely
+deleted, but the user is informed.
+<P>
+Note that a single qnify or Qnify command can be undone with Undo 1, even
+though it may call Refine, intros and Qrepl many times.
+<P>
+Finally, both Theorems and these unification tactics need to be able
+to recognise the equality predicate and apply properties of
+reflexivity, substitutivity and symmetry. Further, qnify must use the
+same equality as Qrepl. For this reason, Configure Qrepl has been
+subsumed by the stronger <A HREF="config_eq.html"><b>Configure
+Equality</b></a>.
+</body>
+</html>

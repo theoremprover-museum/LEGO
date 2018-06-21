@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Introduction</TITLE>
+<META NAME="description" CONTENT="Introduction">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html218" HREF="node3.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html216" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html210" HREF="node1.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html220" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html219" HREF="node3.html">Conventions</A>
+<B>Up:</B> <A NAME="tex2html217" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html211" HREF="node1.html">Contents</A>
+<BR> <P>
+<H1><A NAME="SECTION00020000000000000000">Introduction</A></H1>
+<P>
+This report describes the current LEGO library, which was designed as
+a basis upon which users can develop their own work, and also some
+example proof developments using this library.
+An earlier version of the library was developed
+by Savi Maharaj for use by students being introduced
+to the LEGO system<A NAME="tex2html4" HREF="footnode.html#75"><IMG  ALIGN=BOTTOM ALT="gif" SRC="http://www.dcs.ed.ac.uk/icons//foot_motif.gif"></A>. We hope that this version
+will provide useful preliminaries for <EM>all</EM> users.
+<P>
+We have received contributions from: Thorsten Altenkirch; Petr Cizek;
+Adriana Compagnoni; Healf Goguen; Martin Hofmann; Claire Jones; Savi
+Maharaj; James McKinna; Randy Pollack; Thomas Schreiber.
+<P>
+The LEGO proof development tool is flexible -- users
+can make various basic choices in how to use the
+type system to encode their reasoning. We want
+the library to support this flexibility.
+Ideally, it should be possible for someone to use the library
+with any reasonable encoding of e.g.  equality and logic,
+and to choose where in the type hierarchy
+the basic datatypes should be.  We believe that the current 
+library achieves all of these goals with the exception that
+we cater for only one encoding of logic.
+<P>
+The LEGO library contains around 250 definitions and 400 theorems,
+and covers both the common datatypes such as natural numbers, list,
+booleans, products, sums, unit, empty and some more unusual ones such
+as integers, sigma types, quotient types, finite sets, vectors.
+There is also a directory which contains 
+some examples of proof developments
+using the library.
+<P>
+The library exploits the new module
+system of LEGO so that loading a library file will
+automatically load the files on which it depends and 
+two library files which depend on 
+some common files will have the common files loaded
+only once. So users don't need to know anything about the
+dependency structure of the library, only where to find
+the theorems they want. For faster loading, the library also stores 
+``compiled'' versions of most files which can be accessed by using
+the <code>Make</code> command in LEGO.
+<P>
+The library files are organised into directories by datatype.  Some
+files rely on more than one datatype in which case they are put in
+whatever directory seems most appropriate. 
+The basic datatypes are given inductively with their elimination
+and reduction rules. Library standards include deriving also
+recursor, iterator, induction principle and 
+the double elimination rule for each datatype and also the 
+appropriate characterisation theorems
+(e.g. disjointness of constructors).
+<P>
+In this document we will describe each file briefly and then
+give a list of the definitions made and theorems proved
+in each file.
+<P>
+<HR><A NAME="tex2html218" HREF="node3.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html216" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html210" HREF="node1.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html220" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html219" HREF="node3.html">Conventions</A>
+<B>Up:</B> <A NAME="tex2html217" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html211" HREF="node1.html">Contents</A>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Integers-Definitions</TITLE>
+<META NAME="description" CONTENT="The Integers-Definitions">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html950" HREF="node66.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html948" HREF="node63.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html942" HREF="node64.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html952" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html951" HREF="node66.html">Basic Lemmas</A>
+<B>Up:</B> <A NAME="tex2html949" HREF="node63.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html943" HREF="node64.html">Extra lemmas for integers</A>
+<BR> <P>
+<H2><A NAME="SECTION000202000000000000000">The Integers-Definitions</A></H2>
+<P>
+In this file are
+given some basic definitions for the integers.
+The datatype itself, its equality, various constants 
+and some operations are defined.
+The internal sigma-type is used to define the
+pairs of integers. This is mainly because using 
+inductive cross-product is slower to run.
+<P>
+<PRE> ** Module lib_int_basics Imports lib_integers/lib_int_nat_lemmas
+     lib_nat/lib_nat_minus_thms lib_sets/lib_sets_ccmj
+  zed = ... : Type
+  Eq_zed = ... : zed-&gt;zed-&gt;Prop
+  Eq_refl_zed = ... : refl Eq_zed
+  Eq_sym_zed = ... : sym Eq_zed
+  Eq_trans_zed = ... : trans Eq_zed
+  int = ... : set
+  zero_zed = ... : int.1
+  one_zed = ... : int.1
+  two_zed = ... : int.1
+  three_zed = ... : int.1
+  four_zed = ... : int.1
+  minus_one_zed = ... : int.1
+  plus_zed = ... : int.1-&gt;int.1-&gt;int.1
+  times_zed = ... : int.1-&gt;int.1-&gt;int.1
+  minus_zed = ... : int.1-&gt;int.1-&gt;int.1
+  neg_zed = ... : int.1-&gt;int.1</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

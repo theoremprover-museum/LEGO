@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>The Relation Adjoin</TITLE>
+<META NAME="description" CONTENT="The Relation Adjoin">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html768" HREF="node50.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html766" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html760" HREF="node48.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html770" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html769" HREF="node50.html">Membership</A>
+<B>Up:</B> <A NAME="tex2html767" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html761" HREF="node48.html">Lists and products</A>
+<BR> <P>
+<H2><A NAME="SECTION000148000000000000000">The Relation Adjoin</A></H2>
+<P>
+This file defines the relation Adjoin over lists and
+proves some of its properties. This relation
+can be used to define permutations, as seen below.
+<P>
+<PRE> ** Module lib_list_Adjoin Imports lib_list_length
+  Adjoin = ... : {s|Type}s-&gt;(list s)-&gt;(list s)-&gt;Prop
+  ad1 = ... : {s|Type}{a:s}{xs:list s}Adjoin a xs (cons a xs)
+  ad2 = ... :
+    {s|Type}{xs|list s}{a|s}{axs|list s}(Adjoin a xs axs)-&gt;{b:s}
+    Adjoin a (cons b xs) (cons b axs)
+  Adjoin_elim_nondep = ... :
+    {s|Type}{T:s-&gt;(list s)-&gt;(list s)-&gt;Prop}
+    ({a:s}{xs:list s}T a xs (cons a xs))-&gt;
+    ({xs|list s}{a|s}{axs|list s}(Adjoin a xs axs)-&gt;(T a xs axs)-&gt;{b:s}
+     T a (cons b xs) (cons b axs))-&gt;{a|s}{xs,ys|list s}
+    (Adjoin a xs ys)-&gt;T a xs ys
+  Adjoin_inv = ... :
+    {s|Type}{a|s}{xs,ys|list s}(Adjoin a xs ys)-&gt;
+    or (Eq ys (cons a xs))
+       (Ex ([xs':list s]
+            Ex ([ys':list s]
+                Ex ([c:s]
+                    and (Eq xs (cons c xs'))
+                        (and (Eq ys (cons c ys')) (Adjoin a xs' ys')))))
+          )
+  Adjoin_inv_corr1 = ... :
+    {s|Type}{a,b|s}{xs,ys|list s}(Adjoin a (cons b xs) ys)-&gt;
+    or (Eq ys (cons a (cons b xs)))
+       (Ex ([ys':list s]and (Eq ys (cons b ys')) (Adjoin a xs ys')))
+  Adjoin_inv_corr2 = ... :
+    {s|Type}{a,b|s}{xs,ys|list s}(Adjoin a xs (cons b ys))-&gt;
+    or (and (Eq a b) (Eq xs ys))
+       (Ex ([xs':list s]and (Eq xs (cons b xs')) (Adjoin a xs' ys)))
+  Adjoin_inv_corr3 = ... :
+    {s|Type}{a|s}{xs|list s}(Adjoin a (nil s) xs)-&gt;
+    Eq xs (cons a (nil s))
+  Adjoin_inv_corr4 = ... :
+    {s|Type}{a|s}{xs|list s}not (Adjoin a xs (nil s))
+  Adjoin_inv_corr5 = ... :
+    {s|Type}{a|s}{xs|list s}(Adjoin a xs (cons a (nil s)))-&gt;
+    Eq xs (nil s)
+  Adjoin_com1 = ... :
+    {s|Type}{a,b|s}{xs,us,ys|list s}(Adjoin a xs ys)-&gt;(Adjoin b ys us)-&gt;
+    Ex ([zs:list s]and (Adjoin b xs zs) (Adjoin a zs us))
+  Adjoin_com2 = ... :
+    {s|Type}{a,b|s}{xs,us,zs|list s}(Adjoin b zs xs)-&gt;(Adjoin a zs us)-&gt;
+    Ex ([ys:list s]and (Adjoin a xs ys) (Adjoin b us ys))
+  Adjoin_com3 = ... :
+    {s|Type}{a,b|s}{xs,us,ys|list s}(Adjoin a xs ys)-&gt;(Adjoin b us ys)-&gt;
+    or (and (Eq us xs) (Eq b a))
+       (Ex ([zs:list s]and (Adjoin b zs xs) (Adjoin a zs us)))
+  Adjoin_length_suc = ... :
+    {s|Type}{a|s}{l,al|list s}(Adjoin a l al)-&gt;
+    Eq (length al) (suc (length l))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

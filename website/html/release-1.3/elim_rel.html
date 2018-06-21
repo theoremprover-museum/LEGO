@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Verion 1.3: Elimination Rule for Relations</title>
+  </head>
+
+  <body>
+<P>
+ <HR> 
+<A HREF="induction.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+
+<A HREF="config_eq.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Next:</B> <A  HREF="induction.html">Induction</A>
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Version 1.3</A>
+<B> Previous:</B> <A HREF="config_eq.html">Configure Equality </A>
+<HR>      <h1>LEGO Version 1.3: Elimination Rule for Relations </h1>
+
+Consider inductive families defined with Relation, typically:
+<P>
+<PRE>
+  Inductive [R:T1->..->Tn->UNIV] Relation
+  Constructors
+    [rule1 : {x1:t1}..{xk:tk} (* schematic variables *)
+
+                (* inductive premises *)
+            (R p1 .. pn)->..->(R p'1 .. p'n)->       (* side conditions *)
+        (*--------------------------------------*) S1->..->Sn->
+                     R c1 .. cn
+                  (* conclusion *)                               ]
+    (* more rules *)
+    [ruleN: (* same pattern *) ];
+</PRE>
+<P>
+Previously, the elimination rule generated and assumed was
+<P>
+<PRE>
+  R_elim : {C_R:T1->..->Tn->UNIV} (* C_R does not depend on proofs of R *)
+              ({x1:t1}..{xk:tk}S1->..->Sn-> (* rule1 case *)
+               (C_R p1 .. pn)->..->(C_R p'1 .. p'n)->C_R c1 .. cn)->
+              (* more cases *)
+                   {a1:T1}..{an:Tn}(R a1 .. an)->C_R a1 .. an
+</PRE><P>
+This captured directly the idea that R is the smallest relation
+satisfying its rules.
+<P>
+However, observe that in each case, we get (C_R p1 .. pn) etc as
+hypotheses, but not the (R p1 .. pn) etc themselves, often very
+useful. We can add these hypotheses for a given
+<P><PRE>
+  C_R = [b1:T1]..[bn:Tn]P
+</PRE><P>
+by replacing it with
+<P><PRE>
+  C_R = [b1:T1]..[bn:Tn]and (R b1 .. bn) P
+</PRE><P>
+and reconstructing explicitly the proof of (R b1 .. bn) we morally
+already have.
+<P>
+In the light of this, and since it is easier to ignore useless
+hypotheses than to reconstruct useful ones, we now add them in when
+we generate the elimination rule, which now looks like this:
+<P><PRE>
+  R_elim : {C_R:T1->..->Tn->UNIV} (* C_R does not depend on proofs of R *)
+              ({x1:t1}..{xk:tk}S1->..->Sn-> (* rule1 case *)
+               (R p1 .. pn)->..->(R p'1 .. p'n)->
+               (C_R p1 .. pn)->..->(C_R p'1 .. p'n)->C_R c1 .. cn)->
+              (* more cases *)
+                   {a1:T1}..{an:Tn}(R a1 .. an)->C_R a1 .. an
+</PRE><P>
+This formulation is no stronger than the previous one, but hopefully more
+convenient.
+</body>
+</html>

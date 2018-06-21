@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Boolean valued functions on the integers</TITLE>
+<META NAME="description" CONTENT="Boolean valued functions on the integers">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node72.html">
+<LINK REL="previous" HREF="node70.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node72.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html988"
+ HREF="node72.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html985"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html979"
+ HREF="node70.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html987"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html989"
+ HREF="node72.html">Propositional relations on integers</A>
+<B> Up:</B> <A NAME="tex2html986"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html980"
+ HREF="node70.html">Some theorems about Modulo</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000195000000000000000">
+Boolean valued functions on the integers</A>
+</H2>
+
+<P>
+This file defines equality, strict and non-strict inequality as
+boolean valued functions. It also defines the boolean valued test for
+zero and positive and proves some theorems about them.
+
+<P>
+<PRE>
+ ** Module lib_int_bool Imports lib_int_Prop_rels lib_nat_rels
+  int_eq_zero = ... : int.1-&gt;bool
+  int_Le_bool = ... : int.1-&gt;int.1-&gt;bool
+  int_eq_bool = ... : int.1-&gt;int.1-&gt;bool
+  int_Lt_bool = ... : int.1-&gt;int.1-&gt;bool
+  bool_pos = ... : int.1-&gt;bool
+  bool_pos_true_imp_pos = ... :
+    {x:int.1}(Eq (bool_pos x) true)-&gt;Le_zed zero_zed x
+  bool_pos_false_imp_pos = ... :
+    {x:int.1}(Eq (bool_pos x) false)-&gt;Lt_zed x zero_zed
+  pos_imp_bool_pos_true = ... :
+    {x:int.1}(Le_zed zero_zed x)-&gt;Eq (bool_pos x) true
+  pos_imp_bool_pos_false = ... :
+    {x:int.1}(Lt_zed x zero_zed)-&gt;Eq (bool_pos x) false
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>Pattern Updating</title>
+  </head>
+
+  <body>
+      <h1>Pattern Updating</h1>
+
+<hr>
+
+<p>
+
+Consider:
+
+<pre>
+Inductive [nat:Prop] Constructors [Z:nat][S:nat->nat];
+[one = S Z][two = S one][three = S two][four = S three][five = S four];
+[add [n,m:nat] = nat_iter ([_:nat]nat) m ([_,x:nat]S x) n];
+</pre>
+
+<p>
+
+We add a new non-canonical constant:
+
+<pre>
+[NCC:nat->nat]
+[||NCC (S(S(S Z))) ==> Z];
+</pre>
+
+<p>
+
+(<a href="./patternremark.html">Remark</a> about a minor modification
+to LEGO rewrite syntax).
+
+<p>
+
+In old versions, <tt>Hnf NCC two</tt> would compute to <tt>NCC
+two</tt>.  This is reasonable, as <tt>NCC two</tt> <i>is</i> a whnf
+(or canonical form): no amount of computation can change its outermost
+constructor.  Similarly, <tt>Hnf NCC (add one one)</tt> would produce
+<tt>NCC (add one one)</tt>.  However, although <tt>NCC two</tt> and
+<tt>NCC (add one one)</tt> are canonical forms, in order to discover
+this, LEGO had to compute the arguments <tt>two</tt> and <tt>add one
+one</tt> to <tt>S(S Z)</tt>, and ascertain that this doesn't match
+with <tt>S(S(S Z))</tt>, so you might think <tt>Hnf NCC (add one
+one)</tt> should produce <tt>NCC (S(S Z))</tt>, by analogy with beta
+and projection.  For example <tt>Hnf (([x:nat->nat]x) f Z)</tt>, where
+<tt>f</tt> is a variable, produces <tt>f Z</tt> by updating the head
+of the application, even though the outermost constructor,
+application, is not changed by this updating.  Similarly <tt>Hnf
+(([x:nat#nat]x) f).1</tt> produces <tt>f.1</tt>.  The difference is
+that beta and projection update the head (root) of an expression, even
+if they don't change the outer constructor, but rewriting would update
+the arguments, and not even just "top-level" arguments.
+
+<p>
+
+Nonetheless, the original decision not to do pattern updating in LEGO,
+now seems to have been a poor choice, and the new version does pattern
+updating.
+
+<p>
+
+BTW, notice that in the example above we also have <tt>Hnf NCC
+five</tt> returns <tt>NCC (S(S(S(S one))))</tt>, because LEGO unwinds
+the argument just far enough to see that it is not <tt>three</tt>.
+
+<p>
+
+Pattern updating brings LEGO's computation very much in line with that
+of a lazy functional language such as Haskell, except that LEGO's
+patterns may be non-linear.  
+
+<p>
+
+<hr>
+
+<!-- Created: Wed Feb 12 17:56:55 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: 13-Feb-1997
+<!-- hhmts end -->
+
+  </body>
+</html>

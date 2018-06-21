@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Leibniz Equality</TITLE>
+<META NAME="description" CONTENT="Leibniz Equality">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html316" HREF="node11.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html314" HREF="node9.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html308" HREF="node9.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html318" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html317" HREF="node11.html">Paulin-Mohring's Inductive Equality</A>
+<B>Up:</B> <A NAME="tex2html315" HREF="node9.html">Equality</A>
+<B> Previous:</B> <A NAME="tex2html309" HREF="node9.html">Equality</A>
+<BR> <P>
+<H3><A NAME="SECTION00062100000000000000">Leibniz Equality</A></H3>
+<P>
+The first contains the definition and rules for manipulating Leibniz 
+(impredicative) equality. Loading this file causes the
+LEGO tactic <TT>Qrepl</TT> to be configured for Leibniz equality.
+This file is based on the definitions in Randy Pollack's
+logic file.
+<P>
+<PRE> ** Module lib_eq Imports lib_logic
+ $Eq : {t|Type}t-&gt;t-&gt;Prop
+ $Eqr : {t|Type}{x:t}Eq x x
+ $Eq_elim :
+    {t|Type}{P:{x,y:t}(Eq x y)-&gt;Type}({x:t}P x x (Eqr x))-&gt;{x,y:t}
+    {p:Eq x y}P x y p
+[[t:Type][P:{x,y:t}(Eq x y)-&gt;Type][h:{x:t}P x x (Eqr x)][x:t]
+    Eq_elim P h x x (Eqr x)  ==&gt;  h x]
+
+  Eq_refl = ... : {t|Type}refl (Eq|t)
+  Eq_subst = ... : {t|Type}{m,n|t}(Eq m n)-&gt;{P:t-&gt;Type}(P m)-&gt;P n</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

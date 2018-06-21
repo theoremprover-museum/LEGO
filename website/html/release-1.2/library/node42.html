@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>List Definitions</TITLE>
+<META NAME="description" CONTENT="List Definitions">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html691" HREF="node43.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html689" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html683" HREF="node41.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html693" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html692" HREF="node43.html">List Basics</A>
+<B>Up:</B> <A NAME="tex2html690" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html684" HREF="node41.html">List</A>
+<BR> <P>
+<H2><A NAME="SECTION000141000000000000000">List Definitions</A></H2>
+<P>
+The basic file contains the definition of list and the
+usual elimination, reduction, iteration and double
+elimination rules plus the characterisation theorems.
+<P>
+<PRE> ** Module lib_list Imports lib_eq_basics
+ $list : (Type)-&gt;Type(list)
+ $nil : {t:Type}list t
+ $cons1 : {t:Type}t-&gt;(list t)-&gt;list t
+ $list_elim :
+    {t:Type}{C_list:(list t)-&gt;Type}(C_list (nil t))-&gt;
+    ({x1:t}{x2:list t}(C_list x2)-&gt;C_list (cons1 t x1 x2))-&gt;{z:list t}
+    C_list z
+[[t:Type][C_list:(list t)-&gt;Type][f_nil:C_list (nil t)]
+ [f_cons1:{x1:t}{x2:list t}(C_list x2)-&gt;C_list (cons1 t x1 x2)][x1:t]
+ [x2:list t]
+    list_elim t C_list f_nil f_cons1 (nil t)  ==&gt;  f_nil
+ || list_elim t C_list f_nil f_cons1 (cons1 t x1 x2)  ==&gt;
+    f_cons1 x1 x2 (list_elim t C_list f_nil f_cons1 x2)]
+
+  cons = ... : {t|Type}t-&gt;(list t)-&gt;list t
+  list_rec = ... : {s|Type}{t|Type}t-&gt;(s-&gt;(list s)-&gt;t-&gt;t)-&gt;(list s)-&gt;t
+  list_iter = ... : {s|Type}{t|Type}t-&gt;(s-&gt;t-&gt;t)-&gt;(list s)-&gt;t
+  list_ind = ... :
+    {s|Type}{P:(list s)-&gt;Prop}(P (nil s))-&gt;
+    ({x:s}{l:list s}(P l)-&gt;P (cons x l))-&gt;{l:list s}P l
+  list_double_elim = ... :
+    {s|Type}{T:(list s)-&gt;(list s)-&gt;Type}(T (nil s) (nil s))-&gt;
+    ({x:s}{l:list s}(T (nil s) l)-&gt;T (nil s) (cons x l))-&gt;
+    ({x:s}{l:list s}({l':list s}T l l')-&gt;T (cons x l) (nil s))-&gt;
+    ({x:s}{l:list s}({l':list s}T l l')-&gt;{y:s}{l':list s}
+     (T (cons x l) l')-&gt;T (cons x l) (cons y l'))-&gt;{l,l':list s}T l l'
+  is_nil = ... : {t|Type}(list t)-&gt;Prop
+  is_cons = ... : {t|Type}(list t)-&gt;Prop
+  nil_or_cons = ... : {t|Type}{l:list t}or (is_nil l) (is_cons l)
+  nil_not_cons = ... :
+    {t|Type}{l:list t}{x:t}not (Eq (nil t) (cons x l))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

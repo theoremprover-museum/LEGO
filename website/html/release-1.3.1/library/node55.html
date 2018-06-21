@@ -1,0 +1,234 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Permutation</TITLE>
+<META NAME="description" CONTENT="Permutation">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node56.html">
+<LINK REL="previous" HREF="node54.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node56.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html804"
+ HREF="node56.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html801"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html795"
+ HREF="node54.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html803"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html805"
+ HREF="node56.html">Sorted Lists</A>
+<B> Up:</B> <A NAME="tex2html802"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html796"
+ HREF="node54.html">Distinctness</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION0001311000000000000000">
+Permutation</A>
+</H2>
+<P>
+We define the relation <TT>Perm</TT> that one list is a
+permutation of another.
+<P><PRE>
+ ** Module lib_list_Perm Imports lib_list_Distin
+ $Perm : {s|Type}(list s)-&gt;(list s)-&gt;Prop
+ $perm1 : {s|Type}Perm (nil s) (nil s)
+ $perm2 :
+    {s|Type}{xs,ys:list s}(Perm xs ys)-&gt;{a:s}{axs:list s}
+    (Adjoin a xs axs)-&gt;{ays:list s}(Adjoin a ys ays)-&gt;Perm axs ays
+ $Perm_elim :
+    {s|Type}{C_Perm:(list s)-&gt;(list s)-&gt;Prop}(C_Perm (nil s) (nil s))-&gt;
+    ({xs,ys:list s}(Perm xs ys)-&gt;{a:s}{axs:list s}(Adjoin a xs axs)-&gt;
+     {ays:list s}(Adjoin a ys ays)-&gt;(C_Perm xs ys)-&gt;C_Perm axs ays)-&gt;
+    {x1,x2|list s}(Perm x1 x2)-&gt;C_Perm x1 x2
+ ** Label (!Perm!) Perm
+ ** Label (!Perm elim!) Perm_elim
+ ** Label (!Perm perm1!) perm1
+ ** Label (!Perm perm2!) perm2
+[[s|Type][C_Perm:(list s)-&gt;(list s)-&gt;Prop]
+ [f_perm1:C_Perm (nil s) (nil s)]
+ [f_perm2:{xs,ys:list s}(Perm xs ys)-&gt;{a:s}{axs:list s}
+  (Adjoin a xs axs)-&gt;{ays:list s}(Adjoin a ys ays)-&gt;(C_Perm xs ys)-&gt;
+  C_Perm axs ays][xs,ys:list s][x1:Perm xs ys][a:s][axs:list s]
+ [x2:Adjoin a xs axs][ays:list s][x3:Adjoin a ys ays]
+    Perm_elim C_Perm f_perm1 f_perm2 (perm1|s)  ==&gt;  f_perm1
+ || Perm_elim C_Perm f_perm1 f_perm2 (perm2 xs ys x1 a axs x2 ays x3)
+    ==&gt;
+    f_perm2 xs ys x1 a axs x2 ays x3
+     (Perm_elim C_Perm f_perm1 f_perm2 x1)]
+
+  Perm_fact = ... :
+    {s|Type}{xs,ys|list s}{a|s}(Perm xs ys)-&gt;
+    Perm (cons a xs) (cons a ys)
+  Perm_refl = ... : {s|Type}{xs:list s}Perm xs xs
+  Perm_sym = ... : {s|Type}{xs,ys|list s}(Perm xs ys)-&gt;Perm ys xs
+  Perm_Adjoin_com1 = ... :
+    {s|Type}{a|s}{vs,xs,ys,zs|list s}(Perm vs xs)-&gt;(Adjoin a xs ys)-&gt;
+    (Adjoin a zs ys)-&gt;Perm vs zs
+  Perm_Adjoin_com2 = ... :
+    {s|Type}{a|s}{xs,ys,zs,us|list s}(Adjoin a xs ys)-&gt;(Perm ys zs)-&gt;
+    (Adjoin a us zs)-&gt;Perm xs us
+  Perm_Adjoin_com2_corr = ... :
+    {s|Type}{a|s}{xs,ys|list s}(Perm (cons a xs) (cons a ys))-&gt;
+    Perm xs ys
+  Perm_Adjoin_com3 = ... :
+    {s|Type}{a|s}{xs,zs,ys|list s}(Adjoin a xs ys)-&gt;(Perm ys zs)-&gt;
+    Ex ([us:list s](Perm xs us /\ Adjoin a us zs))
+  Perm_trans = ... :
+    {s|Type}{xs,ys,zs|list s}(Perm xs ys)-&gt;(Perm ys zs)-&gt;Perm xs zs
+  Perm_of_Distin = ... :
+    {s|Type}{xs,ys:list s}(Distin xs)-&gt;
+    ({a:s}(Member a xs)-&gt;Member a ys)-&gt;(Eq (length xs) (length ys))-&gt;
+    Perm xs ys
+  surjective_imp_Perm = ... :
+    {s|Type}{l:list s}{f,g:s-&gt;s}(Distin l)-&gt;
+    ({x:s}(Member x l)-&gt;Member (g x) l)-&gt;({x:s}Eq (f (g x)) x)-&gt;
+    Perm l (map f l)
+</PRE>
+<P>
+There is also an alternative, much more extensive but incompatible 
+implementation of permutations.
+<P><PRE>
+ ** Module lib_list_PermII Imports lib_list_length lib_rel_closure
+  insert = ... : {A|Type(0)}A-&gt;(list A)-&gt;(list A)-&gt;list A
+  insertnil = ... :
+    {A|Type(0)}{a|A}{h,k|list A}(Eq (insert a h k) (nil A))-&gt;absurd
+  insertsingleton = ... :
+    {A|Type(0)}{a,b|A}{h,k|list A}(Eq (insert a h k) (cons b (nil A)))-&gt;
+    and3 (Eq (nil A) h) (Eq a b) (Eq (nil A) k)
+  insertapp = ... :
+    {A|Type(0)}{a|A}{h,k|list A}{l,m:list A}
+    (Eq (insert a h k) (append l m))-&gt;
+    (({phi:Prop}
+     ({n:list A}(Eq (insert a h n) l)-&gt;(Eq (append n m) k)-&gt;phi)-&gt;phi)
+     \/ {phi:Prop}
+     ({n:list A}(Eq (append l n) h)-&gt;(Eq (insert a n k) m)-&gt;phi)-&gt;phi)
+  inseqins = ... :
+    {A|Type(0)}{a|A}{h,k,l,m|list A}(Eq (insert a h k) (insert a l m))-&gt;
+    (({phi:Prop}
+     ({n:list A}(Eq (insert a h n) l)-&gt;(Eq (insert a n m) k)-&gt;phi)-&gt;phi)
+     \/
+     ((Eq l h /\ Eq k m) \/ {phi:Prop}
+      ({n:list A}(Eq (insert a l n) h)-&gt;(Eq (insert a n k) m)-&gt;phi)-&gt;
+      phi))
+  swap = ... : {A|Type(0)}(Rel (list A) (list A))-&gt;Prop
+  conscl = ... :
+    {A|Type(0)}A-&gt;(Rel (list A) (list A))-&gt;(list A)-&gt;(list A)-&gt;Prop
+  consClosed = ... : {A|Type(0)}(Rel (list A) (list A))-&gt;Prop
+  iclSwap = ... : {A|Type(0)}IntersectionClosed (swap|A)
+  iclConscl = ... : {A|Type(0)}IntersectionClosed (consClosed|A)
+  Fbase = ... : {A|Type(0)}Pred (Rel (list A) (list A))
+  iclBase = ... : {A|Type(0)}IntersectionClosed (Fbase|A)
+  PermBase = ... : {A|Type(0)}Rel (list A) (list A)
+  swapBase = ... : {A|Type(0)}swap (PermBase|A)
+  consclBase = ... : {A|Type(0)}consClosed (PermBase|A)
+  Perm = ... : {A|Type(0)}Rel (list A) (list A)
+  equivPerm = ... : {A|Type(0)}equiv (Perm|A)
+  reflPerm = ... : {A|Type(0)}refl (Perm|A)
+  symPerm = ... : {A|Type(0)}sym (Perm|A)
+  transPerm = ... : {A|Type(0)}trans (Perm|A)
+  reflPerm' = ... : {A|Type(0)}SubRel (Eq|(list A)) (Perm|A)
+  swapPerm = ... : {A|Type(0)}swap (Perm|A)
+  consclPerm = ... : {A|Type(0)}consClosed (Perm|A)
+  appcl = ... :
+    {A|Type(0)}(list A)-&gt;(Rel (list A) (list A))-&gt;(list A)-&gt;(list A)-&gt;
+    Prop
+  appClosed = ... : {A|Type(0)}(Rel (list A) (list A))-&gt;Prop
+  iclAppcl = ... : {A|Type(0)}IntersectionClosed (appClosed|A)
+  appclPerm = ... : {A|Type(0)}appClosed (Perm|A)
+  recPerm = ... :
+    {A|Type(0)}{l,m:list A}(Perm l m)-&gt;{R:Rel (list A) (list A)}
+    ({l'6:list A}R l'6 l'6)-&gt;
+    ({l'7,m'8:list A}(Perm l'7 m'8)-&gt;(R l'7 m'8)-&gt;R m'8 l'7)-&gt;
+    ({l'8,m'9,n:list A}(Perm l'8 m'9)-&gt;(R l'8 m'9)-&gt;(Perm m'9 n)-&gt;
+     (R m'9 n)-&gt;R l'8 n)-&gt;
+    ({l'9,m'10:list A}R (append l'9 m'10) (append m'10 l'9))-&gt;
+    ({a:A}{m'11,n:list A}(Perm m'11 n)-&gt;(R m'11 n)-&gt;
+     R (cons a m'11) (cons a n))-&gt;R l m
+  PermE = ... :
+    {A|Type(0)}{R:Rel (list A) (list A)}({l,m|list A}(Eq l m)-&gt;R l m)-&gt;
+    ({l,m|list A}(Perm l m)-&gt;(R l m)-&gt;R m l)-&gt;
+    ({l,m,n|list A}(Perm l m)-&gt;(R l m)-&gt;(Perm m n)-&gt;(R m n)-&gt;R l n)-&gt;
+    ({l,m|list A}R (append l m) (append m l))-&gt;
+    ({a|A}{m,n|list A}(Perm m n)-&gt;(R m n)-&gt;R (cons a m) (cons a n))-&gt;
+    SubRel (Perm|A) R
+  indPerm = ... : {A|Type(0)}Rel (list A) (list A)
+  PermIsInductive = ... : {A|Type(0)}SubRel (Perm|A) (indPerm|A)
+  PermRrespR = ... :
+    {A|Type(0)}{B|Type}{R:Rel B (list A)}
+    ({l,m:list A}{h:B}(R h (append l m))-&gt;R h (append m l))-&gt;
+    ({b:A}{l,m:list A}(Perm l m)-&gt;({h:B}(R h l)-&gt;R h m)-&gt;{k:B}
+     (R k (cons b l))-&gt;R k (cons b m))-&gt;SubRel (Perm|A) (impliesRel R R)
+  PermLrespR = ... :
+    {A|Type(0)}{B|Type}{R:Rel (list A) B}
+    ({l,m:list A}{h:B}(R (append l m) h)-&gt;R (append m l) h)-&gt;
+    ({b:A}{l,m:list A}(Perm l m)-&gt;({h:B}(R l h)-&gt;R m h)-&gt;{k:B}
+     (R (cons b l) k)-&gt;R (cons b m) k)-&gt;
+    SubRel (Perm|A) (coimpliesRel R R)
+  PermPredE = ... :
+    {A|Type(0)}{P:Pred (list A)}
+    ({l,m:list A}(P (append l m))-&gt;P (append m l))-&gt;
+    ({b:A}{l,m:list A}(Perm l m)-&gt;(iff (P l) (P m))-&gt;(P (cons b l))-&gt;
+     P (cons b m))-&gt;{l,m:list A}(Perm l m)-&gt;(P l)-&gt;P m
+  nilPermlemma = ... :
+    {A|Type(0)}{l,m|list A}(Perm l m)-&gt;(Eq (nil A) l)-&gt;Eq (nil A) m
+  nilPerm = ... : {A|Type(0)}{l:list A}(Perm (nil A) l)-&gt;Eq (nil A) l
+  singletonPermlemma = ... :
+    {A|Type(0)}{l,m:list A}(Perm l m)-&gt;{a:A}(Eq (singleton a) l)-&gt;
+    Ex ([b:A](Eq a b /\ Eq (singleton b) m))
+  singletonPerm = ... :
+    {A|Type(0)}{a,b:A}(Perm (singleton a) (singleton b))-&gt;Eq a b
+  PermRespLength = ... :
+    {A|Type(0)}{l,m|list A}(Perm l m)-&gt;Eq (length l) (length m)
+  PermResidue = ... : {A|Type(0)}A-&gt;Rel (list A) (list A)
+  insResidue = ... :
+    {A|Type(0)}{a:A}{h,k,l:list A}(Eq (insert a h k) l)-&gt;
+    PermResidue a (append h k) l
+  swapResidue = ... :
+    {A|Type(0)}{a:A}{l,m,n:list A}(PermResidue a n (append l m))-&gt;
+    PermResidue a n (append m l)
+  consclResidue = ... :
+    {A|Type(0)}{a,b:A}{l,m:list A}(Perm l m)-&gt;
+    ({h:list A}(PermResidue a h l)-&gt;PermResidue a h m)-&gt;{k:list A}
+    (PermResidue a k (cons b l))-&gt;PermResidue a k (cons b m)
+  funopResidue = ... :
+    {A|Type(0)}{a:A}{h,k,l:list A}(PermResidue a h l)-&gt;
+    (PermResidue a k l)-&gt;Perm h k
+  transResiduelemma = ... :
+    {A|Type(0)}{a:A}{l,m,h|list A}(Perm l m)-&gt;(Eq (cons a h) l)-&gt;
+    PermResidue a h m
+  heredPermlemma = ... :
+    {A|Type(0)}{a:A}{l,m|list A}(Perm (cons a l) (cons a m))-&gt;Perm l m
+  hereditary = ... : {A|Type(0)}(Rel (list A) (list A))-&gt;Prop
+  heredPerm = ... : {A|Type(0)}hereditary (Perm|A)
+  transposePerm = ... :
+    {A|Type(0)}{a,b|A}{l,m,n|list A}
+    Perm (insert a l (insert b m n)) (insert b l (insert a m n))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

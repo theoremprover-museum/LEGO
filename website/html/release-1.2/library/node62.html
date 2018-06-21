@@ -1,0 +1,69 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Set theory</TITLE>
+<META NAME="description" CONTENT="Set theory">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html909" HREF="node63.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html907" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html901" HREF="node61.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html911" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html910" HREF="node63.html">The Integers</A>
+<B>Up:</B> <A NAME="tex2html908" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html902" HREF="node61.html">Relation closures</A>
+<BR> <P>
+<H1><A NAME="SECTION000190000000000000000">Set theory</A></H1>
+<P>
+The one file currently in this section contains the
+version of set theory developed for
+the work described in [<A HREF="node92.html#jonesrationals">Jones, 1992</A>].
+It defines a ``set'' to be the sigma type
+consisting of a type plus an equivalence relation
+over that type. Similarly a ``function'' between two
+sets is an arrow between the base types and a proof
+that the function respects equality. Also defined
+are (two-place) relations, two-place functions,
+and subsets (defined as predicates over the base types).
+<P>
+<PRE> ** Module lib_sets_ccmj Imports lib_logic
+  eq_refl = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_sym = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_trans = ... : {A|Type}(A-&gt;A-&gt;Prop)-&gt;Prop
+  eq_rel = ... : (Type)-&gt;Type
+  set = ... : Type
+  eq = ... : {A|set}A.1-&gt;A.1-&gt;Prop
+  eq_refl_ax = ... : {A|set}eq_refl|A.1|A.2.1
+  eq_sym_ax = ... : {A|set}{x,y|A.1}(eq x y)-&gt;eq y x
+  eq_trans_ax = ... : {A|set}{x,y,z|A.1}(eq x y)-&gt;(eq y z)-&gt;eq x z
+  pres_eq = ... : {A,B|set}(A.1-&gt;B.1)-&gt;Prop
+  function = ... : set-&gt;set-&gt;Type
+  pres_eq_ax = ... : {A,B|set}{f|function A B}[f'4=f.1]pres_eq|A|B f'4
+  pr = ... : {A,B|set}A.1-&gt;B.1-&gt;A.1#B.1
+  cross_prod = ... : set-&gt;set-&gt;set
+  curry = ... : {A,B,C:set}(function|(cross_prod A B)|C)-&gt;A.1-&gt;B.1-&gt;C.1
+  comp = ... : {A,B,C|set}(function A B)-&gt;(function B C)-&gt;function A C
+  pres_l = ... : {A:set}(A.1-&gt;A.1-&gt;Prop)-&gt;Prop
+  pres_r = ... : {A:set}(A.1-&gt;A.1-&gt;Prop)-&gt;Prop
+  relation = ... : set-&gt;Type
+  rel_pres_eq_l = ... : {A|set}{R|relation A}pres_l A R.1
+  rel_pres_eq_r = ... : {A|set}{R|relation A}pres_r A R.1
+  subset = ... : set-&gt;Type
+  pres_eq2 = ... : {A,B:set}(A.1-&gt;A.1-&gt;B.1)-&gt;Prop
+  function2 = ... : set-&gt;set-&gt;Type
+  pres_eq_l = ... :
+    {A,B|set}{f|function2 A B}{x,y,z:A.1}(eq x y)-&gt;
+    eq (f.1 x z) (f.1 y z)
+  pres_eq_r = ... :
+    {A,B|set}{f|function2 A B}{x,y,z:A.1}(eq x y)-&gt;
+    eq (f.1 z x) (f.1 z y)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

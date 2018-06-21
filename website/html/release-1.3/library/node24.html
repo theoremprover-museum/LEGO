@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Inductive Sigma</TITLE>
+<META NAME="description" CONTENT="Inductive Sigma">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node25.html">
+<LINK REL="previous" HREF="node23.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node25.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html435"
+ HREF="node25.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html432"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html426"
+ HREF="node23.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html434"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html436"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Up:</B> <A NAME="tex2html433"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html427"
+ HREF="node23.html">Sum Types</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000110000000000000000">
+Inductive Sigma</A>
+</H1>
+
+<P>
+In the directory <TT>lib_sigma</TT> we define the inductive sigma type, with
+its projections, a proof that the first projection is
+injective and the eta-rule for the dependent pairs. Products can then
+be defined as a non-dependent sigma type.
+
+<P>
+<PRE>
+ ** Module lib_sigma Imports lib_eq_basics
+ $sigma : {A|Type}(A-&gt;Type)-&gt;Type(sigma)
+ $dep_pair : {A|Type}{B|A-&gt;Type}{a:A}(B a)-&gt;sigma|A|B
+ $sigma_elim :
+    {A|Type}{B|A-&gt;Type}{C_sigma:(sigma|A|B)-&gt;Type}
+    ({a:A}{b:B a}C_sigma (dep_pair a b))-&gt;{z:sigma|A|B}C_sigma z
+[[A|Type][B|A-&gt;Type][C_sigma:(sigma|A|B)-&gt;Type]
+ [f_dep_pair:{a:A}{b:B a}C_sigma (dep_pair a b)][a:A][b:B a]
+    sigma_elim C_sigma f_dep_pair (dep_pair a b)  ==&gt;  f_dep_pair a b]
+
+  sigma_rec = ... :
+    {A|Type}{B|A-&gt;Type}{T|Type}({a:A}(B a)-&gt;T)-&gt;(sigma|A|B)-&gt;T
+  sigma_ind = ... :
+    {A|Type}{B|A-&gt;Type}{P:(sigma|A|B)-&gt;Prop}
+    ({a:A}{b:B a}P (dep_pair a b))-&gt;{z:sigma|A|B}P z
+  sig_pi1 = ... : {A|Type}{B|A-&gt;Type}(sigma|A|B)-&gt;A
+  sig_pi2 = ... : {A|Type}{B|A-&gt;Type}{z:sigma|A|B}B (sig_pi1 z)
+  dep_pair_eta = ... :
+    {A|Type}{B|A-&gt;Type}{x:sigma|A|B}
+    Eq x (dep_pair (sig_pi1 x) (sig_pi2 x))
+  sig_pi1_inj = ... :
+    {A|Type}{B|A-&gt;Type}{x,y:sigma|A|B}(Eq x y)-&gt;
+    Eq (sig_pi1 x) (sig_pi1 y)
+  Sigma = ... : {A:Type}(A-&gt;Type)-&gt;Type(sigma)
+  Prod = ... : (Type)-&gt;(Type)-&gt;Type(sigma)
+  Pr = ... : {A|Type}{B|Type}A-&gt;B-&gt;sigma|A|([_:A]B)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

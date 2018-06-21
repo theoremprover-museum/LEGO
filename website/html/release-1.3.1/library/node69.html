@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Basic Lemmas</TITLE>
+<META NAME="description" CONTENT="Basic Lemmas">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node70.html">
+<LINK REL="previous" HREF="node68.html">
+<LINK REL="up" HREF="node66.html">
+<LINK REL="next" HREF="node70.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html963"
+ HREF="node70.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html960"
+ HREF="node66.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html954"
+ HREF="node68.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html962"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html964"
+ HREF="node70.html">Some theorems about Modulo</A>
+<B> Up:</B> <A NAME="tex2html961"
+ HREF="node66.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html955"
+ HREF="node68.html">The Integers Definitions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000193000000000000000">
+Basic Lemmas</A>
+</H2>
+<P>
+This file contains some basic theorems 
+about the integers involving the
+algebraic operators, e.g. commutativity, associativity etc.
+Note this file takes quite a long time to load.
+<P>
+The variable <TT>eq</TT> is a generic equality for any set
+and is defined in the file in the directory <TT>lib_sets</TT>.
+Here it is always implicitly specialised to  <TT>Eq_zed</TT>
+which is the equality defined on the set <TT>int</TT> in 
+the file <TT>lib_int_basics</TT>.
+<P><PRE>
+ ** Module lib_int_basics_thms Imports lib_int_basics
+  times_one_zed = ... : {m|int.1}eq m (times_zed one_zed m)
+  middle_four_plus_zed = ... :
+    {a,b,c,d|int.1}
+    eq (plus_zed (plus_zed a c) (plus_zed b d))
+     (plus_zed (plus_zed a b) (plus_zed c d))
+  times_plus_dist_r_zed = ... :
+    {a,b,c|int.1}
+    eq (times_zed (plus_zed a b) c)
+     (plus_zed (times_zed a c) (times_zed b c))
+  times_plus_dist_l_zed = ... :
+    {a,b,c|int.1}
+    eq (times_zed c (plus_zed a b))
+     (plus_zed (times_zed c a) (times_zed c b))
+  times_resp_eq_l = ... :
+    {a,b,x:int.1}(eq a b)-&gt;eq (times_zed x a) (times_zed x b)
+  plus_commutes_zed = ... : {p,q|int.1}Eq (plus_zed p q) (plus_zed q p)
+  times_commutes_zed = ... :
+    {p,q|int.1}Eq (times_zed p q) (times_zed q p)
+  times_assoc_zed = ... :
+    {a,b,c|int.1}
+    eq (times_zed (times_zed a b) c) (times_zed a (times_zed b c))
+  plus_resp_eq = ... :
+    {a,b,x,y:int.1}(eq a b)-&gt;(eq x y)-&gt;eq (plus_zed a x) (plus_zed b y)
+  minus_resp_eq = ... :
+    {a,b,x,y:int.1}(eq a b)-&gt;(eq x y)-&gt;
+    eq (minus_zed a x) (minus_zed b y)
+  times_resp_eq_r = ... :
+    {a,b,x:int.1}(eq a b)-&gt;eq (times_zed a x) (times_zed b x)
+  times_resp_eq = ... :
+    {a,b,x,y:int.1}(eq a b)-&gt;(eq x y)-&gt;
+    eq (times_zed a x) (times_zed b y)
+  neg_resp_eq = ... : {x,y:int.1}(eq x y)-&gt;eq (neg_zed x) (neg_zed y)
+  neg_minus = ... :
+    {x,y:int.1}eq (plus_zed x (neg_zed y)) (minus_zed x y)
+  times_cancel_left_zed = ... :
+    {x,y,a:int.1}(not (eq a zero_zed))-&gt;
+    (eq (times_zed a x) (times_zed a y))-&gt;eq x y
+  middle_four_times_zed = ... :
+    {x,y,a,b:int.1}
+    eq (times_zed (times_zed x y) (times_zed a b))
+     (times_zed (times_zed x a) (times_zed y b))
+  eq_zero_zed_imp = ... : {x:zed}(eq zero_zed x)-&gt;Eq x.1 x.2
+  imp_eq_zero_zed = ... : {x:zed}(Eq x.1 x.2)-&gt;eq zero_zed x
+  times_zero_lemma_zed = ... :
+    {x,y:zed}(eq (times_zed x y) zero_zed)-&gt;
+    (eq zero_zed x \/ eq zero_zed y)
+  right_dist_minus_times_zed = ... :
+    {a,b,c|int.1}
+    eq (times_zed (minus_zed a b) c)
+     (minus_zed (times_zed a c) (times_zed b c))
+  times_neg = ... :
+    {x,y:int.1}eq (times_zed x (neg_zed y)) (times_zed y (neg_zed x))
+  times_neg_both = ... :
+    {x,y:int.1}eq (times_zed x y) (times_zed (neg_zed x) (neg_zed y))
+  plus_assoc_zed = ... :
+    {a,b,c|int.1}
+    eq (plus_zed (plus_zed a b) c) (plus_zed a (plus_zed b c))
+  one_times_zed = ... : {x:int.1}eq (times_zed one_zed x) x
+  plus_zero_zed = ... : {x:int.1}eq (plus_zed x zero_zed) x
+  minus_zed_is = ... :
+    {x,y,z:int.1}iff (eq (minus_zed x y) z) (eq x (plus_zed y z))
+  n_minus_n_Eq_zero_zed = ... : {x:int.1}eq (minus_zed x x) zero_zed
+  plus_inv_minus_zed = ... :
+    {x,y:int.1}eq (plus_zed (minus_zed x y) y) x
+  bring_neg_out = ... :
+    {x,y:int.1}eq (times_zed (neg_zed x) y) (neg_zed (times_zed x y))
+  minus_is_minus_zed = ... :
+    {a,b:nat}(Le a b)-&gt;eq (minus_zed (b,zero) (a,zero)) (minus b a,zero)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

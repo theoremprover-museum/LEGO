@@ -1,0 +1,38 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Some theorems about Modulo</TITLE>
+<META NAME="description" CONTENT="Some theorems about Modulo">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html972" HREF="node68.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html970" HREF="node63.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html964" HREF="node66.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html974" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html973" HREF="node68.html">Some integer facts for </A>
+<B>Up:</B> <A NAME="tex2html971" HREF="node63.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html965" HREF="node66.html">Basic Lemmas</A>
+<BR> <P>
+<H2><A NAME="SECTION000204000000000000000">Some theorems about Modulo</A></H2>
+<P>
+This file defines the relation Modulo, and proves
+a couple of theorems about it.
+<P>
+<PRE> ** Module lib_int_mod Imports lib_integers/lib_int_basics_thms
+  Mod = ... : int.1-&gt;int.1-&gt;int.1-&gt;Prop
+  plus_resp_mod = ... :
+    {m,x1,x2,r1,r2|int.1}(Mod m x1 r1)-&gt;(Mod m x2 r2)-&gt;
+    Mod m (plus_zed x1 x2) (plus_zed r1 r2)
+  times_resp_Mod = ... :
+    {m,x1,x2,r1,r2|int.1}(Mod m x1 r1)-&gt;(Mod m x2 r2)-&gt;
+    Mod m (times_zed x1 x2) (times_zed r1 r2)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Distinctness</TITLE>
+<META NAME="description" CONTENT="Distinctness">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node55.html">
+<LINK REL="previous" HREF="node53.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node55.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html796"
+ HREF="node55.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html793"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html787"
+ HREF="node53.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html795"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html797"
+ HREF="node55.html">Permutation</A>
+<B> Up:</B> <A NAME="tex2html794"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html788"
+ HREF="node53.html">Membership</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION0001310000000000000000">
+Distinctness</A>
+</H2>
+
+<P>
+We define the property <TT>Distin</TT>, that all the elements of
+a list are distinct. 
+
+<P>
+<PRE>
+ ** Module lib_list_Distin Imports lib_list_Member lib_nat_Le
+ $Distin : {s|Type}(list s)-&gt;Prop
+ $Dis1 : {s|Type}Distin (nil s)
+ $Dis2 :
+    {s|Type}{a:s}{xs:list s}(not (Member a xs))-&gt;(Distin xs)-&gt;
+    Distin (cons a xs)
+ $Distin_elim :
+    {s|Type}{C_Distin:(list s)-&gt;Prop}(C_Distin (nil s))-&gt;
+    ({a:s}{xs:list s}(not (Member a xs))-&gt;(Distin xs)-&gt;(C_Distin xs)-&gt;
+     C_Distin (cons a xs))-&gt;{x1|list s}(Distin x1)-&gt;C_Distin x1
+[[s|Type][C_Distin:(list s)-&gt;Prop][f_Dis1:C_Distin (nil s)]
+ [f_Dis2:{a:s}{xs:list s}(not (Member a xs))-&gt;(Distin xs)-&gt;
+  (C_Distin xs)-&gt;C_Distin (cons a xs)][a:s][xs:list s]
+ [x1:not (Member a xs)][x2:Distin xs]
+    Distin_elim C_Distin f_Dis1 f_Dis2 (Dis1|s)  ==&gt;  f_Dis1
+ || Distin_elim C_Distin f_Dis1 f_Dis2 (Dis2 a xs x1 x2)  ==&gt;
+    f_Dis2 a xs x1 x2 (Distin_elim C_Distin f_Dis1 f_Dis2 x2)]
+
+  Distin_inv = ... :
+    {s|Type}{a|s}{l|list s}(Distin (cons a l))-&gt;
+    (not (Member a l) /\ Distin l)
+  Distin_append = ... :
+    {s|Type}{l1,l2:list s}(Distin l1)-&gt;(Distin l2)-&gt;
+    ({a:s}(Member a l1)-&gt;not (Member a l2))-&gt;Distin (append l1 l2)
+  Distin_inj_map = ... :
+    {s|Type}{u|Type}{l:list s}{f:s-&gt;u}
+    ({a1,a2:s}(Member a1 l)-&gt;(Member a2 l)-&gt;(Eq (f a1) (f a2))-&gt;
+     Eq a1 a2)-&gt;(Distin l)-&gt;Distin (map f l)
+  Distin_prod = ... :
+    {s|Type}{u|Type}{l1:list s}{l2:list u}(Distin l1)-&gt;(Distin l2)-&gt;
+    Distin (prod_list l1 l2)
+  Distin_inj_build = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}
+    ({k1,k2:nat}(Lt k1 n)-&gt;(Lt k2 n)-&gt;(Eq (f k1) (f k2))-&gt;Eq k1 k2)-&gt;
+    Distin (build_list f n)
+  Distin_sublist_Le_length = ... :
+    {s|Type}{xs,ys:list s}(Distin xs)-&gt;
+    ({a:s}(Member a xs)-&gt;Member a ys)-&gt;Le (length xs) (length ys)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

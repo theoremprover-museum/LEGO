@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Paulin-Mohring's Inductive Equality</TITLE>
+<META NAME="description" CONTENT="Paulin-Mohring's Inductive Equality">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html327" HREF="node12.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html325" HREF="node9.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html319" HREF="node10.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html329" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html328" HREF="node12.html">Martin-L&#246;f's Inductive Equality</A>
+<B>Up:</B> <A NAME="tex2html326" HREF="node9.html">Equality</A>
+<B> Previous:</B> <A NAME="tex2html320" HREF="node10.html">Leibniz Equality</A>
+<BR> <P>
+<H3><A NAME="SECTION00062200000000000000">Paulin-Mohring's Inductive Equality</A></H3>
+<P>
+The next library equality file gives the definition
+and rules for Christine Paulin-Mohring's inductive equality. Loading this 
+file causes the LEGO tactic <TT>Qrepl</TT> to be configured for this
+inductive equality.
+<P>
+<PRE>     ** Mark &quot;lib_ind_eq&quot; **
+
+Eq : {t|SET}t-&gt;t-&gt;Prop
+Eqr : {t|SET}{x:t}Eq x x
+Eq_elim : {t|SET}{x:t}{C_Eq:{x1|t}(Eq x x1)-&gt;TYPE}
+      (C_Eq (Eqr x))-&gt;{x1|t}{z:Eq x x1}C_Eq z
+Eq_refl = ... : {t|SET}refl (Eq|t)
+Eq_subst = ... : {t|SET}{m,n|t}(Eq m n)-&gt;{P:t-&gt;TYPE_minus1}(P m)-&gt;P n
+Eq_sym = ... : {t|SET}sym (Eq|t)
+Eq_trans = ... : {t|SET}trans (Eq|t)
+Eq_resp = ... : {A,B|SET}{f:A-&gt;B}respect f Eq
+Eq_resp2 = ... : {A,B,C|SET}{r:A-&gt;B-&gt;C}respect2 r Eq</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

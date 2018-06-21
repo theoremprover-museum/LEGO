@@ -1,0 +1,58 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Max and Min</TITLE>
+<META NAME="description" CONTENT="Max and Min">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html657" HREF="node41.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html655" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html651" HREF="node39.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html659" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html658" HREF="node41.html">List</A>
+<B>Up:</B> <A NAME="tex2html656" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html652" HREF="node39.html">The predicate Even</A>
+<BR> <P>
+<H2><A NAME="SECTION0001316000000000000000">Max and Min</A></H2>
+<P>
+The final file for natural numbers defines the functions
+max and min and proves various theorems about them.
+It requires most of the other nat library files.
+The functions min and max are defined explicitly 
+using double iteration rather than by showing that
+the order relation on nat is complete.
+<P>
+<PRE> ** Module lib_max_min Imports lib_nat_Prop_rels
+  max = ... : nat-&gt;nat-&gt;nat
+  min = ... : nat-&gt;nat-&gt;nat
+  max_Le_left = ... : {x,y:nat}Le x (max x y)
+  max_Le_right = ... : {x,y:nat}Le y (max x y)
+  max_is_least = ... : {x,y,z:nat}(Le x z)-&gt;(Le y z)-&gt;Le (max x y) z
+  min_Le_left = ... : {x,y:nat}Le (min x y) y
+  min_Le_right = ... : {x,y:nat}Le (min x y) x
+  min_is_greatest = ... : {x,y,z:nat}(Le z x)-&gt;(Le z y)-&gt;Le z (min x y)
+  max_sym = ... : {n,m:nat}Eq (max n m) (max m n)
+  min_sym = ... : {n,m:nat}Eq (min n m) (min m n)
+  Le_min_left = ... : {x,y:nat}(Le x y)-&gt;Eq (min x y) x
+  Le_min_right = ... : {x,y:nat}(Le y x)-&gt;Eq (min x y) y
+  Le_max_right = ... : {x,y:nat}(Le x y)-&gt;Eq (max x y) y
+  Le_max_left = ... : {x,y:nat}(Le y x)-&gt;Eq (max x y) x
+  min_idemp = ... : {a:nat}Eq (min a a) a
+  max_resp_times = ... :
+    {x,y,a:nat}Eq (max (times a x) (times a y)) (times a (max x y))
+  min_resp_times = ... :
+    {x,y,a:nat}Eq (min (times a x) (times a y)) (times a (min x y))
+  max_resp_plus = ... :
+    {a,b,x:nat}Eq (max (plus a x) (plus b x)) (plus (max a b) x)
+  min_resp_plus = ... :
+    {a,b,x:nat}Eq (min (plus a x) (plus b x)) (plus (min a b) x)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

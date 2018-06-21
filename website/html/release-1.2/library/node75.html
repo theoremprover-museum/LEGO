@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Basic defintion of locations</TITLE>
+<META NAME="description" CONTENT="Basic defintion of locations">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html1069" HREF="node76.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html1067" HREF="node74.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html1061" HREF="node74.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html1071" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html1070" HREF="node76.html">Updating</A>
+<B>Up:</B> <A NAME="tex2html1068" HREF="node74.html">Locations</A>
+<B> Previous:</B> <A NAME="tex2html1062" HREF="node74.html">Locations</A>
+<BR> <P>
+<H3><A NAME="SECTION000221100000000000000">Basic defintion of locations</A></H3>
+<P>
+<PRE> ** Module lib_locations Imports lib_nat_bool_rels lib_list
+ $location : Type(location)
+ $make_location : nat-&gt;location
+ $location_elim :
+    {C_location:location-&gt;TYPE}
+    ({address:nat}C_location (make_location address))-&gt;{z:location}
+    C_location z
+[[C_location:location-&gt;TYPE]
+ [f_make_location:{address:nat}C_location (make_location address)]
+ [address:nat]
+    location_elim C_location f_make_location (make_location address)
+    ==&gt;  f_make_location address]
+
+  address = ... : location-&gt;nat
+  location_eq = ... : location-&gt;location-&gt;bool
+* location_eq_character = ... :
+    {m,n:location}iff (is_true (location_eq m n)) (Eq m n)
+* location_eq_refl = ... : {x:location}is_true (location_eq x x)
+  Env = ... : (location-&gt;Type)-&gt;Type</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

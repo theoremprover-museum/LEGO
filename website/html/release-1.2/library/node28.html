@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Theorems about Plus</TITLE>
+<META NAME="description" CONTENT="Theorems about Plus">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html527" HREF="node29.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html525" HREF="node24.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html519" HREF="node27.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html529" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html528" HREF="node29.html">Theorems about multiplication</A>
+<B>Up:</B> <A NAME="tex2html526" HREF="node24.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html520" HREF="node27.html">Theorems about Minus</A>
+<BR> <P>
+<H2><A NAME="SECTION000134000000000000000">Theorems about Plus</A></H2>
+<P>
+Theorems involving only the function plus are given
+in this file below. Note the theorem 
+<TT>middle_four_plus</TT>--we find this and
+similar theorems very useful
+for manipulating expressions involving commutative, associative
+operators. It is possible to prove the general case of this
+theorem and derive this and other instances of it from it as desired.
+We may choose to do this in a future version of the library.
+<P>
+<PRE> ** Module lib_nat_plus_thms Imports lib_nat/lib_nat_suc_thms
+  plus_zero = ... : {n:nat}Eq (plus n zero) n
+  plus_suc = ... : {m,n:nat}Eq (plus m (suc n)) (suc (plus m n))
+  plus_suc_lemma = ... : {x,t:nat}not (Eq (plus x (suc t)) x)
+  plus_assoc = ... :
+    {k,m,n:nat}Eq (plus (plus k m) n) (plus k (plus m n))
+  plus_commutes = ... : {m,n:nat}Eq (plus m n) (plus n m)
+  plus_strict = ... :
+    {n,m|nat}(Eq (plus n m) zero)-&gt;and (Eq n zero) (Eq m zero)
+  middle_four_plus = ... :
+    {i,j,k,l|nat}
+    Eq (plus (plus i k) (plus j l)) (plus (plus i j) (plus k l))
+  one_plus_lemma = ... :
+    {m,n|nat}(Eq one (plus m n))-&gt;
+    or (and (Eq one m) (Eq zero n)) (and (Eq zero m) (Eq one n))
+  cancel_plus = ... : {i,j,k:nat}(Eq (plus i j) (plus i k))-&gt;Eq j k
+  plus_subst_l = ... : {l,n,m|nat}(Eq l n)-&gt;Eq (plus l m) (plus n m)
+  plus_subst_r = ... : {l,n,m|nat}(Eq l n)-&gt;Eq (plus m l) (plus m n)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

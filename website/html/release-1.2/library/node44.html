@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>List functions with booleans</TITLE>
+<META NAME="description" CONTENT="List functions with booleans">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html713" HREF="node45.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html711" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html705" HREF="node43.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html715" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html714" HREF="node45.html">Partial List functions</A>
+<B>Up:</B> <A NAME="tex2html712" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html706" HREF="node43.html">List Basics</A>
+<BR> <P>
+<H2><A NAME="SECTION000143000000000000000">List functions with booleans</A></H2>
+<P>
+This file contains list functions and theorems involving the
+booleans. These include the boolean valued test
+for nil, test for membership give a boolean-valued
+equality over the type of elements of the list, list
+subtraction, universal and existential extensions
+of a predicate to a list of values.
+<P>
+<PRE> ** Module lib_list_bool Imports lib_list_basics lib_bool_thms
+  nil_test = ... : {s|Type}(list s)-&gt;bool
+  exist_list = ... : {t|Type}(t-&gt;bool)-&gt;(list t)-&gt;bool
+  all_list = ... : {t|Type}(t-&gt;bool)-&gt;(list t)-&gt;bool
+  member = ... : {t|Type}(t-&gt;t-&gt;bool)-&gt;t-&gt;(list t)-&gt;bool
+  list_eq = ... : {t|Type}(t-&gt;t-&gt;bool)-&gt;(list t)-&gt;(list t)-&gt;bool
+  del_first = ... : {t|Type}(t-&gt;t-&gt;bool)-&gt;t-&gt;(list t)-&gt;list t
+  del_all = ... : {t|Type}(t-&gt;t-&gt;bool)-&gt;t-&gt;(list t)-&gt;list t
+  list_sub = ... : {A|Type}(Type)-&gt;(A-&gt;bool)-&gt;A-&gt;(list A)-&gt;list A
+  exist_list_append_lem = ... :
+    {t|Type}{P:t-&gt;bool}{j,k:list t}
+    Eq (exist_list P (append j k))
+       (orelse (exist_list P j) (exist_list P k))
+  member_append_lem = ... :
+    {t|Type}{eq_on_t:t-&gt;t-&gt;bool}{x:t}{j,k:list t}
+    Eq (member eq_on_t x (append j k))
+       (orelse (member eq_on_t x j) (member eq_on_t x k))
+  nil_test_true_equiv_Eq_nil = ... :
+    {t|Type}{l:list t}iff (Eq (nil_test l) true) (Eq l (nil t))
+  nil_test_false_equiv_Eq_cons = ... :
+    {t|Type}{l:list t}
+    iff (Eq (nil_test l) false)
+        (Ex ([a:t]Ex ([m:list t]Eq l (cons a m))))
+  nil_test_on_append = ... :
+    {t|Type}{l,m:list t}{a:t}Eq (nil_test (append l (cons a m))) false</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

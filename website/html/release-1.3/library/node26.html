@@ -1,0 +1,130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Natural Numbers: Basic Definitions</TITLE>
+<META NAME="description" CONTENT="Natural Numbers: Basic Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node27.html">
+<LINK REL="previous" HREF="node25.html">
+<LINK REL="up" HREF="node25.html">
+<LINK REL="next" HREF="node27.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html475"
+ HREF="node27.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html472"
+ HREF="node25.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html466"
+ HREF="node25.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html474"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html476"
+ HREF="node27.html">Iteration Principles</A>
+<B> Up:</B> <A NAME="tex2html473"
+ HREF="node25.html">The Natural Numbers</A>
+<B> Previous:</B> <A NAME="tex2html467"
+ HREF="node25.html">The Natural Numbers</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000121000000000000000">
+Natural Numbers: Basic Definitions</A>
+</H2>
+
+<P>
+The basic definitions are held in the file <TT>lib_nat</TT>.
+We find it useful to define the double iterator
+and double induction, and the constants <TT>one</TT> to <TT>ten</TT>.
+This file also defines the algebraic functions addition, multiplication
+and exponentiation. We also define <TT>pred</TT> (predecessor) in one step
+from this we define truncated subtraction (<TT>minus</TT>).
+
+<P>
+<PRE>
+ ** Module lib_nat Imports lib_bool
+ $nat : Type(nat)
+ $zero : nat
+ $suc : nat-&gt;nat
+ $nat_elim :
+    {C_nat:nat-&gt;Type}(C_nat zero)-&gt;
+    ({x1:nat}(C_nat x1)-&gt;C_nat (suc x1))-&gt;{z:nat}C_nat z
+[[C_nat:nat-&gt;Type][f_zero:C_nat zero]
+ [f_suc:{x1:nat}(C_nat x1)-&gt;C_nat (suc x1)][x1:nat]
+    nat_elim C_nat f_zero f_suc zero  ==&gt;  f_zero
+ || nat_elim C_nat f_zero f_suc (suc x1)  ==&gt;
+    f_suc x1 (nat_elim C_nat f_zero f_suc x1)]
+
+  nat_is_zero = ... : nat-&gt;Type
+  nat_is_suc = ... : nat-&gt;Type
+  nat_zero_injective = ... : (Eq zero zero)-&gt;{P|Type}P-&gt;P
+  nat_suc_injective = ... :
+    {ix0,iy0|nat}(Eq (suc ix0) (suc iy0))-&gt;{P|Type}((Eq ix0 iy0)-&gt;P)-&gt;P
+  nat_rec = ... : {t|Type}t-&gt;(nat-&gt;t-&gt;t)-&gt;nat-&gt;t
+  nat_iter = ... : {t|Type}t-&gt;(t-&gt;t)-&gt;nat-&gt;t
+  nat_ind = ... :
+    {P:nat-&gt;Prop}(P zero)-&gt;({n:nat}(P n)-&gt;P (suc n))-&gt;{n:nat}P n
+  nat_double_elim = ... :
+    {T:nat-&gt;nat-&gt;Type}(T zero zero)-&gt;
+    ({n:nat}(T zero n)-&gt;T zero (suc n))-&gt;
+    ({m:nat}({n:nat}T m n)-&gt;T (suc m) zero)-&gt;
+    ({m:nat}({n:nat}T m n)-&gt;{n:nat}(T (suc m) n)-&gt;T (suc m) (suc n))-&gt;
+    {m,n:nat}T m n
+  nat_diagonal_iter = ... :
+    {C|Type}(nat-&gt;C)-&gt;(nat-&gt;C)-&gt;(C-&gt;C)-&gt;nat-&gt;nat-&gt;C
+  nat_diagonal_ind = ... :
+    {phi:nat-&gt;nat-&gt;Prop}({m:nat}phi zero m)-&gt;({n:nat}phi (suc n) zero)-&gt;
+    ({n,m:nat}(phi n m)-&gt;phi (suc n) (suc m))-&gt;{n,m:nat}phi n m
+  nat_d_rec_for_int = ... :
+    {C:nat-&gt;nat-&gt;Type}(C zero zero)-&gt;({m,n:nat}(C m n)-&gt;C (suc m) n)-&gt;
+    ({m,n:nat}(C m n)-&gt;C m (suc n))-&gt;{m,n:nat}C m n
+  is_suc = ... : nat-&gt;Prop
+  is_zero = ... : nat-&gt;Prop
+  zero_not_suc = ... : {n:nat}not (Eq zero (suc n))
+  suc_not_zero = ... : not (is_suc zero)
+  suc_n_not_n = ... : {n:nat}not (Eq (suc n) n)
+ ** Config Qnify nat suc_n_not_n 
+  zero_or_suc = ... : {n:nat}(Eq n zero \/ is_suc n)
+  one = ... : nat
+  two = ... : nat
+  three = ... : nat
+  four = ... : nat
+  five = ... : nat
+  six = ... : nat
+  seven = ... : nat
+  eight = ... : nat
+  nine = ... : nat
+  ten = ... : nat
+  plus = ... : nat-&gt;nat-&gt;nat
+  times = ... : nat-&gt;nat-&gt;nat
+  exp = ... : nat-&gt;nat-&gt;nat
+  pred = ... : nat-&gt;nat
+  minus = ... : nat-&gt;nat-&gt;nat
+  ackerman = ... : nat-&gt;nat-&gt;nat
+  if_zero = ... : {t|Type}nat-&gt;t-&gt;t-&gt;t
+  fact = ... : nat-&gt;nat
+  zero_not_one = ... : not (Eq zero one)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Boolean Definition</TITLE>
+<META NAME="description" CONTENT="Boolean Definition">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html403" HREF="node19.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html401" HREF="node17.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html395" HREF="node17.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html405" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html404" HREF="node19.html">Boolean Functions</A>
+<B>Up:</B> <A NAME="tex2html402" HREF="node17.html">The Booleans</A>
+<B> Previous:</B> <A NAME="tex2html396" HREF="node17.html">The Booleans</A>
+<BR> <P>
+<H2><A NAME="SECTION00091000000000000000">Boolean Definition</A></H2>
+<P>
+The file <TT>lib_bool</TT> gives the basic definition of the boolean
+type with its recursor and induction principle and
+propositional functions <TT>is_true</TT>
+and <TT>is_false</TT> which are used in the two
+characterisation theorems that true is not equal to false
+and that any boolean is either true or false.
+<P>
+<PRE> ** Module lib_bool Imports lib_eq_basics
+ $bool : Type(bool)
+ $true : bool
+ $false : bool
+ $bool_elim :
+    {C_bool:bool-&gt;TYPE}(C_bool true)-&gt;(C_bool false)-&gt;{z:bool}C_bool z
+[[C_bool:bool-&gt;TYPE][f_true:C_bool true][f_false:C_bool false]
+    bool_elim C_bool f_true f_false true  ==&gt;  f_true
+ || bool_elim C_bool f_true f_false false  ==&gt;  f_false]
+
+  bool_rec = ... : {T|Type}T-&gt;T-&gt;bool-&gt;T
+  bool_ind = ... : {P:bool-&gt;Prop}(P true)-&gt;(P false)-&gt;{b:bool}P b
+  bool_double_elim = ... :
+    {T:bool-&gt;bool-&gt;Type}(T true true)-&gt;(T true false)-&gt;(T false true)-&gt;
+    (T false false)-&gt;{x,y:bool}T x y
+  is_true = ... : bool-&gt;Prop
+  is_false = ... : bool-&gt;Prop
+  true_not_false = ... : not (Eq true false)
+  true_or_false = ... : {b:bool}or (is_true b) (is_false b)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

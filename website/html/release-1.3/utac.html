@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3: UTac</title>
+  </head>
+
+  <body>  <P>
+ <HR> 
+<A HREF="library/library.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+
+<A HREF="theorems.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Next:</B> <A  HREF="library/library.html">Library Documentation</A>
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Version 1.3</A>
+<B> Previous:</B> <A HREF="theorems.html">Theorems and Configure Theorems</A>
+<HR>
+    <h1>LEGO Version 1.3: UTac</h1>
+    Lego is written in ML. We provide two binaries, lego and legoML.
+    The latter gives you a toplevel of ML in which lego is executed as
+    a function. The command <tt>Drop</tt> returns you to the ML
+    toplevel. There, you can define any ML function you like e.g., a
+    fancy decision procedure, and execute it to ease some tedious
+    aspects in your proof development. Of course, this function may
+    interrogate the current goals and use known assumptions.
+    <em>Notice, that you have been able to do this with all previous
+    versions of Lego as well!</em> However, with the current 
+    release, we provide a mechanism to register simple user-defined
+    tactics so that they can be conveniently executed at the
+    <em>Lego</em> level. While at the ML level, you may register any
+    tactic <tt>f:unit->unit</tt> via
+
+       <listing>Tactics.add_tactic "TacticId" f</listing>
+
+    After returning to the Lego level via <tt>lego()</tt>, you can
+    execute the new tactic by invoking
+
+       <listing>UTac TacticId</listing>
+
+    In constructing such a tactic <tt>f</tt>, you will have to
+    synthesis all arguments from the current proof state. Notice that
+    the function
+
+      <listing>Namespace.getCurrentGoals : unit -> question list</listing>
+
+    gives you access to the current goals wheras interrogation of
+      the context is possible through
+
+      <listing>Namespace.search id (Namespace.getNamespace()) : binding</listing>
+       
+
+    See the source file <b>"src/lib_nat_plus_thms.sml"></b> for an example on
+    how one might define and integrate a tactic for replacing
+    all occurrences of the form (a+b)+c in the current goal
+           by a+(b+c).
+
+    <hr>
+    <address><a href="mailto:lego@dcs.ed.ac.uk">LEGO Team</a></address>
+<!-- Created: Thu May  8 13:52:51 BST 1997 -->
+<!-- hhmts start -->
+Last modified: Tue Jun 23 16:46:32 BST 1998
+<!-- hhmts end -->
+  </body>
+</html>

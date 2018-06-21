@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<!-- Time-stamp: "24 Oct 98 tms /home/lego/pub/html/release-1.3.1/knownbugs.html" -->
+<html>
+  <head>
+    <title>Lego Version 1.3.1: Known Bugs</title>
+  </head>
+
+  <body>  <P>
+      
+      <h1>LEGO Version 1.3.1: Known Bugs</h1>
+      
+      Please let us know if you come across any bugs in the current
+      release. We are aware of the following problems:
+      <dl>
+	<!-- one of (dt dd) -->
+      <dt>Double</dt>
+        <dd>The computation of double elimination rules uses named variables.
+        If an inductive definition uses a name twice or a name
+        used by the system, the clash may cause an error. Workaround: do not
+        duplicate names and never call anything "z".</dd>
+
+      <dt>Expansion</dt>
+	<dd>The command <tt>ExpAll</tt> no longer works.</dd>
+	<dt>Freezing</dt>
+	<dd>Freezing terms while constructing a proof may lead to
+	problems in building the internal partial proof tree and LEGO
+	  fails with <tt>*tocAppErr*</tt>.</dd>
+	<dt>Pwd</dt>
+	<dd>under Linux does not work.</dd>
+
+      <dt>Reduction Rules</dt>
+	<dd>Implicit arguments in constructors which cannot actually be
+        inferred from
+	later arguments may lead to illegal reduction rules, thus
+	corrupting the object file.</dd>
+
+      </dl>
+
+      <hr>
+      <address><a href="mailto:lego@dcs.ed.ac.uk">LEGO Team</a></address>
+<!-- Created: Thu Feb 13 10:54:23 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: Tue Nov 10 18:25:12 GMT 1998
+<!-- hhmts end -->
+  </body>
+</html>

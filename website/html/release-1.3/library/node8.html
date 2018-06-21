@@ -1,0 +1,182 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Logic</TITLE>
+<META NAME="description" CONTENT="Logic">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node9.html">
+<LINK REL="previous" HREF="node7.html">
+<LINK REL="up" HREF="node7.html">
+<LINK REL="next" HREF="node9.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html257"
+ HREF="node9.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html254"
+ HREF="node7.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html248"
+ HREF="node7.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html256"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html258"
+ HREF="node9.html">Equality</A>
+<B> Up:</B> <A NAME="tex2html255"
+ HREF="node7.html">Providing logic and equality</A>
+<B> Previous:</B> <A NAME="tex2html249"
+ HREF="node7.html">Providing logic and equality</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION00051000000000000000">
+Logic</A>
+</H2>
+
+<P>
+The logic file contains impredicative encodings of ``and'', ``or''
+``exists'', etc. and their introduction and elimination rules, and
+definitions of some properties of relations (symmetry, reflexivity etc.).
+It is based on Randy Pollack's logic file.  For the convenience
+of some of our users we have included definitions of ``and'' and ``exists''
+which take up to 7 arguments.
+
+<P>
+<PRE>
+ ** Module lib_logic Imports parameters
+ ** Config Infix /\ left 3
+ ** Config Infix \/ left 2
+  cut = ... : {A,B|Prop}A-&gt;(A-&gt;B)-&gt;B
+  trueProp = ... : Prop
+  Id = ... : {T|SET}T-&gt;T
+  PropId = ... : {A|Prop}A-&gt;A
+  Contrapos = ... : {A,B|Prop}(A-&gt;B)-&gt;{X|Prop}(B-&gt;X)-&gt;A-&gt;X
+  compose = ... : {T,S,U|SET}(S-&gt;U)-&gt;(T-&gt;S)-&gt;T-&gt;U
+  permute = ... : {T,S,U|SET}(T-&gt;S-&gt;U)-&gt;S-&gt;T-&gt;U
+  forall_elim = ... :
+    {C|Prop}{T|SET}{P:T-&gt;Prop}({x:T}P x)-&gt;{e:T}((P e)-&gt;C)-&gt;C
+  impl_elim = ... : {A,B,C|Prop}(A-&gt;B)-&gt;A-&gt;(B-&gt;C)-&gt;C
+  and = ... : Prop-&gt;Prop-&gt;Prop
+  or = ... : Prop-&gt;Prop-&gt;Prop
+  or_elim = ... : {A,B,C|Prop}(A \/ B)-&gt;(A-&gt;C)-&gt;(B-&gt;C)-&gt;C
+  pair = ... : {A,B|Prop}A-&gt;B-&gt;(A /\ B)
+  inl = ... : {A,B|Prop}A-&gt;(A \/ B)
+  inr = ... : {A,B|Prop}B-&gt;(A \/ B)
+  fst = ... : {A,B|Prop}(A /\ B)-&gt;A
+  snd = ... : {A,B|Prop}(A /\ B)-&gt;B
+  iff = ... : Prop-&gt;Prop-&gt;Prop
+  absurd = ... : Prop
+  absurd_elim = ... : absurd-&gt;{N:Prop}N
+  not = ... : Prop-&gt;Prop
+  All = ... : {T|SET}(T-&gt;Prop)-&gt;Prop
+  Ex = ... : {T|SET}(T-&gt;Prop)-&gt;Prop
+  ExIntro = ... : {T|SET}{wit:T}{P:T-&gt;Prop}(P wit)-&gt;Ex P
+  ExIn = ... :
+    {T|SET}{wit:T}{P:T-&gt;Prop}(P wit)-&gt;{B:Prop}({t:T}(P t)-&gt;B)-&gt;B
+  ExElim = ... : {T|SET}{P|T-&gt;Prop}(Ex P)-&gt;{N|Prop}({t:T}(P t)-&gt;N)-&gt;N
+  ex = ... : {A|Prop}(A-&gt;Prop)-&gt;Prop
+  ex_intro = ... : {A|Prop}{P:A-&gt;Prop}{wit|A}(P wit)-&gt;ex P
+  witness = ... : {A|Prop}{P|A-&gt;Prop}(ex P)-&gt;A
+  Ex2 = ... : {T,S|SET}(T-&gt;S-&gt;Prop)-&gt;Prop
+  Ex2Intro = ... : {T,S|SET}{P:T-&gt;S-&gt;Prop}{t|T}{s|S}(P t s)-&gt;Ex2 P
+  Ex2Elim = ... :
+    {T,S|SET}{P|T-&gt;S-&gt;Prop}(Ex2 P)-&gt;{N|Prop}({t|T}{s|S}(P t s)-&gt;N)-&gt;N
+  Ex2In = ... : {T,S|SET}{t:T}{s:S}{P:T-&gt;S-&gt;Prop}(P t s)-&gt;Ex2 P
+  Ex3 = ... : {T,S,U|SET}(T-&gt;S-&gt;U-&gt;Prop)-&gt;Prop
+  Ex3In = ... :
+    {T,S,U|SET}{t:T}{s:S}{u:U}{P:T-&gt;S-&gt;U-&gt;Prop}(P t s u)-&gt;Ex3 P
+  Ex3Elim = ... :
+    {T,S,U|SET}{P|T-&gt;S-&gt;U-&gt;Prop}(Ex3 P)-&gt;{N|Prop}
+    ({t|T}{s|S}{u|U}(P t s u)-&gt;N)-&gt;N
+  Ex4 = ... : {T,S,U,V|SET}(T-&gt;S-&gt;U-&gt;V-&gt;Prop)-&gt;Prop
+  Ex4In = ... :
+    {T,S,U,V|SET}{t:T}{s:S}{u:U}{v:V}{P:T-&gt;S-&gt;U-&gt;V-&gt;Prop}(P t s u v)-&gt;
+    Ex4 P
+  Ex4Elim = ... :
+    {T,S,U,V|SET}{P|T-&gt;S-&gt;U-&gt;V-&gt;Prop}(Ex4 P)-&gt;{N|Prop}
+    ({t|T}{s|S}{u|U}{v|V}(P t s u v)-&gt;N)-&gt;N
+  Ex5 = ... : {T,S,U,V,W|SET}(T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;Prop)-&gt;Prop
+  Ex5In = ... :
+    {T,S,U,V,W|SET}{t:T}{s:S}{u:U}{v:V}{w:W}{P:T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;Prop}
+    (P t s u v w)-&gt;Ex5 P
+  Ex5Elim = ... :
+    {T,S,U,V,W|SET}{P|T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;Prop}(Ex5 P)-&gt;{N|Prop}
+    ({t|T}{s|S}{u|U}{v|V}{w|W}(P t s u v w)-&gt;N)-&gt;N
+  Ex6 = ... : {T,S,U,V,W,X|SET}(T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;X-&gt;Prop)-&gt;Prop
+  Ex6In = ... :
+    {T,S,U,V,W,X|SET}{t:T}{s:S}{u:U}{v:V}{w:W}{x:X}
+    {P:T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;X-&gt;Prop}(P t s u v w x)-&gt;Ex6 P
+  Ex6Elim = ... :
+    {T,S,U,V,W,X|SET}{P|T-&gt;S-&gt;U-&gt;V-&gt;W-&gt;X-&gt;Prop}(Ex6 P)-&gt;{N|Prop}
+    ({t|T}{s|S}{u|U}{v|V}{w|W}{x|X}(P t s u v w x)-&gt;N)-&gt;N
+  and3 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  pair3 = ... : {A,B,C|Prop}A-&gt;B-&gt;C-&gt;and3 A B C
+  and3_out1 = ... : {A,B,C|Prop}(and3 A B C)-&gt;A
+  and3_out2 = ... : {A,B,C|Prop}(and3 A B C)-&gt;B
+  and3_out3 = ... : {A,B,C|Prop}(and3 A B C)-&gt;C
+  and4 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  pair4 = ... : {A,B,C,D|Prop}A-&gt;B-&gt;C-&gt;D-&gt;and4 A B C D
+  and4_out1 = ... : {A,B,C,D|Prop}(and4 A B C D)-&gt;A
+  and4_out2 = ... : {A,B,C,D|Prop}(and4 A B C D)-&gt;B
+  and4_out3 = ... : {A,B,C,D|Prop}(and4 A B C D)-&gt;C
+  and4_out4 = ... : {A,B,C,D|Prop}(and4 A B C D)-&gt;D
+  and5 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  pair5 = ... : {A,B,C,D,E|Prop}A-&gt;B-&gt;C-&gt;D-&gt;E-&gt;and5 A B C D E
+  and5_out1 = ... : {A,B,C,D,E|Prop}(and5 A B C D E)-&gt;A
+  and5_out2 = ... : {A,B,C,D,E|Prop}(and5 A B C D E)-&gt;B
+  and5_out3 = ... : {A,B,C,D,E|Prop}(and5 A B C D E)-&gt;C
+  and5_out4 = ... : {A,B,C,D,E|Prop}(and5 A B C D E)-&gt;D
+  and5_out5 = ... : {A,B,C,D,E|Prop}(and5 A B C D E)-&gt;E
+  and6 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  pair6 = ... : {A,B,C,D,E,F|Prop}A-&gt;B-&gt;C-&gt;D-&gt;E-&gt;F-&gt;and6 A B C D E F
+  and6_out1 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;A
+  and6_out2 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;B
+  and6_out3 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;C
+  and6_out4 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;D
+  and6_out5 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;E
+  and6_out6 = ... : {A,B,C,D,E,F|Prop}(and6 A B C D E F)-&gt;F
+  and7 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  pair7 = ... :
+    {A,B,C,D,E,F,G|Prop}A-&gt;B-&gt;C-&gt;D-&gt;E-&gt;F-&gt;G-&gt;and7 A B C D E F G
+  and7_out1 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;A
+  and7_out2 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;B
+  and7_out3 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;C
+  and7_out4 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;D
+  and7_out5 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;E
+  and7_out6 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;F
+  and7_out7 = ... : {A,B,C,D,E,F,G|Prop}(and7 A B C D E F G)-&gt;G
+  iff3 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  or3 = ... : Prop-&gt;Prop-&gt;Prop-&gt;Prop
+  or3_in1 = ... : {A,B,C|Prop}A-&gt;or3 A B C
+  or3_in2 = ... : {A,B,C|Prop}B-&gt;or3 A B C
+  or3_in3 = ... : {A,B,C|Prop}C-&gt;or3 A B C
+  or3_elim = ... : {A,B,C,X|Prop}(or3 A B C)-&gt;(A-&gt;X)-&gt;(B-&gt;X)-&gt;(C-&gt;X)-&gt;X
+  refl = ... : {T|SET}(T-&gt;T-&gt;Prop)-&gt;Prop
+  sym = ... : {T|SET}(T-&gt;T-&gt;Prop)-&gt;Prop
+  trans = ... : {T|SET}(T-&gt;T-&gt;Prop)-&gt;Prop
+  Equivalence = ... : {T|SET}(T-&gt;T-&gt;Prop)-&gt;Prop
+  respect = ... : {T,S|SET}(T-&gt;S)-&gt;({X|SET}X-&gt;X-&gt;Prop)-&gt;Prop
+  respect2 = ... : {T,S,U|SET}(T-&gt;U-&gt;S)-&gt;({X|SET}X-&gt;X-&gt;Prop)-&gt;Prop
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

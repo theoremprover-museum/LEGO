@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Length-like list functions</TITLE>
+<META NAME="description" CONTENT="Length-like list functions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node50.html">
+<LINK REL="previous" HREF="node48.html">
+<LINK REL="up" HREF="node44.html">
+<LINK REL="next" HREF="node50.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html741"
+ HREF="node50.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html738"
+ HREF="node44.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html732"
+ HREF="node48.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html740"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html742"
+ HREF="node50.html">Other list functions</A>
+<B> Up:</B> <A NAME="tex2html739"
+ HREF="node44.html">List</A>
+<B> Previous:</B> <A NAME="tex2html733"
+ HREF="node48.html">Partial List functions</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H2><A NAME="SECTION000135000000000000000">
+Length-like list functions</A>
+</H2>
+
+<P>
+This section contains the list functions
+which require the natural number datatype;
+the most important of these functions
+is the ``length'' function which returns
+the length of a list. Also given is
+the nth function which returns
+the  element of a list and
+a function called <TT>build_list</TT>
+which constructs the list corresponding
+to the first ``n'' elements of a stream
+represented as a function from nat to
+the elements of some set.
+
+<P>
+<PRE>
+ ** Module lib_list_length Imports lib_list_basics lib_nat_Lt
+  length = ... : {s|Type}(list s)-&gt;nat
+  nth = ... : nat-&gt;{t|Type}(list t)-&gt;t-&gt;t
+  build_list = ... : {s|Type}(nat-&gt;s)-&gt;nat-&gt;list s
+  list_length_induction = ... :
+    {t|Type}{P:(list t)-&gt;Prop}
+    ({l:list t}({x:list t}(Lt (length x) (length l))-&gt;P x)-&gt;P l)-&gt;
+    {k:list t}P k
+  length_zero_nil = ... :
+    {s|Type}{l:list s}(Eq (length l) zero)-&gt;Eq l (nil s)
+  length_map = ... :
+    {s|Type}{t|Type}{l:list s}{f:s-&gt;t}Eq (length (map f l)) (length l)
+  length_build_list = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}Eq (length (build_list f n)) n
+  length_append = ... :
+    {s|Type}{l1,l2:list s}
+    Eq (length (append l1 l2)) (plus (length l1) (length l2))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

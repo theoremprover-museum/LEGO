@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3's Computation and Rewrite Rules</title>
+  </head>
+
+  <body>
+  <P>
+ <HR> 
+<A HREF="../then.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+
+<A HREF="../newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+
+<A HREF="../patterns.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+
+<A HREF="../../../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Next:</B> <A  HREF="../then.html">Then</A>
+<B> Up:</B> <A  HREF="../newfeatures.html">New Features in LEGO Version 1.3</A>
+<B> Previous:</B> <A HREF="../patterns.html"> Relaxed Patterns and Inductive Types </A>
+<HR>        <h1>LEGO Version 1.3's Computation and Rewrite Rules</h1>
+
+<hr>
+
+<P>
+
+Object level computation in the new version of LEGO behaves
+differently than in older versions.  To explain the new version, let's
+consider the design goals of LEGO evaluation.
+
+<p>
+
+LEGO is a normal order programming language.  There are two reasons
+for this: to preserve "feasibility" and to be as "intensional" as
+possible.  Both of these points need explanation.
+
+<ul>
+
+<li> "feasibility" - It is usually said that languages like Haskell use
+normal order evaluation to preserve termination, but LEGO's type
+theories are strongly normalizing (as long as you don't add funny
+rewrite rules), so why don't we use applicative order in LEGO?  The
+fact that LEGO's languages are strongly normalizing is irrelevant in
+choosing an evaluation order, because one can surely write terms in
+LEGO that will not terminate in practice.  LEGO uses a normalizing
+order so that terms that can be feasibly (weak head) normalized will
+have (weak head) normal forms in LEGO.
+
+<li> "intensionality" - Using Haskell you don't see arbitrary terms,
+only values, i.e. built-in data (e.g. booleans) or data type
+constructors (e.g. Cons and Nil).  Using LEGO you do see terms, and
+you may well care about actual terms, not just their values.  For this
+reason, LEGO does not update shared parts of terms during computation.
+For example when LEGO computes the whnf of (\x.xx)((\y.y)z) it stops
+at z((\y.y)z) instead of z(z) as would be the result of using the
+sharing introduced by \x.xx, as Haskell does.  This may be a bad
+decision, but no version of LEGO, including the new one, has this kind
+of sharing.
+
+</ul>
+
+Keeping these design goals in mind, we now consider
+<a href="./patternupdate.html">pattern updating</a>.
+
+<p>
+
+<hr>
+
+<!-- Created: Wed Feb 12 17:56:55 GMT 1997 -->
+<!-- hhmts start -->
+Last modified: Tue Jun 23 16:48:14 BST 1998
+<!-- hhmts end -->
+
+  </body>
+</html>

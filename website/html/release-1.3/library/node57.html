@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<!--Converted with LaTeX2HTML 98.1p1 release (March 2nd, 1998)
+originally by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Finite Sets</TITLE>
+<META NAME="description" CONTENT="Finite Sets">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node58.html">
+<LINK REL="previous" HREF="node44.html">
+<LINK REL="up" HREF="library.html">
+<LINK REL="next" HREF="node58.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html827"
+ HREF="node58.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html824"
+ HREF="library.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html818"
+ HREF="node56.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html826"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html828"
+ HREF="node58.html">Vectors</A>
+<B> Up:</B> <A NAME="tex2html825"
+ HREF="library.html">The LEGO library -</A>
+<B> Previous:</B> <A NAME="tex2html819"
+ HREF="node56.html">Sorted Lists</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION000140000000000000000">
+Finite Sets</A>
+</H1>
+
+<P>
+The finite set datatype is a family of types parameterised
+by nat, where the type <TT>fin n</TT> has exactly n 
+elements, which can be thought of as the set of numbers
+
+<!-- MATH: $\{0,\ldots,n-1\}$ -->
+<IMG
+ WIDTH="122" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$\{0,\ldots,n-1\}$">.
+
+<P>
+The function <code>f_plus</code> lifts elements from 
+<!-- MATH: $\{0,\ldots,n-1\}$ -->
+<IMG
+ WIDTH="122" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img9.gif"
+ ALT="$\{0,\ldots,n-1\}$">
+to
+
+<!-- MATH: $\{0,\ldots,m+n-1\}$ -->
+<IMG
+ WIDTH="161" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img10.gif"
+ ALT="$\{0,\ldots,m+n-1\}$">,
+<code>f_plus_assoc</code> coerces elements in
+
+<!-- MATH: $\{0,\ldots,(m+(n+o))-1\}$ -->
+<IMG
+ WIDTH="223" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img11.gif"
+ ALT="$\{0,\ldots,(m+(n+o))-1\}$">
+to 
+<!-- MATH: $\{0,\ldots,((m+n)+o))-1\}$ -->
+<IMG
+ WIDTH="230" HEIGHT="37" ALIGN="MIDDLE" BORDER="0"
+ SRC="img12.gif"
+ ALT="$\{0,\ldots,((m+n)+o))-1\}$">.
+
+<P>
+<PRE>
+ ** Module lib_finite Imports lib_nat
+ $fin : nat-&gt;Type(fin)
+ $f_zero : {n:nat}fin (suc n)
+ $f_suc : {n|nat}(fin n)-&gt;fin (suc n)
+ $fin_elim :
+    {C_fin:{n|nat}(fin n)-&gt;TYPE}({n:nat}C_fin (f_zero n))-&gt;
+    ({n|nat}{x:fin n}(C_fin x)-&gt;C_fin (f_suc x))-&gt;{n|nat}{z:fin n}
+    C_fin z
+[[C_fin:{n|nat}(fin n)-&gt;TYPE][f_f_zero:{n1:nat}C_fin (f_zero n1)]
+ [f_f_suc:{n|nat}{x:fin n}(C_fin x)-&gt;C_fin (f_suc x)][n1:nat][n|nat]
+ [x:fin n]
+    fin_elim C_fin f_f_zero f_f_suc (f_zero n1)  ==&gt;  f_f_zero n1
+ || fin_elim C_fin f_f_zero f_f_suc (f_suc x)  ==&gt;
+    f_f_suc x (fin_elim C_fin f_f_zero f_f_suc x)]
+
+  f_plus = ... : {n,m|nat}(fin n)-&gt;fin (plus m n)
+  fin_elim'_lemma = ... :
+    {n:nat}{m:fin (suc n)}{P:(fin (suc n))-&gt;Type}(P (f_zero n))-&gt;
+    ({m'5:fin n}P (f_suc m'5))-&gt;P m
+  fin_elim' = ... :
+    {n:nat}{P:(fin (suc n))-&gt;Type}(P (f_zero n))-&gt;
+    ({m:fin n}P (f_suc m))-&gt;{m:fin (suc n)}P m
+  fin_rec = ... :
+    {C|Type}(nat-&gt;C)-&gt;({n|nat}(fin n)-&gt;C-&gt;C)-&gt;{n|nat}(fin n)-&gt;C
+  fin_iter = ... : {C|Type}(nat-&gt;C)-&gt;(nat-&gt;C-&gt;C)-&gt;{n|nat}(fin n)-&gt;C
+  fin_ind = ... :
+    {P:{n:nat}(fin n)-&gt;Prop}({n:nat}P (f_zero n))-&gt;
+    ({n|nat}{x:fin n}(P x)-&gt;P (f_suc x))-&gt;{n|nat}{z:fin n}P z
+  fin_rec' = ... : {n:nat}{C|Type}C-&gt;((fin n)-&gt;C)-&gt;(fin (suc n))-&gt;C
+  fin_ind' = ... :
+    {n:nat}{P:(fin (suc n))-&gt;Prop}(P (f_zero n))-&gt;
+    ({m:fin n}P (f_suc m))-&gt;{m:fin (suc n)}P m
+  peano2_fin = ... : {n:nat}{x:fin n}not (Eq (f_suc x) (f_zero n))
+  peano3_fin = ... : {n:nat}{x,y:fin n}(Eq (f_suc x) (f_suc y))-&gt;Eq x y
+  inj_void = ... :
+    {n:nat}{x:fin (suc n)}(not (Eq x (f_zero n)))-&gt;
+    Ex ([x':fin n]Eq x (f_suc x'))
+  finite_is_zero_or_succ = ... :
+    {n:nat}{x:fin (suc n)}
+    (Eq x (f_zero n) \/ Ex ([x':fin n]Eq x (f_suc x')))
+  zero_set_is_empty = ... : (fin zero)-&gt;absurd
+  fin_zero_lemma = ... :
+    {n|nat}{x:fin n}
+    nat_elim ([x'3:nat](fin x'3)-&gt;Type)
+     ([x'3:fin zero]{P:(fin zero)-&gt;Type}P x'3)
+     ([n'3:nat][_:(fin n'3)-&gt;Type][_:fin (suc n'3)]{t:Type}t-&gt;t) n x
+  fin_elim_zero = ... : {P:(fin zero)-&gt;Type}{x:fin zero}P x
+  f_plus_assoc = ... :
+    {n,o,m|nat}(fin (plus m (plus n o)))-&gt;fin (plus (plus m n) o)
+  fin_to_nat = ... : {n|nat}(fin n)-&gt;nat
+  fin_to_nat_resp_suc = ... :
+    {n|nat}{x:fin n}Eq (suc (fin_to_nat x)) (fin_to_nat (f_suc x))
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Lego</I>
+<BR><I>1998-06-15</I>
+</ADDRESS>
+</BODY>
+</HTML>

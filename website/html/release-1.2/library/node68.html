@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Some integer facts for number theory</TITLE>
+<META NAME="description" CONTENT="Some integer facts for number theory">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html983" HREF="node69.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html981" HREF="node63.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html975" HREF="node67.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html985" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html984" HREF="node69.html">Boolean valued functions on </A>
+<B>Up:</B> <A NAME="tex2html982" HREF="node63.html">The Integers</A>
+<B> Previous:</B> <A NAME="tex2html976" HREF="node67.html">Some theorems about Modulo</A>
+<BR> <P>
+<H2><A NAME="SECTION000205000000000000000">Some integer facts for number theory</A></H2>
+<P>
+This file defined the relations Divides, and Coprime and
+proves some properties of them.
+<P>
+<PRE> ** Module lib_int_number_theory Imports lib_integers/lib_int_mod
+  Divides = ... : zed-&gt;zed-&gt;Prop
+  Coprime = ... : zed-&gt;zed-&gt;Prop
+  refl_Divides = ... : refl Divides
+  divides_implies_is_zero_modulo = ... :
+    {m,n|int.1}(Divides m n)-&gt;Mod m n zero_zed
+  times_Divides = ... :
+    {m,n,p|int.1}(Divides m n)-&gt;Divides m (times_zed p n)
+  times_Divides' = ... :
+    {m,n,p|int.1}(Divides m p)-&gt;Divides m (times_zed p n)
+  sym_Coprime = ... : sym Coprime
+  factor_Coprime = ... :
+    {p,m,n|int.1}(Coprime p (times_zed m n))-&gt;Coprime p n
+  factor_Coprime' = ... :
+    {p,m,n|int.1}(Coprime p (times_zed m n))-&gt;Coprime p m</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

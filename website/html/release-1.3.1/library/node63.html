@@ -1,0 +1,270 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<!--Converted with LaTeX2HTML 97.1 (release) (July 13th, 1997)
+ by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippman, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>Definitions</TITLE>
+<META NAME="description" CONTENT="Definitions">
+<META NAME="keywords" CONTENT="library">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso_8859_1">
+<LINK REL="STYLESHEET" HREF="library.css">
+<LINK REL="next" HREF="node64.html">
+<LINK REL="previous" HREF="node62.html">
+<LINK REL="up" HREF="node62.html">
+<LINK REL="next" HREF="node64.html">
+</HEAD>
+<BODY >
+<!--Navigation Panel-->
+<A NAME="tex2html892"
+ HREF="node64.html">
+<IMG WIDTH="37" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next_motif.gif"></A> 
+<A NAME="tex2html889"
+ HREF="node62.html">
+<IMG WIDTH="26" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_motif.gif"></A> 
+<A NAME="tex2html883"
+ HREF="node62.html">
+<IMG WIDTH="63" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="previous_motif.gif"></A> 
+<A NAME="tex2html891"
+ HREF="node1.html">
+<IMG WIDTH="65" HEIGHT="24" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents_motif.gif"></A>  
+<BR>
+<B> Next:</B> <A NAME="tex2html893"
+ HREF="node64.html">Relation closures</A>
+<B> Up:</B> <A NAME="tex2html890"
+ HREF="node62.html">Relations</A>
+<B> Previous:</B> <A NAME="tex2html884"
+ HREF="node62.html">Relations</A>
+<BR>
+<BR>
+<!--End of Navigation Panel-->
+<H2><A NAME="SECTION000171000000000000000">
+Definitions</A>
+</H2>
+<TT>relations.l</TT> uses the obvious definitions of binary relations
+and unary predicates to do a little algebra with the equality on
+relations given by pointwise (extensional) equality, induced by a
+pre-order given by inclusion. The logical operators <TT>and</TT>,
+<TT>or</TT> etc lift to relations, and we also have the tensor product
+<TT>composeRel</TT> and its left and right adjoints across the
+pre-order, <TT>impliesRel</TT> <TT>coimpliesRel</TT>, familiar as
+Hoare/He's weakest pre-specification etc. These may also be considered
+in the context of predicates, and functions-as-relations, giving
+<TT>existsfPred</TT> and so on. These are then used to prove sound a
+variety of obvious algebraic laws, and as an application to define
+&quot;the transitive interior&quot; of a relation. 
+<PRE>
+ ** Module lib_rel Imports lib_nat
+  Pred = ... : (Type)-&gt;Type
+  Rel = ... : (Type)-&gt;(Type)-&gt;Type
+  preserves = ... : {s|Type}{t|Type}(s-&gt;t)-&gt;(Rel s s)-&gt;(Rel t t)-&gt;Prop
+  WF = ... : {s|Type}(Rel s s)-&gt;Prop
+  TWF = ... : {s|Type}(Rel s s)-&gt;Prop
+  per = ... : {s|Type}(Rel s s)-&gt;Prop
+  equiv = ... : {s|Type}(Rel s s)-&gt;Prop
+  preorder = ... : {s|Type}(Rel s s)-&gt;Prop
+  PreorderEq = ... : {s|Type}{R:Rel s s}(preorder R)-&gt;Rel s s
+  SubPred = ... : {s|Type}(Pred s)-&gt;(Pred s)-&gt;Prop
+  reflSubPred = ... : {s|Type}refl (SubPred|s)
+  transSubPred = ... : {s|Type}trans (SubPred|s)
+  EqPred = ... : {s|Type}Rel (Pred s) (Pred s)
+  SubRel = ... : {s|Type}{t|Type}(Rel s t)-&gt;(Rel s t)-&gt;Prop
+  reflSubRel = ... : {s|Type}{t|Type}refl (SubRel|s|t)
+  transSubRel = ... : {s|Type}{t|Type}trans (SubRel|s|t)
+  EqRel = ... : {s|Type}{t|Type}Rel (Rel s t) (Rel s t)
+  andPred = ... : {s|Type}(Pred s)-&gt;(Pred s)-&gt;Pred s
+  orPred = ... : {s|Type}(Pred s)-&gt;(Pred s)-&gt;Pred s
+  impliesPred = ... : {s|Type}(Pred s)-&gt;(Pred s)-&gt;Pred s
+  notPred = ... : {s|Type}(Pred s)-&gt;Pred s
+  andPredI = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred E F)-&gt;(SubPred E G)-&gt;
+    SubPred E (andPred F G)
+  andPredE1 = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred E (andPred F G))-&gt;SubPred E F
+  andPredE2 = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred E (andPred F G))-&gt;SubPred E G
+  orPredE = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred F E)-&gt;(SubPred G E)-&gt;
+    SubPred (orPred F G) E
+  orPredI1 = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred E F)-&gt;SubPred E (orPred F G)
+  orPredI2 = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred E G)-&gt;SubPred E (orPred F G)
+  impliesPredI = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred (andPred F G) E)-&gt;
+    SubPred F (impliesPred G E)
+  impliesPredE = ... :
+    {s|Type}{E,F,G|Pred s}(SubPred F (impliesPred G E))-&gt;
+    SubPred (andPred F G) E
+  existsf = ... : {s|Type}{t|Type}(t-&gt;s)-&gt;(Pred t)-&gt;Pred s
+  starf = ... : {s|Type}{t|Type}(t-&gt;s)-&gt;(Pred s)-&gt;Pred t
+  forallf = ... : {s|Type}{t|Type}(t-&gt;s)-&gt;(Pred t)-&gt;Pred s
+  existsfE = ... :
+    {s|Type}{t|Type}{F|Pred s}{H|Pred t}{f|t-&gt;s}
+    (SubPred (existsf f H) F)-&gt;SubPred H (starf f F)
+  existsfI = ... :
+    {s|Type}{t|Type}{F|Pred s}{H|Pred t}{f|t-&gt;s}
+    (SubPred H (starf f F))-&gt;SubPred (existsf f H) F
+  forallfE = ... :
+    {s|Type}{t|Type}{F|Pred s}{H|Pred t}{f|t-&gt;s}
+    (SubPred F (forallf f H))-&gt;SubPred (starf f F) H
+  forallfI = ... :
+    {s|Type}{t|Type}{F|Pred s}{H|Pred t}{f|t-&gt;s}
+    (SubPred (starf f F) H)-&gt;SubPred F (forallf f H)
+  op = ... : {s|Type}{t|Type}(Rel s t)-&gt;Rel t s
+  notRel = ... : {s|Type}{t|Type}(Rel s t)-&gt;Rel s t
+  andRel = ... : {s|Type}{t|Type}(Rel s t)-&gt;(Rel s t)-&gt;Rel s t
+  orRel = ... : {s|Type}{t|Type}(Rel s t)-&gt;(Rel s t)-&gt;Rel s t
+  composeRel = ... :
+    {s|Type}{t|Type}{u|Type}(Rel s t)-&gt;(Rel t u)-&gt;Rel s u
+  impliesRel = ... :
+    {s|Type}{t|Type}{u|Type}(Rel s t)-&gt;(Rel s u)-&gt;Rel t u
+  coimpliesRel = ... :
+    {s|Type}{t|Type}{u|Type}(Rel t u)-&gt;(Rel s u)-&gt;Rel s t
+  andRelI = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel R P)-&gt;(SubRel R Q)-&gt;
+    SubRel R (andRel P Q)
+  andRelE1 = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel R (andRel P Q))-&gt;SubRel R P
+  andRelE2 = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel R (andRel P Q))-&gt;SubRel R Q
+  orRelE = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel P R)-&gt;(SubRel Q R)-&gt;
+    SubRel (orRel P Q) R
+  orRelI1 = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel R P)-&gt;SubRel R (orRel P Q)
+  orRelI2 = ... :
+    {s|Type}{t|Type}{P,Q,R|Rel s t}(SubRel R Q)-&gt;SubRel R (orRel P Q)
+  impliesRelI = ... :
+    {s|Type}{t|Type}{u|Type}{R|Rel s t}{S|Rel t u}{T|Rel s u}
+    (SubRel (composeRel R S) T)-&gt;SubRel S (impliesRel R T)
+  impliesRelE = ... :
+    {s|Type}{t|Type}{u|Type}{R|Rel s t}{S|Rel t u}{T|Rel s u}
+    (SubRel S (impliesRel R T))-&gt;SubRel (composeRel R S) T
+  coimpliesRelI = ... :
+    {s|Type}{t|Type}{u|Type}{R|Rel s t}{S|Rel t u}{T|Rel s u}
+    (SubRel (composeRel R S) T)-&gt;SubRel R (coimpliesRel S T)
+  coimpliesRelE = ... :
+    {s|Type}{t|Type}{u|Type}{R|Rel s t}{S|Rel t u}{T|Rel s u}
+    (SubRel R (coimpliesRel S T))-&gt;SubRel (composeRel R S) T
+  existsgh = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}(u-&gt;v-&gt;s)-&gt;(u-&gt;v-&gt;t)-&gt;(Rel u v)-&gt;
+    Rel s t
+  stargh = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}(u-&gt;v-&gt;s)-&gt;(u-&gt;v-&gt;t)-&gt;(Rel s t)-&gt;
+    Rel u v
+  forallgh = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}(u-&gt;v-&gt;s)-&gt;(u-&gt;v-&gt;t)-&gt;(Rel u v)-&gt;
+    Rel s t
+  existsghE = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{U|Rel u v}{g|u-&gt;v-&gt;s}
+    {h|u-&gt;v-&gt;t}(SubRel (existsgh g h U) P)-&gt;SubRel U (stargh g h P)
+  existsghI = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{U|Rel u v}{g|u-&gt;v-&gt;s}
+    {h|u-&gt;v-&gt;t}(SubRel U (stargh g h P))-&gt;SubRel (existsgh g h U) P
+  forallghE = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{U|Rel u v}{g|u-&gt;v-&gt;s}
+    {h|u-&gt;v-&gt;t}(SubRel P (forallgh g h U))-&gt;SubRel (stargh g h P) U
+  forallghI = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{U|Rel u v}{g|u-&gt;v-&gt;s}
+    {h|u-&gt;v-&gt;t}(SubRel (stargh g h P) U)-&gt;SubRel P (forallgh g h U)
+  KPred = ... : {s|Type}Prop-&gt;Pred s
+  KRelL = ... : {s|Type}{t|Type}(Pred s)-&gt;Rel s t
+  KRelR = ... : {s|Type}{t|Type}(Pred t)-&gt;Rel s t
+  leftKanPred = ... : {s|Type}{t|Type}(Rel s t)-&gt;(Pred s)-&gt;Pred t
+  rightKanPred = ... : {s|Type}{t|Type}(Rel s t)-&gt;(Pred s)-&gt;Pred t
+  notPredIE = ... :
+    {s|Type}{E,F|Pred s}(SubPred E F)-&gt;SubPred (notPred F) (notPred E)
+  notRelIE = ... :
+    {s|Type}{t|Type}{P,Q|Rel s t}(SubRel P Q)-&gt;
+    SubRel (notRel Q) (notRel P)
+  univPred = ... : {s|Type}Pred s
+  univRel = ... : {s|Type}{t|Type}Rel s t
+  emptyPred = ... : {s|Type}Pred s
+  emptyRel = ... : {s|Type}{t|Type}Rel s t
+  univPredI = ... : {s|Type}{F|Pred s}SubPred F (univPred|s)
+  emptyPredI = ... : {s|Type}{F|Pred s}SubPred (emptyPred|s) F
+  univRelI = ... : {s|Type}{t|Type}{R|Rel s t}SubRel R (univRel|s|t)
+  emptyRelI = ... : {s|Type}{t|Type}{R|Rel s t}SubRel (emptyRel|s|t) R
+  existfunit = ... :
+    {s|Type}{t|Type}{H|Pred t}{f|t-&gt;s}SubPred H (starf f (existsf f H))
+  existfcounit = ... :
+    {s|Type}{t|Type}{F|Pred s}{f|t-&gt;s}SubPred (existsf f (starf f F)) F
+  forallfunit = ... :
+    {s|Type}{t|Type}{F|Pred s}{f|t-&gt;s}SubPred F (forallf f (starf f F))
+  forallfcounit = ... :
+    {s|Type}{t|Type}{H|Pred t}{f|t-&gt;s}SubPred (starf f (forallf f H)) H
+  existghunit = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{U|Rel u v}{g|u-&gt;v-&gt;s}{h|u-&gt;v-&gt;t}
+    SubRel U (stargh g h (existsgh g h U))
+  existghcounit = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{g|u-&gt;v-&gt;s}{h|u-&gt;v-&gt;t}
+    SubRel (existsgh g h (stargh g h P)) P
+  forallghunit = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{g|u-&gt;v-&gt;s}{h|u-&gt;v-&gt;t}
+    SubRel P (forallgh g h (stargh g h P))
+  forallghcounit = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{U|Rel u v}{g|u-&gt;v-&gt;s}{h|u-&gt;v-&gt;t}
+    SubRel (stargh g h (forallgh g h U)) U
+  monotonePred = ... : {s|Type}{t|Type}((Pred s)-&gt;Pred t)-&gt;Prop
+  monotoneRel = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}((Rel s t)-&gt;Rel u v)-&gt;Prop
+  opMono = ... :
+    {s|Type}{t|Type}{P,Q|Rel s t}(SubRel P Q)-&gt;SubRel (op P) (op Q)
+  opInvol = ... : {s|Type}{t|Type}{P|Rel s t}SubRel P (op (op P))
+  composeRelMonoL = ... :
+    {s|Type}{t|Type}{u|Type}{P|Rel s t}
+    monotoneRel|t|u|s|u (composeRel P)
+  composeRelR = ... :
+    {s|Type}{t|Type}{u|Type}(Rel t u)-&gt;(Rel s t)-&gt;Rel s u
+  composeRelMonoR = ... :
+    {s|Type}{t|Type}{u|Type}{Q|Rel t u}
+    monotoneRel|s|t|s|u (composeRelR Q)
+  composeRelEqL1 = ... :
+    {s|Type}{t|Type}{P|Rel s t}SubRel (composeRel (Eq|s) P) P
+  composeRelEqL2 = ... :
+    {s|Type}{t|Type}{P|Rel s t}SubRel P (composeRel (Eq|s) P)
+  composeRelEqR1 = ... :
+    {s|Type}{t|Type}{P|Rel s t}SubRel (composeRel P (Eq|t)) P
+  composeRelEqR2 = ... :
+    {s|Type}{t|Type}{P|Rel s t}SubRel P (composeRel P (Eq|t))
+  composeRelAssoc1 = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{Q|Rel t u}{R|Rel u v}
+    SubRel (composeRel (composeRel P Q) R)
+     (composeRel P (composeRel Q R))
+  composeRelAssoc2 = ... :
+    {s|Type}{t|Type}{u|Type}{v|Type}{P|Rel s t}{Q|Rel t u}{R|Rel u v}
+    SubRel (composeRel P (composeRel Q R))
+     (composeRel (composeRel P Q) R)
+  opcompose1 = ... :
+    {s|Type}{t|Type}{u|Type}{P|Rel s t}{Q|Rel t u}
+    SubRel (composeRel (op Q) (op P)) (op (composeRel P Q))
+  opcompose2 = ... :
+    {s|Type}{t|Type}{u|Type}{P|Rel s t}{Q|Rel t u}
+    SubRel (op (composeRel P Q)) (composeRel (op Q) (op P))
+  ClosedL = ... : {s|Type}{t|Type}(Rel s s)-&gt;(Rel s t)-&gt;Prop
+  ClosedR = ... : {s|Type}{t|Type}(Rel t t)-&gt;(Rel s t)-&gt;Prop
+  symkernelRel = ... : {s|Type}(Rel s s)-&gt;Rel s s
+  prekernelRelR = ... :
+    {s|Type}{S:Rel s s}[P=impliesRel S S]
+    (preorder P /\ {Q:Rel s s}(ClosedR Q S)-&gt;SubRel Q P)
+  prekernelRelL = ... :
+    {s|Type}{S:Rel s s}[P=coimpliesRel S S]
+    (preorder P /\ {Q:Rel s s}(ClosedL Q S)-&gt;SubRel Q P)
+  kernelRel = ... :
+    {s|Type}{S:Rel s s}(sym S)-&gt;[kerS=symkernelRel S]
+    (equiv kerS /\ {Q:Rel s s}(ClosedL Q S)-&gt;(ClosedR Q S)-&gt;
+     SubRel Q kerS)
+</PRE>
+<P>
+<BR><HR>
+<ADDRESS>
+<I>Conor McBride</I>
+<BR><I>11/13/1998</I>
+</ADDRESS>
+</BODY>
+</HTML>

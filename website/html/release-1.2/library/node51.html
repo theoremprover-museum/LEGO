@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Distinctness</TITLE>
+<META NAME="description" CONTENT="Distinctness">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html790" HREF="node52.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html788" HREF="node41.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html782" HREF="node50.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html792" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html791" HREF="node52.html">Permutation</A>
+<B>Up:</B> <A NAME="tex2html789" HREF="node41.html">List</A>
+<B> Previous:</B> <A NAME="tex2html783" HREF="node50.html">Membership</A>
+<BR> <P>
+<H2><A NAME="SECTION0001410000000000000000">Distinctness</A></H2>
+<P>
+We defines the property <TT>Distin</TT>, that all the elements of
+a list are distinct. Like that of <TT>Adjoin</TT>, we use
+the impredicative definition and prove a 
+an elimination rule.
+<P>
+<PRE> ** Module lib_list_Distin Imports lib_list_Member lib_nat_Le
+  Distin = ... : {s|Type}(list s)-&gt;Prop
+  Dis1 = ... : {s|Type}Distin (nil s)
+  Dis2 = ... :
+    {s|Type}{a:s}{xs:list s}(not (Member a xs))-&gt;(Distin xs)-&gt;
+    Distin (cons a xs)
+  Dis_elim = ... :
+    {s|Type}{T:(list s)-&gt;Prop}(T (nil s))-&gt;
+    ({a:s}{xs:list s}(not (Member a xs))-&gt;(T xs)-&gt;T (cons a xs))-&gt;
+    {xs:list s}(Distin xs)-&gt;T xs
+  Distin_inv = ... :
+    {s|Type}{a|s}{l|list s}(Distin (cons a l))-&gt;
+    and (not (Member a l)) (Distin l)
+  Distin_append = ... :
+    {s|Type}{l1,l2:list s}(Distin l1)-&gt;(Distin l2)-&gt;
+    ({a:s}(Member a l1)-&gt;not (Member a l2))-&gt;Distin (append l1 l2)
+  Distin_inj_map = ... :
+    {s|Type}{u|Type}{l:list s}{f:s-&gt;u}
+    ({a1,a2:s}(Member a1 l)-&gt;(Member a2 l)-&gt;(Eq (f a1) (f a2))-&gt;
+     Eq a1 a2)-&gt;(Distin l)-&gt;Distin (map f l)
+  Distin_prod = ... :
+    {s|Type}{u|Type}{l1:list s}{l2:list u}(Distin l1)-&gt;(Distin l2)-&gt;
+    Distin (prod_list l1 l2)
+  Distin_inj_build = ... :
+    {s|Type}{f:nat-&gt;s}{n:nat}
+    ({k1,k2:nat}(Lt k1 n)-&gt;(Lt k2 n)-&gt;(Eq (f k1) (f k2))-&gt;Eq k1 k2)-&gt;
+    Distin (build_list f n)
+  Distin_sublist_Le_length = ... :
+    {s|Type}{xs,ys:list s}(Distin xs)-&gt;
+    ({a:s}(Member a xs)-&gt;Member a ys)-&gt;Le (length xs) (length ys)</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

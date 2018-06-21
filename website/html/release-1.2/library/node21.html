@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Product Types</TITLE>
+<META NAME="description" CONTENT="Product Types">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html434" HREF="node22.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html432" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html426" HREF="node20.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html436" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html435" HREF="node22.html">Sum Types</A>
+<B>Up:</B> <A NAME="tex2html433" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html427" HREF="node20.html">Boolean Theorems</A>
+<BR> <P>
+<H1><A NAME="SECTION000100000000000000000">Product Types</A></H1>
+<P>
+There is one library file in the directory <TT>lib_prod</TT> with the 
+definition of (non-dependent) cross-product. As well as the basic
+definitions there are also theorems giving the  <IMG WIDTH=8 HEIGHT=18 ALIGN=MIDDLE ALT="tex2html_wrap_inline349" SRC="img1.gif"  > -rule
+for pairs and the fact that pairing is extensional.
+<P>
+<PRE> ** Module lib_prod Imports lib_eq_basics
+ $prod : (Type)-&gt;(Type)-&gt;Type(prod)
+ $pair1 : {A:Type}{B:Type}A-&gt;B-&gt;prod A B
+ $prod_elim :
+    {A:Type}{B:Type}{C_prod:(prod A B)-&gt;Type}
+    ({a:A}{b:B}C_prod (pair1 A B a b))-&gt;{z:prod A B}C_prod z
+[[A:Type][B:Type][C_prod:(prod A B)-&gt;Type]
+ [f_pair1:{a:A}{b:B}C_prod (pair1 A B a b)][a:A][b:B]
+    prod_elim A B C_prod f_pair1 (pair1 A B a b)  ==&gt;  f_pair1 a b]
+
+  Pair = ... : {A|Type}{B|Type}A-&gt;B-&gt;prod A B
+  prod_rec = ... : {s|Type}{t|Type}{u|Type}(s-&gt;t-&gt;u)-&gt;(prod s t)-&gt;u
+  prod_ind = ... :
+    {s|Type}{t|Type}{P:(prod s t)-&gt;Prop}({a:s}{b:t}P (Pair a b))-&gt;
+    {p:prod s t}P p
+  Fst = ... : {s|Type}{t|Type}(prod s t)-&gt;s
+  Snd = ... : {s|Type}{t|Type}(prod s t)-&gt;t
+  prod_eta = ... :
+    {s|Type}{t|Type}{p:prod s t}Eq p (Pair (Fst p) (Snd p))
+  prod_ext = ... :
+    {s|Type}{t|Type}{p,q:prod s t}(Eq (Fst p) (Fst q))-&gt;
+    (Eq (Snd p) (Snd q))-&gt;Eq p q</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

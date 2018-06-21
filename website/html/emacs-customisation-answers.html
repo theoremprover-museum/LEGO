@@ -1,0 +1,142 @@
+<HTML>
+<HEAD>
+<TITLE>lego-mode: Customisation</TITLE>
+</HEAD>
+<BODY><P>
+ <HR> 
+<A HREF="emacs-changes.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+<A HREF="tools.html"> <IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+<A HREF="emacs-installation.html"> <IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A  HREF="emacs-changes.html">Recent Changes</A>
+<B> Up:</B> <A  HREF="tools.html">Tools</A>
+<B> Previous:</B> <A  HREF="emacs-installation.html">Installation</A>
+
+<HR> <P>
+
+ <H1>lego-mode: Customisation</H1> 
+Notice that the following customisation options work for both Emacs and <a href="http://xemacs.cs.uiuc.edu">XEmacs</a> unless otherwise stated. <P>
+<ol>
+<LI> <a name="remote">How can I start the LEGO process on another machine?</a> <P>
+You need to start LEGO via a remote login, a remote shell is not sufficient, because it cannot handle interactive interrupts. Insert 
+<LISTING>
+(setq lego-shell-echo-input nil)
+
+;;substitute the machine of your choice for BIG_JOBS
+(setq lego-prog-name "rlogin BIG_JOBS")
+(add-hook 'lego-shell-hook-before-displaying-buffer
+                (function (lambda ()
+                            (lego-simple-send "stty nl" nil t)
+                            (lego-simple-send "lego" nil t)
+			    (lego-simple-send 
+			     (format "Cd \"%s\"" 
+				     (expand-file-name lego-shell-working-dir)) 
+			     t t))))</LISTING>
+in your <TT>.emacs</TT> file. <P>
+
+<LI> <a name="fonts">
+     How can I display LEGO modules and the LEGO shell buffer in colour?
+     </a><P>Insert
+            <LISTING>
+	    (add-hook 'lego-mode-hook '(lambda () (font-lock-mode 1)))
+	    (add-hook 'lego-shell-hook-after-displaying-buffer
+                                      '(lambda () (font-lock-mode 1)))
+            </LISTING>
+     in your <TT>.emacs</TT> file.<P>
+
+<LI> <a name="frame">How can I display the LEGO shell in a separate frame?</a> <P>
+If you are an Elisp hacker, I'd appreciate it if you could help me to tidy up the following. If not, don't worry, just insert in in your <tt>.emacs</tt> file.
+
+<LISTING>
+(cond
+ (window-system
+  (defvar lego-shell-screen nil)
+   ;; customise the frame here
+  (put 'lego-shell-screen 'screen-defaults '((name . "Lego shell")
+					     (left . 10) 
+					     (top . 10) 
+					     (height . 20)
+					     (width . 98) 
+					     (vertical-scroll-bars . t)))
+  (cond
+   ((string-match "XEmacs\\|Lucid" emacs-version)
+   (put 'lego-shell 'screen-name 'lego-shell-screen)
+    (add-hook 'lego-shell-hook-after-displaying-buffer
+	      (function (lambda ()
+			  (put 'lego-shell 'screen (car (screen-list))))))
+    (add-hook 'lego-exit-lego-hook
+	      (function (lambda ()
+			  (let ((lego-shell-screen
+				 (get 'lego-shell 'screen)))
+			    (cond (lego-shell-screen
+				   (delete-screen lego-shell-screen))))
+			  ))))
+   ((string-match "^19" emacs-version)
+    (eval-after-load "lego-mode"
+		     '(progn
+			(let ((lego-shell-buffer-regexp
+			    (regexp-quote lego-shell-buffer-name)))
+		       (or (member lego-shell-buffer-regexp
+				   special-display-regexps)
+			   (setq special-display-regexps
+				 (cons lego-shell-buffer-regexp
+				       special-display-regexps))))
+		     (add-hook
+		      'lego-shell-before-displaying-buffer
+		      (function (lambda ()
+				  (make-local-variable 'default-frame-alist)
+				  (setq default-frame-alist
+					(append 
+					 (get 'lego-shell-screen 'screen-defaults)
+					 default-frame-alist))
+				  )))
+		     (add-hook
+		      'lego-shell-hook-after-displaying-buffer
+		      (function (lambda ()
+				  (modify-frame-parameters
+				   (car (frame-list))
+				   (get 'lego-shell-screen 'screen-defaults)))))
+		     ))))))
+</LISTING> <P>
+<LI> <a name="legogrep">How can I change the behaviour of legogrep?</a> <P>
+<a href="tools.html#legogrep>legogrep</a> depends on the following variables:
+
+<LISTING>
+(defvar lego-test-all-name "test_all"
+  "The name of the LEGO module which inherits all other modules of the
+  library.")
+
+(defvar legogrep-command (concat "legogrep -n  " lego-test-all-name)
+  "Last legogrep command used in \\{legogrep}; default for next legogrep.")
+</LISTING> <P>
+<LI> <a name="lego-prog-name">How can I run a different version of LEGO?</a> <P>
+Use the variable <VAR>lego-prog-name</VAR> e.g.,
+
+<LISTING>
+(setq lego-prog-name "lego.test")
+</LISTING> Alternatively, configure
+
+<LISTING>
+(setq lego-prog-name-ask-p t)
+</LISTING>
+and you will be asked which program to run when the inferior
+LEGO process starts up.
+Click <a href="#remote">here</a> if you would like to invoke a version of LEGO on another machine. <P>
+
+
+
+
+
+</ol>
+
+
+<P><ADDRESS>
+<I>LEGO Team
+<a href="mailto:lego@dcs.ed.ac.uk">&lt;lego@dcs.ed.ac.uk&gt;</a> <BR>
+</I>
+<!-- hhmts start -->
+Last modified: Fri Aug 30 15:49:38 BST 
+<!-- hhmts end -->
+</ADDRESS>
+</BODY></HTML>

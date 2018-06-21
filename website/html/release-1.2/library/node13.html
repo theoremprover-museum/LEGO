@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Altenkirch-Streicher Elimination Rule</TITLE>
+<META NAME="description" CONTENT="Altenkirch-Streicher Elimination Rule">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html347" HREF="node14.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html345" HREF="node9.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html341" HREF="node12.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html349" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html348" HREF="node14.html">Setoids</A>
+<B>Up:</B> <A NAME="tex2html346" HREF="node9.html">Equality</A>
+<B> Previous:</B> <A NAME="tex2html342" HREF="node12.html">Martin-L&#246;f's Inductive Equality</A>
+<BR> <P>
+<H3><A NAME="SECTION00062400000000000000">Altenkirch-Streicher Elimination Rule</A></H3>
+<P>
+This file contains an extra elimination rule for
+Martin-L&#246;f's
+inductive equality proposed by
+Thorsten Altenkirch and Thomas Streicher.
+This new rule is used to prove the proposition
+<TT>Eq_unique</TT> below which allows one to prove
+e.g. that equality in inductive sigma types
+respects second projection.
+This rule has recently been shown not to be 
+derivable from the usual elimination rule for
+inductive equality.
+<P>
+<PRE> ** Module lib_AS_eq Imports lib_equality/ML/lib_eq
+ $Eq_elim' :
+    {A|Type}{C:{a|A}(Eq a a)-&gt;Type}({a:A}C (Eq_refl a))-&gt;{a|A}{p:Eq a a}
+    C p
+* Eq_unique = ... : {A|Type}{a,b:A}{p,q:Eq a b}Eq p q</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

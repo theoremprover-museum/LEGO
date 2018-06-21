@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+  <head>
+    <title>LEGO Version 1.3: Infix</title>
+  </head>
+
+  <body>
+<P>
+ <HR> 
+<A HREF="inversion.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> 
+
+<A HREF="newfeatures.html"> 
+<IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A>
+
+<A HREF="induction.html">
+<IMG ALIGN=MIDDLE
+SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A>
+
+<A HREF="../index.html"><IMG ALIGN=MIDDLE SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>
+ <BR>
+
+<B> Next:</B> <A  HREF="inversion.html">Inversion and Invert</A>
+<B> Up:</B> <A  HREF="newfeatures.html">New features in LEGO Version 1.3</A>
+<B> Previous:</B> <A HREF="induction.html">Induction</A>
+<HR>      <h1>LEGO Version 1.3: Infix</h1>
+<PRE>
+Introduction of a new infix operator is via a Configure declaration, for
+example
+
+Configure Infix + left 7;
+
+asserts that + is an infix operator which is left associative with
+precedence 7 (as per usual, higher numbers mean tighter binding). 
+
+This causes the expression
+
+a + b
+
+to be parsed as 
+
+op+ a b
+
+Pretty-printing reverses the above process for infix-declared operators
+applied to exactly two arguments.
+
+
+Example:
+--------
+
+Lego> Configure Infix + left 5;
+Infix + left 5
+Lego> [A:Type][a:A][op+:A->A->A];
+decl  A : Type
+decl  a : A
+decl  op+ : A->A->A
+  (* time= 0.0  gc= 0.0  sys= 0.010000 *)
+Lego> a+(a+a); 
+value = a + (a + a)
+type  = A
+
+
+Notes
+-----
+
+To maintain backward compatibility, the operators \/ and /\ are
+aliased to "or" and "and" respectively, rather than op\/ and op/\.
+They should work exactly as before (once you've got lib_logic loaded).
+
+Built-in infix operators have a higher precedence than any user-defined
+ones.
+
+In Configure declarations, associativity (left or right) and the
+precedence (1-9) are mandatory unless the operator is one of +,-,*, or
+/, in which case in the absence of user-supplied associativity and
+precedence defaults will be used.
+
+The syntactic class of infix operators is currently 
+
++  -  /  *  <<  >>  /\  \/  |-  ::  &word @word
+
+where word is one or more alphabetic characters. 
+
+
+How 'alpha' is alpha?
+---------------------
+
+Eventually the syntactic class for infix operators will be expanded to
+something a bit more rational (suggestions welcome), and the mechanism
+for precedence and associativity defaults will be extended to use
+those of the first character of the new operator. 
+[Did I already do this? - djs]
+</PRE>
+</body>
+</html>

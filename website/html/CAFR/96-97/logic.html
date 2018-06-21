@@ -1,0 +1,149 @@
+<HTML>
+<HEAD>
+<TITLE>Reasoning in intuitionistic logic (due 4-Nov-1996)</TITLE>
+<!-- Created by: Thomas Schreiber,  2-Oct-1995 -->
+<!-- Changed by: Thomas Schreiber, 13-Nov-1995 -->
+
+</HEAD>
+<BODY>
+<P>
+<!--
+ <HR> 
+<A HREF="verification.html">
+<IMG ALIGN=MIDDLE SRC="www/icons/next_motif.gif"></A>
+<A HREF="exercises.html"> <IMG ALIGN=MIDDLE SRC="www/icons/up_motif.gif"></A>
+<A HREF="programming.html">
+ <IMG ALIGN=MIDDLE SRC="www/icons/previous_motif.gif"></A>
+<A HREF="www/packages/lego/index.html"><IMG ALIGN=MIDDLE SRC="www/icons/contents_motif.gif"></A>
+ <BR>
+<B> Next:</B> <A HREF="verification.html">
+Type theory - a unifying framework for logic and computation</A><BR>
+<B> Up:</B> <A  HREF="exercises.html">Exercises</A>
+<B> Previous:</B> <A  HREF="programming.html">Programming in type theory</A>
+<HR> <P>
+-->
+<P>
+<H1>Reasoning in intuitionistic logic</H1>
+
+Computer Aided Formal Reasoning<BR>
+Exercise 1<BR>
+<B>Deadline</B>: Monday, 4 November 1996<BR>
+
+<STRONG>Note new deadline!</STRONG>
+ <P>
+Please submit your module(s) by Email to <a href="mailto:jlu@dcs.ed.ac.uk"><I>&lt;jlu@dcs.ed.ac.uk&gt;</I></a>
+<hr>
+Use Emacs to create a file
+<TT>logic.l</TT> in some suitable directory e.g <TT>~/lego</TT>
+with the following module declaration <P>
+
+<B>Module</B> <TT>logic</TT> <B>Import</B> <A HREF="http://www/home/lego/html/library/node8.html#SECTION00053000000000000000">lib_logic</A>; <P>
+
+In order to process this Module declaration when you have Lego started,
+you must either use the Process Buffer menu item (or ^C^B), or 
+load the file explicitly in Lego with the command "Make logic"
+(where logic is the filename -- Lego will complain if the 
+filename doesn't match the Module name).
+<OL>
+<LI> 
+Declare <VAR>P</VAR>, <VAR>Q</VAR> and <VAR>R</VAR> to be 
+propositions.
+Prove the following simple properties about conjunction and disjunction:
+
+<OL> 
+<LI> <B>Goal</B> <TT>and_comm: (and P Q)-&gt;(and Q P);</TT><P> 
+<LI> <B>Goal</B> <TT>or_comm: (or P Q)-&gt;(or Q P);</TT><P> 
+<LI> <B>Goal</B>
+     <TT>or_imp:(or (P-&gt;Q) (P-&gt;R))-&gt;(P-&gt;(or Q R));</TT><P> 
+<LI> <B>Goal</B> <TT>and_imp_or: (and P Q)-&gt;(or P Q);</TT><P> 
+</OL>
+
+<LI> 
+Prove that the following three laws are equivalent:
+
+<DL compact>
+<DT> Excluded Middle 
+<DD> <TT>{P:Prop}or P (not P)</TT>
+<DT> Double Negation 
+<DD> <TT>{P:Prop}(not (not P))->P</TT>
+<DT> Peirce
+<DD> <TT>{P,Q:Prop}((P->Q)->P)->P</TT>
+</DL>
+
+To save some typing, you can define abbreviations in Lego 
+for these things by putting the following commands in your
+file:
+<PRE><KBD> 
+[EM = {P:Prop}or P (not P)]; 
+[DN = {P:Prop}(not (not P))->P];
+[Peirce = {P,Q:Prop}((P->Q)->P)->P];
+</KBD></PRE>
+To show these three things are equivalent, you must 
+show any one of them implies the other two.  You do not
+need to prove all six implications directly.  You could do
+this by proving a cycle of implications, for example
+<KBD>EM-&gt;DN-&gt;Peirce-&gt;EM</KBD>, or by proving
+two equivalences, for example
+<KBD>EM-&gt;DN and DN-&gt;EM and Peirce-&gt;DN and DN-&gt;Peirce</KBD>.
+Some of the implications are easier than others, so it is a good
+idea to think about which ones you want to prove.
+ <P>
+<STRONG>NOTE:</STRONG> Be sure you are trying to prove 
+the right goal! In Lego, the scope of a quantifier 
+extends as far to the right as possible if not limited
+by explicit parentheses.  For example, if you write
+<PRE>
+Goal {P:Prop}or P (not P) -&gt;{P:Prop}(not (not P))->P;
+</PRE>
+then Lego will parse this as
+<PRE>
+Goal {P:Prop}(or P ((not P) -&gt;{P:Prop}(not (not P))->P));
+</PRE>
+which is probably not what you wanted.   You would need to
+write
+<PRE>
+Goal ({P:Prop}or P (not P)) -&gt;{P:Prop}(not (not P))->P;
+</PRE>
+to get what you want for this exercise.
+ <P>
+Hint: Remember that these are quantified formulas, so 
+the <KBD>P</KBD> and <KBD>Q</KBD> may be instantiated to 
+any formula.
+ <P>
+A shortcut when using negation:  If you have a goal which
+you want to prove by absurd_elim, and you wish to do this
+by using some assumption <KBD>H: not A</KBD> and then proving
+a proof of <KBD>A</KBD>, you can do this in one step with
+<KBD>Refine H</KBD>.
+ <P>
+Recall that <KBD>not A</KBD> is defined as <KBD>A-&gt;absurd</KBD>.
+To prove a negation by proving <KBD>A-&gt;absurd</KBD>, use
+the capitalized "Intros", which reduces the goal before
+introducing assumptions.  For example:
+<KBD>
+<PRE>
+  ?0 : not A
+Lego> Intros x;
+Intros x;
+Intros (1) x
+  x : A
+  ?1 : absurd
+Lego> 
+</PRE>
+</KBD>
+
+ <P> 
+<LI> 
+Prove <KBD>{P:Prop} not(not ((not(not P)) -> P)).</KBD>  Note
+the parentheses.  Although the law of double negation elimination
+(shown above) is not provable constructively, this shows that
+its double negation is provable.  
+ <P>
+
+
+
+</OL>
+<ADDRESS> <A Name=Signature HREF="/home/lego/html/CAFR/index.html/">
+Computer Aided Formal Reasoning</A></ADDRESS>
+</BODY>
+</HTML>

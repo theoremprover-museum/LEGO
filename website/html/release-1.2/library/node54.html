@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<!--Converted with LaTeX2HTML 96.1 (Feb 5, 1996) by Nikos Drakos (nikos@cbl.leeds.ac.uk), CBLU, University of Leeds -->
+<HTML>
+<HEAD>
+<TITLE>Finite Sets</TITLE>
+<META NAME="description" CONTENT="Finite Sets">
+<META NAME="keywords" CONTENT="newlib">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="newlib.css">
+</HEAD>
+<BODY LANG="EN">
+ <A NAME="tex2html821" HREF="node55.html"><IMG WIDTH=37 HEIGHT=24 ALIGN=BOTTOM ALT="next" SRC="http://www.dcs.ed.ac.uk/icons//next_motif.gif"></A> <A NAME="tex2html819" HREF="newlib.html"><IMG WIDTH=26 HEIGHT=24 ALIGN=BOTTOM ALT="up" SRC="http://www.dcs.ed.ac.uk/icons//up_motif.gif"></A> <A NAME="tex2html813" HREF="node53.html"><IMG WIDTH=63 HEIGHT=24 ALIGN=BOTTOM ALT="previous" SRC="http://www.dcs.ed.ac.uk/icons//previous_motif.gif"></A> <A NAME="tex2html823" HREF="node1.html"><IMG WIDTH=65 HEIGHT=24 ALIGN=BOTTOM ALT="contents" SRC="http://www.dcs.ed.ac.uk/icons//contents_motif.gif"></A>  <BR>
+<B> Next:</B> <A NAME="tex2html822" HREF="node55.html">Vectors</A>
+<B>Up:</B> <A NAME="tex2html820" HREF="newlib.html">The LEGO library</A>
+<B> Previous:</B> <A NAME="tex2html814" HREF="node53.html">Sorted Lists</A>
+<BR> <P>
+<H1><A NAME="SECTION000150000000000000000">Finite Sets</A></H1>
+<P>
+The finite set datatype is a family of types parameterised
+by nat, where the type <TT>fin n</TT> has exactly n 
+elements, which can be thought of as the set of numbers
+ <IMG WIDTH=112 HEIGHT=29 ALIGN=MIDDLE ALT="tex2html_wrap_inline361" SRC="img5.gif"  > .  
+The file is in the directory <TT>lib_finite</TT>.
+<P>
+<PRE> ** Module lib_finite Imports lib_nat/lib_nat
+ $fin : nat-&gt;Type(fin)
+ $f_zero : {n:nat}fin (suc n)
+ $f_suc : {n|nat}(fin n)-&gt;fin (suc n)
+ $fin_elim :
+    {C_fin:{n|nat}(fin n)-&gt;TYPE}({n:nat}C_fin (f_zero n))-&gt;
+    ({n|nat}{x:fin n}(C_fin x)-&gt;C_fin (f_suc x))-&gt;{n|nat}{z:fin n}
+    C_fin z
+[[C_fin:{n|nat}(fin n)-&gt;TYPE][f_f_zero:{n1:nat}C_fin (f_zero n1)]
+ [f_f_suc:{n|nat}{x:fin n}(C_fin x)-&gt;C_fin (f_suc x)][n1:nat][n|nat]
+ [x:fin n]
+    fin_elim C_fin f_f_zero f_f_suc (f_zero n1)  ==&gt;  f_f_zero n1
+ || fin_elim C_fin f_f_zero f_f_suc (f_suc x)  ==&gt;
+    f_f_suc x (fin_elim C_fin f_f_zero f_f_suc x)]
+
+  fin_elim'_lemma = ... :
+    {n:nat}{m:fin (suc n)}{P:(fin (suc n))-&gt;Type}(P (f_zero n))-&gt;
+    ({m'5:fin n}P (f_suc m'5))-&gt;P m
+  fin_elim' = ... :
+    {n:nat}{P:(fin (suc n))-&gt;Type}(P (f_zero n))-&gt;
+    ({m:fin n}P (f_suc m))-&gt;{m:fin (suc n)}P m
+  fin_rec = ... :
+    {C|Type}(nat-&gt;C)-&gt;({n|nat}(fin n)-&gt;C-&gt;C)-&gt;{n|nat}(fin n)-&gt;C
+  fin_iter = ... : {C|Type}(nat-&gt;C)-&gt;(nat-&gt;C-&gt;C)-&gt;{n|nat}(fin n)-&gt;C
+  fin_ind = ... :
+    {P:{n:nat}(fin n)-&gt;Prop}({n:nat}P (f_zero n))-&gt;
+    ({n|nat}{x:fin n}(P x)-&gt;P (f_suc x))-&gt;{n|nat}{z:fin n}P z
+  fin_rec' = ... : {n:nat}{C|Type}C-&gt;((fin n)-&gt;C)-&gt;(fin (suc n))-&gt;C
+  fin_ind' = ... :
+    {n:nat}{P:(fin (suc n))-&gt;Prop}(P (f_zero n))-&gt;
+    ({m:fin n}P (f_suc m))-&gt;{m:fin (suc n)}P m
+  peano2_fin = ... : {n:nat}{x:fin n}not (Eq (f_suc x) (f_zero n))
+  peano3_fin = ... : {n:nat}{x,y:fin n}(Eq (f_suc x) (f_suc y))-&gt;Eq x y
+  inj_void = ... :
+    {n:nat}{x:fin (suc n)}(not (Eq x (f_zero n)))-&gt;
+    Ex ([x':fin n]Eq x (f_suc x'))
+  finite_is_zero_or_succ = ... :
+    {n:nat}{x:fin (suc n)}
+    or (Eq x (f_zero n)) (Ex ([x':fin n]Eq x (f_suc x')))
+  zero_set_is_empty = ... : (fin zero)-&gt;absurd
+  fin_zero_lemma = ... :
+    {n|nat}{x:fin n}
+    nat_elim ([x'3:nat](fin x'3)-&gt;Type)
+             ([x'3:fin zero]{P:(fin zero)-&gt;Type}P x'3)
+             ([n'3:nat][_:(fin n'3)-&gt;Type][_:fin (suc n'3)]{t:Type}t-&gt;t)
+             n x
+  fin_elim_zero = ... : {P:(fin zero)-&gt;Type}{x:fin zero}P x
+  fin_to_nat = ... : {n|nat}(fin n)-&gt;nat
+  fin_to_nat_resp_suc = ... :
+    {n|nat}{x:fin n}Eq (suc (fin_to_nat x)) (fin_to_nat (f_suc x))</PRE>
+<P>
+<BR> <HR>
+<P><ADDRESS>
+<I>Lego <BR>
+Fri May 24 19:01:27 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>

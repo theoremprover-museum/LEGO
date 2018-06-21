@@ -1,0 +1,97 @@
+<HTML>
+<HEAD>
+<TITLE>Computation with recursion operators</TITLE>
+<META NAME="description" CONTENT="No Title">
+<META NAME="keywords" CONTENT="calc">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+<LINK REL=STYLESHEET HREF="calc.css">
+</HEAD>
+<BODY LANG="EN">
+ <H1><A NAME="SECTION00010000000000000000">Computation with recursion operators</A></H1>
+<P>
+<H3><A NAME="SECTION00010100000000000000">Five plus two : an annotated example.</A></H3>
+<P>
+Recall the definition of <TT>plus</TT>:
+ <P>
+<TT>
+<PRE>
+plus = [i:nat][j:nat] nat_rec i ([k:nat] suc) j
+</PRE>
+</TT>
+ <P>
+Also recall the rules for evaluating <TT>nat_rec</TT>:
+<TT>
+<PRE>
+nat_rec m f zero    =>  m 
+nat_rec m f (suc i) => f i (nat_rec m f i) 
+</PRE>
+<P>
+</TT>
+Let us calculate <TT>plus five two</TT>.  The names for 
+numbers are abbreviations, so that <TT>two = suc (suc zero)</TT>.
+<PRE>plus five two 
+ = ([i:nat][j:nat] nat_rec i ([k:nat] suc) j) five two</PRE>
+First, we beta-reduce, substituting <TT>five</TT> for <TT>i</TT>:
+<PRE> = ([j:nat] nat_rec five ([k:nat] suc) j) two</PRE>
+Then we beta-reduce again, substituting <TT>two</TT> for <TT>j</TT>
+(and eliminating the outermost set of parentheses):
+<PRE> =  nat_rec five ([k:nat] suc) two</PRE>
+Now let us expand the definition of <TT>two</TT> (not a computation
+step, just for clarity).  We will not need to expand the
+definition of <TT>five</TT>.
+<PRE> =  nat_rec five ([k:nat] suc) (suc (suc zero))</PRE>
+Now we look at the rules for <TT>nat_rec</TT>.  The last
+argument is not zero, so the second rule applies.  The three arguments
+are 
+<PRE>m = five
+f = ([k:nat] suc)
+(suc i) = (suc (suc zero))</PRE>
+Hence <TT>i = (suc zero)</TT>.  Applying the rule, we have
+<PRE> = ([k:nat] suc) (suc zero) (nat_rec five ([k:nat] suc) (suc zero))</PRE>
+We reduce the application <code>([k:nat] suc) (suc zero)</code> 
+by substituting <code>suc zero</code> for <TT>k</TT> in <TT>suc</TT>.  Since 
+<TT>k </TT> does not appear in <TT>suc</TT>, we are left with 
+<TT>suc</TT>, giving the whole term as:
+<PRE> = suc (nat_rec five ([k:nat] suc) (suc zero))</PRE>
+Again we look at the rules for <TT>nat_rec</TT>.  The last
+argument to <code>nat_rec</code> is still not zero, so the second 
+rule applies again.  The three arguments
+this time are 
+<PRE>m = five
+f = ([k:nat] suc)
+(suc i) = (suc zero)</PRE>
+Hence <TT>i = zero</TT>.  Applying the rule, we have
+<PRE> = suc (([k:nat] suc) zero (nat_rec five ([k:nat] suc) zero))</PRE>
+Again, reducing <code>([k:nat] suc) zero</code> leaves only
+<TT>suc</TT>:
+<PRE> = suc (suc (nat_rec five ([k:nat] suc) zero))</PRE>
+Looking at the rules for <code>nat_rec</code>, we see that the
+first rule applies - the arguments to <code>nat_rec</code> are:
+<PRE>m = five
+f = ([k:nat] suc)
+zero</PRE>
+Thus we apply the first rule, replacing 
+<code>nat_rec five ([k:nat] suc) zero)</code> with <TT>five</TT>:
+<PRE> = suc (suc five)</PRE>
+So, <code>plus five two</code> is <code>suc (suc five)</code>, or 
+7.
+Here are the steps again:
+<PRE>plus five two 
+ = ([i:nat][j:nat] nat_rec i ([k:nat] suc) j) five two
+ = ([j:nat] nat_rec five ([k:nat] suc) j) two
+ =  nat_rec five ([k:nat] suc) two
+ =  nat_rec five ([k:nat] suc) (suc (suc zero))
+ = ([k:nat] suc) (suc zero) (nat_rec five ([k:nat] suc) (suc zero))
+ = suc (nat_rec five ([k:nat] suc) (suc zero))
+ = suc (([k:nat] suc) zero (nat_rec five ([k:nat] suc) zero))
+ = suc (suc (nat_rec five ([k:nat] suc) zero))
+ = suc (suc five)</PRE>
+<P>
+
+<P><ADDRESS>
+<I>Judith Underwood <BR>
+Fri Oct 25 14:58:22 BST 1996</I>
+</ADDRESS>
+</BODY>
+</HTML>
